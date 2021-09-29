@@ -30,7 +30,7 @@ public class Conexion {
 public Connection Conectar_a_base(){
     try{
         
-    String conectionURL= "jdbc:sqlserver://;database=prueba;integratedSecurity=true;";
+    String conectionURL= "jdbc:sqlserver://;database=GestorPlanesDeEstudio;integratedSecurity=true;";
     conect = DriverManager.getConnection(conectionURL);
         System.out.println("Hola");
     }
