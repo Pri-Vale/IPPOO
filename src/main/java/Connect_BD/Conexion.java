@@ -36,6 +36,7 @@ public Connection Conectar_a_base(){
     }
     catch (SQLException ex){
         System.out.println("Error.");
+        System.out.println("Error.");
     } 
     return conect;
 }
