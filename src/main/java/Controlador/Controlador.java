@@ -20,7 +20,9 @@ public class Controlador {
             System.out.println(pNombreEscuela);
             System.out.println(pCodEscuela);
         salidaControlador.insertarEscuela(escuela);
+        System.out.println("A");
         return true;
+        
         }catch(NullPointerException a){
           return false;  
         }                    
