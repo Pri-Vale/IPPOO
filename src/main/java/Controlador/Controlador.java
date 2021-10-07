@@ -1,5 +1,3 @@
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controlador;
 
 import Connect_BD.Consultas_BaseDatos;

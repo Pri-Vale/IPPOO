@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Vista;
 
 import Controlador.Controlador;
@@ -391,7 +387,7 @@ public class Principal extends javax.swing.JFrame {
       this.rQRegCursos.setVisible(true);  // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-<<<<<<< Updated upstream
+
     private void tCodigoEscuelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCodigoEscuelaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tCodigoEscuelaActionPerformed
@@ -419,7 +415,7 @@ public class Principal extends javax.swing.JFrame {
     this.tNombreEA.setText(null);
     }//GEN-LAST:event_jButton6ActionPerformed
 
-=======
+
     private void nombresEscuelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombresEscuelasActionPerformed
         // TODO add your handling code here:
         
@@ -450,8 +446,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botonLimpiarCamposActionPerformed
  
-    
->>>>>>> Stashed changes
+  
     /**
      * @param args the command line arguments
      */
@@ -488,13 +483,10 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-<<<<<<< Updated upstream
     private javax.swing.JButton bRegEsqArea;
-=======
     private javax.swing.JButton botonLimpiarCampos;
     private javax.swing.JButton botonRegistrar;
     private javax.swing.JComboBox<String> cantHorasLectivas;
->>>>>>> Stashed changes
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -506,13 +498,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-<<<<<<< Updated upstream
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JFrame rQRegCursos;
-    private javax.swing.JFrame rQRegistrarEsqArea;
-    private javax.swing.JTextField tCodigoEscuela;
-    private javax.swing.JTextField tNombreEA;
-=======
     private javax.swing.JLabel labelCodCurso;
     private javax.swing.JLabel labelCodEscuela;
     private javax.swing.JLabel labelCreditos;
@@ -525,7 +511,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> numCreditos;
     private javax.swing.JFrame rQRegCursos;
     private javax.swing.JFrame rQRegistrarEsqArea;
+    private javax.swing.JTextField tCodigoEscuela;
+    private javax.swing.JTextField tNombreEA;
     private javax.swing.JLabel tituloRegistroCursos;
->>>>>>> Stashed changes
     // End of variables declaration//GEN-END:variables
 }
