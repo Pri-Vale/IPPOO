@@ -32,7 +32,7 @@ public Connection Conectar_a_base(){
         
     String conectionURL= "jdbc:sqlserver://;database=GestorPlanesDeEstudio;integratedSecurity=true;";
     conect = DriverManager.getConnection(conectionURL);
-        System.out.println("Hola");
+    System.out.println("Hola");
     }
     catch (SQLException ex){
         System.out.println("Error.");

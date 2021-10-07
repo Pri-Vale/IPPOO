@@ -4,6 +4,12 @@
  */
 package Vista;
 
+import Controlador.Controlador;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author pri23
@@ -15,6 +21,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        
     }
 
     /**
@@ -28,6 +35,14 @@ public class Principal extends javax.swing.JFrame {
 
         rQRegCursos = new javax.swing.JFrame();
         rQRegistrarEsqArea = new javax.swing.JFrame();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        tNombreEA = new javax.swing.JTextField();
+        tCodigoEscuela = new javax.swing.JTextField();
+        bRegEsqArea = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -47,15 +62,95 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
+        rQRegistrarEsqArea.setMinimumSize(new java.awt.Dimension(1000, 1000));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel3.setText("Registrar Escuela o Área Académica");
+
+        jLabel4.setText("Nombre: ");
+
+        jLabel5.setText("Código");
+
+        tCodigoEscuela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tCodigoEscuelaActionPerformed(evt);
+            }
+        });
+
+        bRegEsqArea.setText("Registrar");
+        bRegEsqArea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bRegEsqAreaActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Limpiar Casillas");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tNombreEA, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                            .addComponent(tCodigoEscuela)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(bRegEsqArea)
+                        .addGap(63, 63, 63)
+                        .addComponent(jButton6))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(44, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jLabel3)
+                .addGap(68, 68, 68)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(tNombreEA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(tCodigoEscuela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bRegEsqArea)
+                    .addComponent(jButton6))
+                .addGap(19, 19, 19))
+        );
+
         javax.swing.GroupLayout rQRegistrarEsqAreaLayout = new javax.swing.GroupLayout(rQRegistrarEsqArea.getContentPane());
         rQRegistrarEsqArea.getContentPane().setLayout(rQRegistrarEsqAreaLayout);
         rQRegistrarEsqAreaLayout.setHorizontalGroup(
             rQRegistrarEsqAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(rQRegistrarEsqAreaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         rQRegistrarEsqAreaLayout.setVerticalGroup(
             rQRegistrarEsqAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(rQRegistrarEsqAreaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -150,6 +245,33 @@ public class Principal extends javax.swing.JFrame {
       this.rQRegCursos.setVisible(true);  // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void tCodigoEscuelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCodigoEscuelaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tCodigoEscuelaActionPerformed
+
+    private void bRegEsqAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegEsqAreaActionPerformed
+        Controlador entradaCon = new Controlador();
+        if(this.tNombreEA.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de escuela válido");
+        }
+        
+            
+        if(this.tCodigoEscuela.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un codigo de escuela válido");
+        }
+        try {
+            entradaCon.crearEscuela(tNombreEA.getText(), tCodigoEscuela.getText());
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_bRegEsqAreaActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    this.tCodigoEscuela.setText(null);
+    this.tNombreEA.setText(null);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -186,14 +308,22 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bRegEsqArea;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JFrame rQRegCursos;
     private javax.swing.JFrame rQRegistrarEsqArea;
+    private javax.swing.JTextField tCodigoEscuela;
+    private javax.swing.JTextField tNombreEA;
     // End of variables declaration//GEN-END:variables
 }
