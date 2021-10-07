@@ -21,6 +21,7 @@ public class Controlador {
             System.out.println(pCodEscuela);
         salidaControlador.insertarEscuela(escuela);
         System.out.println("A");
+        System.out.println("A");
         return true;
         
         }catch(NullPointerException a){
