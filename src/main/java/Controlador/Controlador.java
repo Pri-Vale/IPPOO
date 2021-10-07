@@ -17,8 +17,6 @@ public class Controlador {
     public boolean crearEscuela(String pNombreEscuela, String pCodEscuela) throws SQLException{
         try{
         Escuela escuela= new Escuela(pNombreEscuela, pCodEscuela);
-            System.out.println(pNombreEscuela);
-            System.out.println(pCodEscuela);
         salidaControlador.insertarEscuela(escuela);
         return true;
         }catch(NullPointerException a){
