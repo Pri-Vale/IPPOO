@@ -1,4 +1,7 @@
 package Modelo.logicaDeNegocio;
+
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,9 +10,9 @@ package Modelo.logicaDeNegocio;
 
 
 /**
- * Abstraccion de la clase Curso y su información referente
+ * Abstraccion de la clase Curso y su informacion referente
  * @author Valeria
- * @version 04 octubre, 2021
+ * @version 08 octubre, 2021
  */
 public class Curso {
     private String nombreCurso;
@@ -17,6 +20,13 @@ public class Curso {
     private int cantCreditos;
     private int cantHorasLectivas;
     
+    private ArrayList<Curso> requisitos;
+    private ArrayList<Curso> correquisitos;
+ 
+ 
+    /**
+     * Constructor para objetos de la clase Curso
+     */    
     public Curso(){
         
     }
@@ -27,9 +37,9 @@ public class Curso {
      * @param pCantCreditos
      * @param pCantHorasLectivas 
      */
-    public Curso(String pNombreCurso, int pNumCurso, int pCantCreditos, int pCantHorasLectivas) {
+    public Curso(String pNombreCurso, String pCodCurso, int pCantCreditos, int pCantHorasLectivas) {
         setNombreCurso(pNombreCurso);
-        setCodCurso(pNumCurso);
+        setCodCurso(pCodCurso);
         setCantCreditos(pCantCreditos);
         setCantHorasLectivas(pCantHorasLectivas);
     }
@@ -46,11 +56,8 @@ public class Curso {
         return codCurso;
     }
 
-    public void setCodCurso(int pNumCurso){
-        String numCurso = String.valueOf(pNumCurso); 
-        //String prefijoEscuela = generarPrefijoEscuela(pNombreEscuela);
-        //codCurso += prefijoEscuela;
-        codCurso += numCurso;
+    public void setCodCurso(String pCodCurso){
+        this.codCurso = pCodCurso;
     }
 
     public int getCantCreditos() {
@@ -68,5 +75,12 @@ public class Curso {
     public void setCantHorasLectivas(int pCantHorasLectivas) {
         this.cantHorasLectivas = pCantHorasLectivas;
     }
+
+    @Override
+    public String toString() {
+        return "Curso{" + "nombreCurso=" + nombreCurso + ", codCurso=" + codCurso + ", cantCreditos=" + cantCreditos + ", cantHorasLectivas=" + cantHorasLectivas + ", requisitos=" + requisitos + ", correquisitos=" + correquisitos + '}';
+    }
+    
+    
    
 }
