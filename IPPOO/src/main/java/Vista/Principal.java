@@ -4,6 +4,7 @@ import Controlador.Controlador;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,12 +12,14 @@ import javax.swing.JOptionPane;
  * @author pri23
  */
 public class Principal extends javax.swing.JFrame {
-
+    Controlador contrl = new Controlador();
+               
     /**
      * Creates new form Principal
      */
-    public Principal() {
+    public Principal(){
         initComponents();
+        
         
     }
 
@@ -30,20 +33,20 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         rQRegCursos = new javax.swing.JFrame();
-        nombresEscuelas = new javax.swing.JComboBox<>();
-        nombreCurso = new javax.swing.JTextField();
-        numCodCurso = new javax.swing.JTextField();
-        labelCodEscuela = new javax.swing.JLabel();
+        labelRegistroCursos = new javax.swing.JLabel();
         labelEscuela = new javax.swing.JLabel();
         labelNombreCurso = new javax.swing.JLabel();
-        botonRegistrar = new javax.swing.JButton();
-        botonLimpiarCampos = new javax.swing.JButton();
-        numCreditos = new javax.swing.JComboBox<>();
-        cantHorasLectivas = new javax.swing.JComboBox<>();
-        tituloRegistroCursos = new javax.swing.JLabel();
         labelCodCurso = new javax.swing.JLabel();
-        labelCreditos = new javax.swing.JLabel();
+        labelCreditosCurso = new javax.swing.JLabel();
         labelHorasLectivas = new javax.swing.JLabel();
+        tNombreCurso = new javax.swing.JTextField();
+        cbNombresEscuelas = new javax.swing.JComboBox<>();
+        tNumCodCurso = new javax.swing.JTextField();
+        cbNumCreditos = new javax.swing.JComboBox<>();
+        cbCantHorasLectivas = new javax.swing.JComboBox<>();
+        bRegistrarCurso = new javax.swing.JButton();
+        bLimpiarCamposRegCurso = new javax.swing.JButton();
+        lbCodEscuelaCodCurso = new javax.swing.JLabel();
         rQRegistrarEsqArea = new javax.swing.JFrame();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -53,6 +56,9 @@ public class Principal extends javax.swing.JFrame {
         tCodigoEscuela = new javax.swing.JTextField();
         bRegEsqArea = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        rqRegistrarRequeCorreque = new javax.swing.JFrame();
+        rqAsignarPlanDeEstudio = new javax.swing.JFrame();
+        jLabel6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -61,147 +67,124 @@ public class Principal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        nombresEscuelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        nombresEscuelas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nombresEscuelasActionPerformed(evt);
-            }
-        });
-
-        nombreCurso.setText("jTextField1");
-        nombreCurso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nombreCursoActionPerformed(evt);
-            }
-        });
-
-        numCodCurso.setText("jTextField2");
-        numCodCurso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                numCodCursoActionPerformed(evt);
-            }
-        });
-
-        labelCodEscuela.setText("jLabel3");
+        labelRegistroCursos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        labelRegistroCursos.setText("Registro de Cursos");
 
         labelEscuela.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        labelEscuela.setText("Escuela propietaria del curso:");
+        labelEscuela.setText("Escuela propietaria del curso: ");
 
         labelNombreCurso.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         labelNombreCurso.setText("Nombre del curso:");
 
-        botonRegistrar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        botonRegistrar.setText("Registrar");
-        botonRegistrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonRegistrarActionPerformed(evt);
-            }
-        });
-
-        botonLimpiarCampos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        botonLimpiarCampos.setText("Limpiar campos");
-        botonLimpiarCampos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonLimpiarCamposActionPerformed(evt);
-            }
-        });
-
-        numCreditos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        numCreditos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                numCreditosActionPerformed(evt);
-            }
-        });
-
-        cantHorasLectivas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cantHorasLectivas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cantHorasLectivasActionPerformed(evt);
-            }
-        });
-
-        tituloRegistroCursos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        tituloRegistroCursos.setText("Registro de Cursos");
-
         labelCodCurso.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         labelCodCurso.setText("Código del curso:");
 
-        labelCreditos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        labelCreditos.setText("Créditos:");
+        labelCreditosCurso.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        labelCreditosCurso.setText("Créditos:");
 
         labelHorasLectivas.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        labelHorasLectivas.setText("Horas lectivas:");
+        labelHorasLectivas.setText("Horas lectivas: ");
+
+        tNombreCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tNombreCursoActionPerformed(evt);
+            }
+        });
+
+        cbNombresEscuelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbNombresEscuelasActionPerformed(evt);
+            }
+        });
+
+        tNumCodCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tNumCodCursoActionPerformed(evt);
+            }
+        });
+
+        bRegistrarCurso.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        bRegistrarCurso.setText("Registrar");
+        bRegistrarCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bRegistrarCursoActionPerformed(evt);
+            }
+        });
+
+        bLimpiarCamposRegCurso.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        bLimpiarCamposRegCurso.setText("Limpiar Campos");
+        bLimpiarCamposRegCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLimpiarCamposRegCursoActionPerformed(evt);
+            }
+        });
+
+        lbCodEscuelaCodCurso.setText("COD");
 
         javax.swing.GroupLayout rQRegCursosLayout = new javax.swing.GroupLayout(rQRegCursos.getContentPane());
         rQRegCursos.getContentPane().setLayout(rQRegCursosLayout);
         rQRegCursosLayout.setHorizontalGroup(
             rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rQRegCursosLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelEscuela, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelNombreCurso)
-                    .addComponent(labelCodCurso)
-                    .addComponent(labelCreditos)
-                    .addComponent(labelHorasLectivas))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(rQRegCursosLayout.createSequentialGroup()
-                        .addComponent(labelCodEscuela)
-                        .addGap(30, 30, 30)
-                        .addComponent(numCodCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(157, 171, Short.MAX_VALUE))
+                        .addGap(146, 146, 146)
+                        .addComponent(bRegistrarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(89, 89, 89)
+                        .addComponent(bLimpiarCamposRegCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(rQRegCursosLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
                         .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nombresEscuelas, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelNombreCurso)
+                            .addComponent(labelEscuela)
+                            .addComponent(labelCodCurso)
+                            .addComponent(labelCreditosCurso)
+                            .addComponent(labelHorasLectivas))
+                        .addGap(34, 34, 34)
+                        .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(rQRegCursosLayout.createSequentialGroup()
+                                .addComponent(lbCodEscuelaCodCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tNumCodCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbNombresEscuelas, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelRegistroCursos)
                             .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(numCreditos, javax.swing.GroupLayout.Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-                                .addComponent(cantHorasLectivas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(rQRegCursosLayout.createSequentialGroup()
-                .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(rQRegCursosLayout.createSequentialGroup()
-                        .addGap(154, 154, 154)
-                        .addComponent(botonRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(82, 82, 82)
-                        .addComponent(botonLimpiarCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(rQRegCursosLayout.createSequentialGroup()
-                        .addGap(208, 208, 208)
-                        .addComponent(tituloRegistroCursos)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(cbCantHorasLectivas, javax.swing.GroupLayout.Alignment.LEADING, 0, 54, Short.MAX_VALUE)
+                                .addComponent(cbNumCreditos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         rQRegCursosLayout.setVerticalGroup(
             rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rQRegCursosLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(tituloRegistroCursos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
+                .addComponent(labelRegistroCursos)
+                .addGap(31, 31, 31)
                 .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelEscuela)
-                    .addComponent(nombresEscuelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelNombreCurso))
+                    .addComponent(cbNombresEscuelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(numCodCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelCodEscuela)
-                    .addComponent(labelCodCurso))
-                .addGap(18, 18, 18)
-                .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(numCreditos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelCreditos))
+                    .addComponent(labelNombreCurso)
+                    .addComponent(tNombreCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cantHorasLectivas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelHorasLectivas))
-                .addGap(45, 45, 45)
+                    .addComponent(labelCodCurso)
+                    .addComponent(tNumCodCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbCodEscuelaCodCurso))
+                .addGap(18, 18, 18)
                 .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonRegistrar)
-                    .addComponent(botonLimpiarCampos))
-                .addGap(49, 49, 49))
+                    .addComponent(labelCreditosCurso)
+                    .addComponent(cbNumCreditos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelHorasLectivas)
+                    .addComponent(cbCantHorasLectivas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bRegistrarCurso)
+                    .addComponent(bLimpiarCamposRegCurso))
+                .addGap(36, 36, 36))
         );
 
         rQRegistrarEsqArea.setMinimumSize(new java.awt.Dimension(1000, 1000));
@@ -295,6 +278,36 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        javax.swing.GroupLayout rqRegistrarRequeCorrequeLayout = new javax.swing.GroupLayout(rqRegistrarRequeCorreque.getContentPane());
+        rqRegistrarRequeCorreque.getContentPane().setLayout(rqRegistrarRequeCorrequeLayout);
+        rqRegistrarRequeCorrequeLayout.setHorizontalGroup(
+            rqRegistrarRequeCorrequeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        rqRegistrarRequeCorrequeLayout.setVerticalGroup(
+            rqRegistrarRequeCorrequeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        jLabel6.setText("Holi :)");
+
+        javax.swing.GroupLayout rqAsignarPlanDeEstudioLayout = new javax.swing.GroupLayout(rqAsignarPlanDeEstudio.getContentPane());
+        rqAsignarPlanDeEstudio.getContentPane().setLayout(rqAsignarPlanDeEstudioLayout);
+        rqAsignarPlanDeEstudioLayout.setHorizontalGroup(
+            rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
+                .addGap(162, 162, 162)
+                .addComponent(jLabel6)
+                .addContainerGap(210, Short.MAX_VALUE))
+        );
+        rqAsignarPlanDeEstudioLayout.setVerticalGroup(
+            rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
+                .addGap(103, 103, 103)
+                .addComponent(jLabel6)
+                .addContainerGap(183, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Registrar escuela o Área Académica");
@@ -312,6 +325,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("jButton4");
 
@@ -327,20 +345,21 @@ public class Principal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 753, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,13 +399,15 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     this.rQRegistrarEsqArea.setVisible(true);
+        this.rQRegistrarEsqArea.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      this.rQRegCursos.setVisible(true);  // TODO add your handling code here:
+        contrl.poblarCboxEscuelas(cbNombresEscuelas); 
+        poblarCboxCreditos(cbNumCreditos);
+        poblarCboxHorasLectivas(cbCantHorasLectivas);
+        this.rQRegCursos.setVisible(true);  // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-
 
     private void tCodigoEscuelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCodigoEscuelaActionPerformed
         // TODO add your handling code here:
@@ -418,8 +439,6 @@ public class Principal extends javax.swing.JFrame {
 
     private void nombresEscuelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombresEscuelasActionPerformed
         // TODO add your handling code here:
-        
-        String escuelaSeleccionada = nombresEscuelas.getSelectedItem().toString();
     }//GEN-LAST:event_nombresEscuelasActionPerformed
 
     private void nombreCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreCursoActionPerformed
@@ -438,15 +457,95 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cantHorasLectivasActionPerformed
 
-    private void botonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonRegistrarActionPerformed
+    private void bRegistrarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarCursoActionPerformed
+        Controlador entradaCon = new Controlador();
+        //String nombreEscuela = cbNombresEscuelas.getSelectedItem().toString();
+        if(this.tNombreCurso.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de curso válido");
+        }
+        //validar que no repita el nombre
+        
+        String numCodCurso = this.tNumCodCurso.getText();
+        if(this.tNumCodCurso.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un número de curso válido");
+        }
+        
+        try{
+            int intCodCurso = Integer.parseInt(numCodCurso);
+        }
+        catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null,"¡Entrada inválida! Por favor, ingrese un número entero para el curso");
+        }
+        
+        int cantCreditos = Integer.valueOf(cbNumCreditos.getSelectedItem().toString());        
+        int cantHorasLectivas = Integer.valueOf(cbCantHorasLectivas.getSelectedItem().toString());
+        
+        String codCurso = seleccionarCodigoEscuela() + this.tNumCodCurso.getText();
 
-    private void botonLimpiarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonLimpiarCamposActionPerformed
+        //validar num de 4 dig
+        //validar que no repita el num 
+        
+        entradaCon.crearCurso(seleccionarCodigoEscuela(), this.tNombreCurso.getText(), codCurso, cantCreditos, cantHorasLectivas);
+         
+        
+    }//GEN-LAST:event_bRegistrarCursoActionPerformed
+
+    private void bLimpiarCamposRegCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimpiarCamposRegCursoActionPerformed
+        this.tNombreCurso.setText(null);
+        this.tNumCodCurso.setText(null);
+        this.lbCodEscuelaCodCurso.setText(null);
+    }//GEN-LAST:event_bLimpiarCamposRegCursoActionPerformed
+
+    private void botonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_botonLimpiarCamposActionPerformed
- 
-  
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void botonLimpiarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void cbNombresEscuelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNombresEscuelasActionPerformed
+        String nombreEscuela = cbNombresEscuelas.getSelectedItem().toString();
+        String codEscuela = contrl.obtenerCodEscuela(nombreEscuela); 
+        System.out.println(codEscuela);
+        this.lbCodEscuelaCodCurso.setText(codEscuela);
+    }//GEN-LAST:event_cbNombresEscuelasActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tNumCodCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tNumCodCursoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tNumCodCursoActionPerformed
+
+    private void tNombreCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tNombreCursoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tNombreCursoActionPerformed
+
+    private String seleccionarCodigoEscuela(){
+        String nombreEscuela = cbNombresEscuelas.getSelectedItem().toString();
+        String codEscuela = contrl.obtenerCodEscuela(nombreEscuela); 
+        return codEscuela;
+    }
+    
+    private void poblarCboxCreditos(JComboBox cbox_Creditos){
+        int contador = 0;
+        while (10 > contador){
+            cbox_Creditos.addItem(contador);
+            contador++;
+        }   
+    } 
+    
+    private void poblarCboxHorasLectivas(JComboBox cbox_horasLectivas){
+        int contador = 0;
+        while (24 > contador){
+            cbox_horasLectivas.addItem(contador);
+            contador++;
+        }  
+    } 
+    
     /**
      * @param args the command line arguments
      */
@@ -483,10 +582,12 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bLimpiarCamposRegCurso;
     private javax.swing.JButton bRegEsqArea;
-    private javax.swing.JButton botonLimpiarCampos;
-    private javax.swing.JButton botonRegistrar;
-    private javax.swing.JComboBox<String> cantHorasLectivas;
+    private javax.swing.JButton bRegistrarCurso;
+    private javax.swing.JComboBox<String> cbCantHorasLectivas;
+    private javax.swing.JComboBox<String> cbNombresEscuelas;
+    private javax.swing.JComboBox<String> cbNumCreditos;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -497,22 +598,23 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelCodCurso;
-    private javax.swing.JLabel labelCodEscuela;
-    private javax.swing.JLabel labelCreditos;
+    private javax.swing.JLabel labelCreditosCurso;
     private javax.swing.JLabel labelEscuela;
     private javax.swing.JLabel labelHorasLectivas;
     private javax.swing.JLabel labelNombreCurso;
-    private javax.swing.JTextField nombreCurso;
-    private javax.swing.JComboBox<String> nombresEscuelas;
-    private javax.swing.JTextField numCodCurso;
-    private javax.swing.JComboBox<String> numCreditos;
+    private javax.swing.JLabel labelRegistroCursos;
+    private javax.swing.JLabel lbCodEscuelaCodCurso;
     private javax.swing.JFrame rQRegCursos;
     private javax.swing.JFrame rQRegistrarEsqArea;
+    private javax.swing.JFrame rqAsignarPlanDeEstudio;
+    private javax.swing.JFrame rqRegistrarRequeCorreque;
     private javax.swing.JTextField tCodigoEscuela;
+    private javax.swing.JTextField tNombreCurso;
     private javax.swing.JTextField tNombreEA;
-    private javax.swing.JLabel tituloRegistroCursos;
+    private javax.swing.JTextField tNumCodCurso;
     // End of variables declaration//GEN-END:variables
 }

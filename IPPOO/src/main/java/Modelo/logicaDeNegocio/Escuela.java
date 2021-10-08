@@ -10,8 +10,8 @@ package Modelo.logicaDeNegocio;
  */
 public class Escuela {
     
-    String nombreEscuela;
-    String codEscuela; 
+    private String nombreEscuela;
+    private String codEscuela; 
 
     public Escuela() {
     }
