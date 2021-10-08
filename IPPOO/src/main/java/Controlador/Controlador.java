@@ -22,7 +22,7 @@ public class Controlador {
         salidaControlador.insertarEscuela(escuela);
         System.out.println("A");
         System.out.println("A");
-        System.out.println("A");
+        System.out.println("Comida");
         System.out.println("Hola mundo");
         return true;
         
