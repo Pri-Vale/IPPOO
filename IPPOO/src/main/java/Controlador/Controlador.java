@@ -39,9 +39,22 @@ public class Controlador {
         while (listaEscuelas.size() > contador){
             cbox_escuelas.addItem(listaEscuelas.get(contador));
             contador++;
-        }   
+        }
+        
         //excepcion si lista vacia 
-    } 
+    }
+    
+    public void poblarCboxEscuelas2(JComboBox cboxPlanesEst){
+        ArrayList<String> listaEscuelas = consultaBase.seleccionarEscuelas();
+        
+        int contador = 0;
+        while (listaEscuelas.size() > contador){
+            cboxPlanesEst.addItem(listaEscuelas.get(contador));
+            contador++;
+        }
+        
+        //excepcion si lista vacia //tratar de hacer un if 
+    }
     
     public String obtenerCodEscuela(String nombreEscuela){
         String codEscuela = consultaBase.seleccionarCodEscuela(nombreEscuela);
