@@ -85,8 +85,16 @@ public class Controlador {
         //falta manejo de excepciones       
     }
     
-    public void crearPlanEstudios(String pNombreEscuela,int pCodigoPlan,Date pVigenciaPlan,int pCodigoCurso,String pBloqueActivo){
+    public void crearPlanEstudios(String pNombreEscuela,int pCodigoPlan,Date pVigenciaPlan,String pCodigoCurso,String pBloqueActivo){
         PlanDeEstudio plan = new PlanDeEstudio(pCodigoPlan, pVigenciaPlan);
+        Bloque bloque = plan.agregarBloque(pBloqueActivo);
+        //Este curso no se si va aca
+        Curso cursoBloque=new Curso(pCodigoCurso);
+        bloque.agregarCurso(cursoBloque);
+        //Aqui tengo la duda si es el objeto curso o el int
+        
+        //Persistencia almacenado de plan de estudios
+        salidaControlador.insertarPlanEstudio
         
         
     }

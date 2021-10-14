@@ -47,4 +47,5 @@ public class Bloque {
     public String toString() {
         return "Bloque{" + "idBloque=" + idBloque + ", cursos=" + cursos + '}';
     }
-  }
+  
+}

@@ -44,6 +44,10 @@ public class Curso {
         setCantHorasLectivas(pCantHorasLectivas);
     }
 
+    public Curso(String codCurso) {
+        this.codCurso = codCurso;
+    }
+
     public String getNombreCurso() {
         return nombreCurso;
     }

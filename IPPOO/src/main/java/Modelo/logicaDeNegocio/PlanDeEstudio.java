@@ -56,10 +56,11 @@ public class PlanDeEstudio {
         this.fechaVigencia = fechaVigencia;
     }
     
-    public void agregarBloque(String pIdBloque){
+    public Bloque agregarBloque(String pIdBloque){
         //Aqui no se si meter una validación de si existe o no
         Bloque bloqueNuevo = new Bloque(pIdBloque);
         bloques.add(bloqueNuevo);
+        return bloqueNuevo;
     }
 
     @Override
