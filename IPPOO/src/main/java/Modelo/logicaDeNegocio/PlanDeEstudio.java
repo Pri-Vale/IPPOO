@@ -14,9 +14,9 @@ import java.util.ArrayList;
  * @version 08 octubre, 2021
  */
 public class PlanDeEstudio {
-    private int numPlan;
+    private int codPlanEstudio;
     private LocalDate fechaVigencia; 
-    private ArrayList<Curso> cursos;
+    private ArrayList<Bloque> bloques;
 
     /**
      * Constructor para objetos de la clase PlanDeEstudio
@@ -24,26 +24,28 @@ public class PlanDeEstudio {
     public PlanDeEstudio(){
         
     }    
-    
-    /**
-     * Constructor para objetos de la clase PlanDeEstudio
-     * @param pNumPlan el numero de plan de estudio
-     * @param pFechaVigencia a partir de cuando comienza a regir el plan de estudio
-     * 
-     */      
-    public PlanDeEstudio(int pNumPlan, LocalDate pFechaVigencia) {
-        this.numPlan = numPlan;
+    public PlanDeEstudio(int codPlanEstudio, LocalDate fechaVigencia, ArrayList<Bloque> bloques) {
+        this.codPlanEstudio = codPlanEstudio;
         this.fechaVigencia = fechaVigencia;
+        this.bloques = bloques;
     }
 
-    public int getNumPlan() {
-        return numPlan;
+    public int getCodPlanEstudio() {
+        return codPlanEstudio;
     }
 
-    public void setNumPlan(int numPlan) {
-        this.numPlan = numPlan;
+    public void setCodPlanEstudio(int codPlanEstudio) {
+        this.codPlanEstudio = codPlanEstudio;
     }
-    
+
+    public ArrayList<Bloque> getBloques() {
+        return bloques;
+    }
+
+    public void setBloques(ArrayList<Bloque> bloques) {
+        this.bloques = bloques;
+    }
+
     //hay que arreglar los de fecha
     public LocalDate getFechaVigencia() {
         return fechaVigencia;
@@ -52,15 +54,15 @@ public class PlanDeEstudio {
     public void setFechaVigencia(LocalDate fechaVigencia) {
         this.fechaVigencia = fechaVigencia;
     }
+    
+    public void agregarBloque(String pIdBloque){
+        //Aqui no se si meter una validación de si existe o no
+        Bloque bloqueNuevo = new Bloque(pIdBloque);
+        bloques.add(bloqueNuevo);
+    }
 
     @Override
     public String toString() {
-        return "PlanDeEstudio{" + "numPlan=" + numPlan + ", fechaVigencia=" + fechaVigencia + ", cursos=" + cursos + '}';
+        return "PlanDeEstudio{" + "codPlanEstudio=" + codPlanEstudio + ", fechaVigencia=" + fechaVigencia + ", bloques=" + bloques + '}';
     }
-    
-    
-    
-    
-    
-    
 }
