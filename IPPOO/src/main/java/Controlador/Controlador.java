@@ -82,5 +82,8 @@ public class Controlador {
         //falta manejo de excepciones       
     }
     
+    public void crearPlanEstudios(){
+        
+    }
     
 }    
