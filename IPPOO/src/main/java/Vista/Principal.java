@@ -4,6 +4,7 @@ import Controlador.Controlador;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -15,6 +16,9 @@ import javax.swing.JOptionPane;
  */
 public class Principal extends javax.swing.JFrame {
     Controlador contrl = new Controlador();
+    String bloqueActivo;
+    String codigoPlan;
+    String nombreEscuela;
                
     /**
      * Creates new form Principal
@@ -66,14 +70,18 @@ public class Principal extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         cboxPlanesEst = new javax.swing.JComboBox<>();
         txtCodigoPlan = new javax.swing.JTextField();
-        txtVigenciaPlan = new javax.swing.JFormattedTextField();
         jLabel11 = new javax.swing.JLabel();
         txtCodigoCurso = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         cboxBloqueActivo = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         bPropioRegistroVentana = new javax.swing.JButton();
+        CalendVigencia = new com.toedter.calendar.JCalendar();
         jLabel10 = new javax.swing.JLabel();
+        jLocaleChooser1 = new com.toedter.components.JLocaleChooser();
+        jMonthChooser2 = new com.toedter.calendar.JMonthChooser();
+        jSpinField2 = new com.toedter.components.JSpinField();
+        jSpinField1 = new com.toedter.components.JSpinField();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -319,13 +327,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        txtVigenciaPlan.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-        txtVigenciaPlan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtVigenciaPlanActionPerformed(evt);
-            }
-        });
-
         jLabel11.setText("Código del curso que forma parte del plan: ");
 
         jLabel12.setText("Bloque");
@@ -357,40 +358,45 @@ public class Principal extends javax.swing.JFrame {
         rqAsignarPlanDeEstudio.getContentPane().setLayout(rqAsignarPlanDeEstudioLayout);
         rqAsignarPlanDeEstudioLayout.setHorizontalGroup(
             rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rqAsignarPlanDeEstudioLayout.createSequentialGroup()
-                .addContainerGap(186, Short.MAX_VALUE)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(132, 132, 132))
             .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
                 .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
-                        .addGap(44, 44, 44)
                         .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel11)
                             .addComponent(jLabel12))
                         .addGap(32, 32, 32)
+                        .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cboxBloqueActivo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCodigoCurso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
+                        .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(98, 98, 98)
                         .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cboxPlanesEst, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtCodigoPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(cboxBloqueActivo, javax.swing.GroupLayout.Alignment.LEADING, 0, 177, Short.MAX_VALUE)
-                                .addComponent(txtCodigoCurso, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtVigenciaPlan, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addComponent(CalendVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
+                .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(165, 165, 165)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
+                        .addGap(237, 237, 237)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         rqAsignarPlanDeEstudioLayout.setVerticalGroup(
             rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel7)
-                .addGap(47, 47, 47)
+                .addGap(45, 45, 45)
                 .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(cboxPlanesEst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -398,11 +404,14 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtCodigoPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtVigenciaPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel9))
+                    .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(CalendVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtCodigoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -410,9 +419,9 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(cboxBloqueActivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jLabel10.setText("jLabel10");
@@ -618,10 +627,6 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tNombreCursoActionPerformed
 
-    private void txtVigenciaPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVigenciaPlanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtVigenciaPlanActionPerformed
-
     private void jBInterfRegPlanesEstudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInterfRegPlanesEstudioActionPerformed
         contrl.poblarCboxEscuelas2(cboxPlanesEst);
         poblarCboxBloqueActivo(cboxBloqueActivo);
@@ -644,7 +649,36 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cboxPlanesEstActionPerformed
 
     private void bPropioRegistroVentanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPropioRegistroVentanaActionPerformed
-        contr1.crearPlanEstudios
+       
+        try{
+            String nombreEscuela= cboxPlanesEst.getSelectedItem().toString();
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Por favor, seleccione un espacio valido");
+        }
+        
+        if(this.txtCodigoPlan.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de curso válido");
+        }
+        
+        
+        if(this.txtCodigoCurso.getText().equals("")){
+            JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de curso válido");
+        }
+        
+        try{
+            bloqueActivo= this.cboxBloqueActivo.getSelectedItem().toString();
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Por favor, seleccione un espacio valido");
+        }
+        
+        
+        //fecha 
+        int codigoCurso=Integer.parseInt(txtCodigoCurso.getText());
+        int codigoPlan = Integer.parseInt(txtCodigoPlan.getText());
+        Date vigenciaPlan  = CalendVigencia.getDate();
+        contrl.crearPlanEstudios(nombreEscuela,codigoPlan,vigenciaPlan,codigoCurso,bloqueActivo);        
     }//GEN-LAST:event_bPropioRegistroVentanaActionPerformed
 
     private String seleccionarCodigoEscuela(){
@@ -714,6 +748,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JCalendar CalendVigencia;
     private javax.swing.JButton bLimpiarCamposRegCurso;
     private javax.swing.JButton bPropioRegistroVentana;
     private javax.swing.JButton bRegEsqArea;
@@ -740,9 +775,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private com.toedter.components.JLocaleChooser jLocaleChooser1;
+    private com.toedter.calendar.JMonthChooser jMonthChooser2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private com.toedter.components.JSpinField jSpinField1;
+    private com.toedter.components.JSpinField jSpinField2;
     private javax.swing.JLabel labelCodCurso;
     private javax.swing.JLabel labelCreditosCurso;
     private javax.swing.JLabel labelEscuela;
@@ -760,6 +799,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField tNumCodCurso;
     private javax.swing.JTextField txtCodigoCurso;
     private javax.swing.JTextField txtCodigoPlan;
-    private javax.swing.JFormattedTextField txtVigenciaPlan;
     // End of variables declaration//GEN-END:variables
 }
