@@ -1,11 +1,14 @@
 package Controlador;
 
 import Connect_BD.Consultas_BaseDatos;
+import Modelo.logicaDeNegocio.Bloque;
 import Modelo.logicaDeNegocio.Escuela;
 import Modelo.logicaDeNegocio.Curso;
 import Modelo.logicaDeNegocio.PlanDeEstudio;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JComboBox;
 
 /**
@@ -82,7 +85,9 @@ public class Controlador {
         //falta manejo de excepciones       
     }
     
-    public void crearPlanEstudios(){
+    public void crearPlanEstudios(String pNombreEscuela,int pCodigoPlan,Date pVigenciaPlan,int pCodigoCurso,String pBloqueActivo){
+        PlanDeEstudio plan = new PlanDeEstudio(pCodigoPlan, pVigenciaPlan);
+        
         
     }
     

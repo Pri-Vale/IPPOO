@@ -5,8 +5,9 @@
  */
 package Modelo.logicaDeNegocio;
 
-import java.time.LocalDate;
+
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Abstraccion de la clase PlanDeEstudio y su informacion referente
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  */
 public class PlanDeEstudio {
     private int codPlanEstudio;
-    private LocalDate fechaVigencia; 
+    private Date fechaVigencia; 
     private ArrayList<Bloque> bloques;
 
     /**
@@ -24,7 +25,7 @@ public class PlanDeEstudio {
     public PlanDeEstudio(){
         
     }    
-    public PlanDeEstudio(int codPlanEstudio, LocalDate fechaVigencia, ArrayList<Bloque> bloques) {
+    public PlanDeEstudio(int codPlanEstudio, Date fechaVigencia) {
         this.codPlanEstudio = codPlanEstudio;
         this.fechaVigencia = fechaVigencia;
         this.bloques = bloques;
@@ -47,11 +48,11 @@ public class PlanDeEstudio {
     }
 
     //hay que arreglar los de fecha
-    public LocalDate getFechaVigencia() {
+    public Date getFechaVigencia() {
         return fechaVigencia;
     }
 
-    public void setFechaVigencia(LocalDate fechaVigencia) {
+    public void setFechaVigencia(Date fechaVigencia) {
         this.fechaVigencia = fechaVigencia;
     }
     
