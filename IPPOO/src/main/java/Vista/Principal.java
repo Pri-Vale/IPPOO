@@ -1,7 +1,9 @@
 package Vista;
 
 import Controlador.Controlador;
+import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -62,19 +64,18 @@ public class Principal extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cboxPlanesEst = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jLabel11 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        bRegistrarCursoPlanEst = new javax.swing.JButton();
+        cboxBloqueActivo = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jBInterfRegPlanesEstudio = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -310,7 +311,12 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel9.setText("Vigencia del plan de estudios:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboxPlanesEst.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboxPlanesEst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboxPlanesEstActionPerformed(evt);
+            }
+        });
 
         jFormattedTextField1.setText("jFormattedTextField1");
         jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -325,45 +331,33 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel12.setText("Bloque");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        bRegistrarCursoPlanEst.setText("Registrar curso al plan de estudios");
-        bRegistrarCursoPlanEst.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bRegistrarCursoPlanEstActionPerformed(evt);
-            }
-        });
+        cboxBloqueActivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout rqAsignarPlanDeEstudioLayout = new javax.swing.GroupLayout(rqAsignarPlanDeEstudio.getContentPane());
         rqAsignarPlanDeEstudio.getContentPane().setLayout(rqAsignarPlanDeEstudioLayout);
         rqAsignarPlanDeEstudioLayout.setHorizontalGroup(
             rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rqAsignarPlanDeEstudioLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(186, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(132, 132, 132))
             .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
                 .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12))
-                        .addGap(32, 32, 32)
-                        .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(bRegistrarCursoPlanEst, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                    .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel12))
+                .addGap(32, 32, 32)
+                .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboxPlanesEst, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboxBloqueActivo, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         rqAsignarPlanDeEstudioLayout.setVerticalGroup(
             rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -373,7 +367,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboxPlanesEst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -389,10 +383,8 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(bRegistrarCursoPlanEst)
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(cboxBloqueActivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         jLabel10.setText("jLabel10");
@@ -413,10 +405,10 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Registro de Planes de Estudio");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jBInterfRegPlanesEstudio.setText("Registro de Planes de Estudio");
+        jBInterfRegPlanesEstudio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jBInterfRegPlanesEstudioActionPerformed(evt);
             }
         });
 
@@ -446,7 +438,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBInterfRegPlanesEstudio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -462,7 +454,7 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(jBInterfRegPlanesEstudio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4))
         );
@@ -602,9 +594,11 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jBInterfRegPlanesEstudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInterfRegPlanesEstudioActionPerformed
+        contrl.poblarCboxEscuelas2(cboxPlanesEst);
+        poblarCboxBloqueActivo(cboxBloqueActivo);
         this.rqAsignarPlanDeEstudio.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jBInterfRegPlanesEstudioActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         contrl.poblarCboxEscuelas(cbNombresEscuelas);
@@ -616,6 +610,10 @@ public class Principal extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.rQRegistrarEsqArea.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cboxPlanesEstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxPlanesEstActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboxPlanesEstActionPerformed
 
     private String seleccionarCodigoEscuela(){
         String nombreEscuela = cbNombresEscuelas.getSelectedItem().toString();
@@ -637,7 +635,16 @@ public class Principal extends javax.swing.JFrame {
             cbox_horasLectivas.addItem(contador);
             contador++;
         }  
-    } 
+    }
+    
+    private void poblarCboxBloqueActivo(JComboBox cboxBloqueActivo){
+        int contador = 0;
+        String[] listaBloques = {"I Semestre","II Semestre", "Verano"};
+        for(int i=0; i<listaBloques.length ;++i){
+            cboxBloqueActivo.addItem(listaBloques[i]);
+            contador++;
+        }  
+    }
     
     /**
      * @param args the command line arguments
@@ -678,17 +685,16 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton bLimpiarCamposRegCurso;
     private javax.swing.JButton bRegEsqArea;
     private javax.swing.JButton bRegistrarCurso;
-    private javax.swing.JButton bRegistrarCursoPlanEst;
     private javax.swing.JComboBox<String> cbCantHorasLectivas;
     private javax.swing.JComboBox<String> cbNombresEscuelas;
     private javax.swing.JComboBox<String> cbNumCreditos;
+    private javax.swing.JComboBox<String> cboxBloqueActivo;
+    private javax.swing.JComboBox<String> cboxPlanesEst;
+    private javax.swing.JButton jBInterfRegPlanesEstudio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
