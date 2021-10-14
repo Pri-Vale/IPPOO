@@ -95,6 +95,8 @@ public class Consultas_BaseDatos {
         }
     }
     
+    public void insertarPlanEstudio()
+    
     
 }
 

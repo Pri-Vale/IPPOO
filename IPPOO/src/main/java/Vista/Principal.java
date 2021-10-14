@@ -676,7 +676,7 @@ public class Principal extends javax.swing.JFrame {
         
         //fecha 
         int codigoCurso=Integer.parseInt(txtCodigoCurso.getText());
-        int codigoPlan = Integer.parseInt(txtCodigoPlan.getText());
+        String codigoPlan = txtCodigoPlan.getText();
         Date vigenciaPlan  = CalendVigencia.getDate();
         contrl.crearPlanEstudios(nombreEscuela,codigoPlan,vigenciaPlan,codigoCurso,bloqueActivo);        
     }//GEN-LAST:event_bPropioRegistroVentanaActionPerformed
