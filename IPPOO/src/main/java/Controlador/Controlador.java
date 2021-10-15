@@ -99,9 +99,48 @@ public class Controlador {
         salidaControlador.insertarCursoXPlan(pCodigoCurso, plan,pBloqueActivo);
         
         System.out.println("FUN4 COMPLETE");
+    }
+    
+    public void poblarCboxCursosDeEscuela(JComboBox cbox_cursos, String codEscuela){
+        ArrayList<String> listaCursosDeEscuela = consultaBase.seleccionarCursosDeEscuela(codEscuela);
+
+        int contador = 0;
+        while (listaCursosDeEscuela.size() > contador){
+            cbox_cursos.addItem(listaCursosDeEscuela.get(contador));
+            contador++;
+        }
+
+    //excepcion si lista vacia 
+    }
+    
+    public void poblarCboxCursos(JComboBox cbox_cursos){
+        ArrayList<String> listaCursos = consultaBase.seleccionarCursos();
+
+        int contador = 0;
+        while (listaCursos.size() > contador){
+            cbox_cursos.addItem(listaCursos.get(contador));
+            contador++;
+        }
+
+    //excepcion si lista vacia 
+    }
+    
+    public void agregarRequisitoACurso(String codCurso, String codReq){      
+        //Arreglar el manejo de objetos en el codigo
+        Curso cursoRequisito = new Curso(codReq);
         
+        //Persistencia almacenado 
+        salidaControlador.insertarRequisitoXCurso(codCurso, codReq);
+       
+    }
+    
+    public void agregarCorrequisitoACurso(String codCurso, String codCorreq){      
+        //Arreglar el manejo de objetos en el codigo
+        Curso cursoRequisito = new Curso(codCorreq);
         
-        
+        //Persistencia almacenado 
+        salidaControlador.insertarRequisitoXCurso(codCurso, codCorreq);
+
     }
     
 }    
