@@ -7,7 +7,7 @@ package Modelo.logicaDeNegocio;
 
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Abstraccion de la clase PlanDeEstudio y su informacion referente
@@ -28,7 +28,7 @@ public class PlanDeEstudio {
     public PlanDeEstudio(int codPlanEstudio, Date fechaVigencia) {
         this.codPlanEstudio = codPlanEstudio;
         this.fechaVigencia = fechaVigencia;
-        this.bloques = bloques;
+        
     }
 
     public int getCodPlanEstudio() {
@@ -59,6 +59,7 @@ public class PlanDeEstudio {
     public Bloque agregarBloque(String pIdBloque){
         //Aqui no se si meter una validación de si existe o no
         Bloque bloqueNuevo = new Bloque(pIdBloque);
+        ArrayList<Bloque> bloques = new ArrayList<Bloque>();
         bloques.add(bloqueNuevo);
         return bloqueNuevo;
     }

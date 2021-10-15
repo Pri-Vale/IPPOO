@@ -380,7 +380,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="cboxPlanesEst" min="-2" pref="178" max="-2" attributes="0"/>
                               <Component id="txtCodigoPlan" min="-2" pref="177" max="-2" attributes="0"/>
-                              <Component id="CalendVigencia" min="-2" pref="212" max="-2" attributes="0"/>
+                              <Component id="CalendVigencia" min="-2" pref="268" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -423,10 +423,10 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Component id="CalendVigencia" min="-2" pref="116" max="-2" attributes="0"/>
+                          <Component id="CalendVigencia" min="-2" pref="121" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtCodigoCurso" alignment="3" min="-2" max="-2" attributes="0"/>

@@ -8,7 +8,7 @@ import Modelo.logicaDeNegocio.PlanDeEstudio;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import javax.swing.JComboBox;
 
 /**
@@ -94,7 +94,12 @@ public class Controlador {
         //Aqui tengo la duda si es el objeto curso o el int
         
         //Persistencia almacenado de plan de estudios
-        salidaControlador.insertarPlanEstudio
+        salidaControlador.insertarPlanEstudio(plan,pNombreEscuela);
+        
+        salidaControlador.insertarCursoXPlan(pCodigoCurso, plan,pBloqueActivo);
+        
+        System.out.println("FUN4 COMPLETE");
+        
         
         
     }
