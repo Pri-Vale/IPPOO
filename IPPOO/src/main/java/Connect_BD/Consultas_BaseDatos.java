@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.sql.Date;
 
 /**
  *
@@ -26,7 +27,6 @@ public class Consultas_BaseDatos {
         try (java.sql.Connection eConect = con.Conectar_a_base()) {
             Statement stmt= eConect.createStatement();
             stmt.execute(query); //execute se puede utilizar con cualquier tipo de sentencias SQL y devuelve un booleano.
-            System.out.print(query);
             stmt.close();
         }
     }
@@ -95,9 +95,38 @@ public class Consultas_BaseDatos {
         }
     }
     
-    public void insertarPlanEstudio()
+    public void insertarPlanEstudio(PlanDeEstudio plan, String pNombreEscuela){
+        String pCodEscuela = seleccionarCodEscuela(pNombreEscuela);
+        try{
+            Date fecha;
+            
+            String query="INSERT INTO PlanDeEstudio VALUES('"+ plan.getCodPlanEstudio()+"','"
+                    + plan.getFechaVigencia() + "','"
+                    + pCodEscuela+ "')";
+            
+            EjecutarQuery(query);             
+        }
+        catch(SQLException e){
+            e.getErrorCode();
+        }
+    }
     
-    
+    public void insertarCursoXPlan(String codCurso,PlanDeEstudio plan,String pBloqueActivo){
+        try{
+            System.out.println("CXP");
+            
+            String query1="INSERT INTO CursoXPlanDeEstudio VALUES('"+ codCurso +"','"
+                    + plan.getCodPlanEstudio() + "','"
+                    + pBloqueActivo+ "')";
+            System.out.println(query1);
+            EjecutarQuery(query1);
+            System.out.println("Iniciado insertado de Plan");
+        }
+        catch(SQLException e){
+            e.getErrorCode();
+        }
+    }
 }
+    
 
 

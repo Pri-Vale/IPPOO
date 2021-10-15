@@ -3,6 +3,7 @@ package Vista;
 import Controlador.Controlador;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -16,9 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class Principal extends javax.swing.JFrame {
     Controlador contrl = new Controlador();
-    String bloqueActivo;
-    String codigoPlan;
-    String nombreEscuela;
+    
                
     /**
      * Creates new form Principal
@@ -379,7 +378,7 @@ public class Principal extends javax.swing.JFrame {
                         .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cboxPlanesEst, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtCodigoPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CalendVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(CalendVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
                 .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -410,8 +409,8 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(jLabel9))
                     .addGroup(rqAsignarPlanDeEstudioLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(CalendVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(CalendVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(rqAsignarPlanDeEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtCodigoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -649,9 +648,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cboxPlanesEstActionPerformed
 
     private void bPropioRegistroVentanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPropioRegistroVentanaActionPerformed
-       
+   
         try{
-            String nombreEscuela= cboxPlanesEst.getSelectedItem().toString();
+            cboxPlanesEst.getSelectedItem().toString();
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null,"Por favor, seleccione un espacio valido");
@@ -660,25 +659,31 @@ public class Principal extends javax.swing.JFrame {
         if(this.txtCodigoPlan.getText().equals("")){
             JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de curso válido");
         }
-        
-        
         if(this.txtCodigoCurso.getText().equals("")){
             JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de curso válido");
         }
         
         try{
-            bloqueActivo= this.cboxBloqueActivo.getSelectedItem().toString();
+            this.cboxBloqueActivo.getSelectedItem().toString();
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null,"Por favor, seleccione un espacio valido");
         }
         
         
-        //fecha 
-        int codigoCurso=Integer.parseInt(txtCodigoCurso.getText());
-        String codigoPlan = txtCodigoPlan.getText();
+        // variable 
+        String nombreEscuela= cboxPlanesEst.getSelectedItem().toString();
+        String codigoCurso=txtCodigoCurso.getText();
+        int codigoPlan = Integer.parseInt(txtCodigoPlan.getText());
+        String bloqueActivo =this.cboxBloqueActivo.getSelectedItem().toString();
+        
+        //Conversion jCalendar
         Date vigenciaPlan  = CalendVigencia.getDate();
-        contrl.crearPlanEstudios(nombreEscuela,codigoPlan,vigenciaPlan,codigoCurso,bloqueActivo);        
+        long fechaconv= vigenciaPlan.getTime();
+        java.sql.Date fechaSql= new java.sql.Date(fechaconv);
+        
+        //Llamada al controlador
+        contrl.crearPlanEstudios(nombreEscuela,codigoPlan,fechaSql,codigoCurso,bloqueActivo);        
     }//GEN-LAST:event_bPropioRegistroVentanaActionPerformed
 
     private String seleccionarCodigoEscuela(){
