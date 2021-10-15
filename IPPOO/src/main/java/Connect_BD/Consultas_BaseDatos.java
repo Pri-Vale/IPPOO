@@ -126,6 +126,60 @@ public class Consultas_BaseDatos {
             e.getErrorCode();
         }
     }
+    
+    public ArrayList<String> seleccionarCursosDeEscuela(String codEscuela){
+        String sqlQuery = "SELECT codCurso FROM CURSO WHERE codEscuela = '" + codEscuela + "'";
+        ArrayList<String> listaCursosDeEscuela = new ArrayList<>();
+        try{
+             listaCursosDeEscuela = EjecutarSelect(sqlQuery);        
+             return listaCursosDeEscuela;
+        }
+        catch (SQLException e){
+            e.getErrorCode();
+        }
+        return listaCursosDeEscuela;
+    }
+    
+       public ArrayList<String> seleccionarCursos(){
+        String sqlQuery = "SELECT codCurso FROM CURSO";
+        ArrayList<String> listaCursos = new ArrayList<>();
+        try{
+             listaCursos = EjecutarSelect(sqlQuery);        
+             return listaCursos;
+        }
+        catch (SQLException e){
+            e.getErrorCode();
+        }
+        return listaCursos;
+    }
+       
+    public void insertarRequisitoXCurso(String codCurso, String codRequisito){
+        try{
+            System.out.println("CXP");
+            
+            String query ="INSERT INTO RequisitoXCurso VALUES('"+ codCurso +"','" + codRequisito + "')";
+            System.out.println(query);
+            EjecutarQuery(query);
+            System.out.println("Insertado requisito de curso en la BD ");
+        }
+        catch(SQLException e){
+            e.getErrorCode();
+        }
+    }   
+    
+    public void insertarCorrequisitoXCurso(String codCurso, String codCorrequisito){
+        try{
+            System.out.println("CXP");
+            
+            String query ="INSERT INTO CorrequisitoXCurso VALUES('"+ codCurso +"','" + codCorrequisito + "')";
+            System.out.println(query);
+            EjecutarQuery(query);
+            System.out.println("Insertado correquisito de curso en la BD ");
+        }
+        catch(SQLException e){
+            e.getErrorCode();
+        }
+    } 
 }
     
 
