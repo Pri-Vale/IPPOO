@@ -93,7 +93,7 @@ public class Principal extends javax.swing.JFrame {
         rqConsultaPlanEstudio = new javax.swing.JFrame();
         jLabel10 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jEscuelaprop = new javax.swing.JComboBox<>();
+        combEscuelaprop = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         jMostrarCodPlan = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
@@ -102,6 +102,7 @@ public class Principal extends javax.swing.JFrame {
         tabPlanEstudio = new javax.swing.JTable();
         jButton5 = new javax.swing.JButton();
         jMostrarVigencia = new javax.swing.JTextField();
+        jBConsultar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         bVentanaRegistrarEscuela = new javax.swing.JButton();
         bVentanaRegistrarCursos = new javax.swing.JButton();
@@ -585,11 +586,9 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel13.setText("Escuela propietaria del plan:");
 
-        jEscuelaprop.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        combEscuelaprop.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel14.setText("Codigo del plan de estudios:");
-
-        jMostrarCodPlan.setText("jTextField1");
 
         jLabel15.setText("Vigencia del plan de estudios:");
 
@@ -610,55 +609,70 @@ public class Principal extends javax.swing.JFrame {
 
         jButton5.setText("Regresar");
 
+        jBConsultar.setText("Consultar");
+        jBConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBConsultarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout rqConsultaPlanEstudioLayout = new javax.swing.GroupLayout(rqConsultaPlanEstudio.getContentPane());
         rqConsultaPlanEstudio.getContentPane().setLayout(rqConsultaPlanEstudioLayout);
         rqConsultaPlanEstudioLayout.setHorizontalGroup(
             rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
-                        .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel15))
-                        .addGap(94, 94, 94)
-                        .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
-                                .addComponent(jEscuelaprop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(78, 78, 78)
-                                .addComponent(jLabel14)
-                                .addGap(35, 35, 35)
-                                .addComponent(jMostrarCodPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jMostrarVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(bPDFCorreo, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(24, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rqConsultaPlanEstudioLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton5)
                 .addGap(46, 46, 46))
+            .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel14)
+                    .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rqConsultaPlanEstudioLayout.createSequentialGroup()
+                            .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel13)
+                                .addComponent(jLabel15))
+                            .addGap(94, 94, 94)
+                            .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jMostrarCodPlan, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jMostrarVigencia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
+                                .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
+                                    .addComponent(combEscuelaprop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(126, 126, 126)))
+                            .addGap(21, 21, 21)
+                            .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(bPDFCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jBConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         rqConsultaPlanEstudioLayout.setVerticalGroup(
             rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel13)
-                        .addComponent(jEscuelaprop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel14)
-                        .addComponent(jMostrarCodPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
+                        .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(combEscuelaprop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBConsultar))
+                        .addGap(18, 18, 18)
+                        .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(jMostrarCodPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(4, 4, 4)
+                        .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15)
+                            .addComponent(jMostrarVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(1, 1, 1)
+                        .addComponent(bPDFCorreo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)))
-                .addGap(42, 42, 42)
-                .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(jMostrarVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(1, 1, 1)
-                .addComponent(bPDFCorreo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(143, 143, 143)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton5)
@@ -768,10 +782,10 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(235, 235, 235))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel1)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(156, 156, 156)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(156, 156, 156)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
                             .addComponent(jLabel16)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(234, 234, 234)
@@ -1010,6 +1024,9 @@ public class Principal extends javax.swing.JFrame {
 
     private void jBVisualizarPlanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBVisualizarPlanesActionPerformed
        this.rqConsultaPlanEstudio.setVisible(true);
+       this.contrl.poblarCboxEscuelas(combEscuelaprop);
+       
+       
     }//GEN-LAST:event_jBVisualizarPlanesActionPerformed
 
     private void bRegistrarRequisitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarRequisitoActionPerformed
@@ -1072,6 +1089,10 @@ public class Principal extends javax.swing.JFrame {
     private void bCerrarRegReqCorreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCerrarRegReqCorreqActionPerformed
         this.rqRegistrarRequeCorreque.dispose();
     }//GEN-LAST:event_bCerrarRegReqCorreqActionPerformed
+
+    private void jBConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConsultarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBConsultarActionPerformed
 
     private String seleccionarCodigoEscuela(){
         String nombreEscuela = cbNombresEscuelas.getSelectedItem().toString();
@@ -1167,11 +1188,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbNumCreditos;
     private javax.swing.JComboBox<String> cboxBloqueActivo;
     private javax.swing.JComboBox<String> cboxPlanesEst;
+    private javax.swing.JComboBox<String> combEscuelaprop;
+    private javax.swing.JButton jBConsultar;
     private javax.swing.JButton jBInterfRegPlanesEstudio;
     private javax.swing.JButton jBVisualizarPlanes;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jEscuelaprop;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
