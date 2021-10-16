@@ -59,6 +59,8 @@ public class Controlador {
         //excepcion si lista vacia //tratar de hacer un if 
     }
     
+    
+    
     public String obtenerCodEscuela(String nombreEscuela){
         String codEscuela = consultaBase.seleccionarCodEscuela(nombreEscuela);
         return codEscuela;
