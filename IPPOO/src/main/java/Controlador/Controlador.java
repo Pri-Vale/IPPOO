@@ -145,4 +145,21 @@ public class Controlador {
 
     }
     
+    public String obtenerNombreCurso(String codCurso){
+        ArrayList<String> listaNombreCurso = salidaControlador.seleccionarNombreCurso(codCurso);
+        int contador = 0;
+        String nombreCurso = null;
+        while (listaNombreCurso.size() > contador){
+            System.out.println("\n Curso obtenido:" + nombreCurso);
+            nombreCurso = listaNombreCurso.get(contador);
+            contador++;
+        }
+        return nombreCurso;
+    }
+    
+    public ArrayList<String> consultarRequisitos(String codCurso){
+        ArrayList<String> listaRequisitosCurso = salidaControlador.seleccionarRequisitosCurso(codCurso);
+        return listaRequisitosCurso;
+    }
+    
 }    

@@ -179,7 +179,26 @@ public class Consultas_BaseDatos {
         catch(SQLException e){
             e.getErrorCode();
         }
-    } 
+    }
+    
+    public ArrayList<String> seleccionarNombreCurso(String codCurso){
+        ArrayList<String> nombreCurso = new ArrayList<>();
+        try{
+            String sqlQuery = "SELECT nombreCurso FROM Curso WHERE codCurso = '" + codCurso + "'";
+            nombreCurso = EjecutarSelect(sqlQuery);
+        }
+        catch(SQLException e){
+            e.getErrorCode();
+        }
+        return nombreCurso;
+    }
+    
+    public ArrayList<String> seleccionarRequisitosCurso(String codCurso){
+        String sqlQuery = "SELECT codRequisito, nombreCurso " +
+                          "FROM (SELECT codRequisito FROM RequisitoXCurso WHERE codCurso = '" + codCurso +"') AS t1 " +
+                          "INNER JOIN (SELECT codCurso, nombreCurso FROM Curso) AS t2 " +
+                          "ON t1.codRequisito = t2.codCurso";
+    }
 }
     
 
