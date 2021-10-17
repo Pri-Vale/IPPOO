@@ -1,6 +1,7 @@
 package Vista;
 
 import Controlador.Controlador;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -103,6 +104,41 @@ public class Principal extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jMostrarVigencia = new javax.swing.JTextField();
         jBConsultar = new javax.swing.JButton();
+        rqConsultarRequesCurso = new javax.swing.JFrame();
+        lbConsultarReques = new javax.swing.JLabel();
+        lbEscuelasConsultarReqs = new javax.swing.JLabel();
+        lbCodCursoConsultarReqs = new javax.swing.JLabel();
+        lbNombreCursoConsultarReques = new javax.swing.JLabel();
+        cbEscuelasConsultarReqs = new javax.swing.JComboBox<>();
+        cbCodsCursosConsultarReqs = new javax.swing.JComboBox<>();
+        tNombreCursoConsultarReqs = new javax.swing.JTextField();
+        lbReqsConsultarReqs = new javax.swing.JLabel();
+        scrollPaneReqsCurso = new javax.swing.JScrollPane();
+        llistaReqs = new javax.swing.JList<>();
+        bConsultarReqs = new javax.swing.JButton();
+        rqConsultarPlanesConCiertoCurso = new javax.swing.JFrame();
+        lbPlanesEstudioCiertoCurso = new javax.swing.JLabel();
+        cbEscuelasCiertoCurso = new javax.swing.JComboBox<>();
+        lbNombreCursoCiertoCurso = new javax.swing.JLabel();
+        cbCodsCursosDeEscuelaCiertoCurso = new javax.swing.JComboBox<>();
+        lbPlanesEstudioConCiertoCurso = new javax.swing.JLabel();
+        lbEscuelasCiertoCurso = new javax.swing.JLabel();
+        lbCodCursoCiertoCurso = new javax.swing.JLabel();
+        tNombreCursoCiertoCurso = new javax.swing.JTextField();
+        scrollPanePlanesEstudioDeCurso = new javax.swing.JScrollPane();
+        tablaInfoPlanesEstudioCiertoCurso = new javax.swing.JTable();
+        rqConsultarCorrequesCurso = new javax.swing.JFrame();
+        lbConsultarCorreques = new javax.swing.JLabel();
+        lbEscuelasConsultarCorreqs = new javax.swing.JLabel();
+        cbEscuelasConsultarCorreqs = new javax.swing.JComboBox<>();
+        lbCodCursoConsultarCorreqs = new javax.swing.JLabel();
+        cbCodsCursoConsultarCorreqs = new javax.swing.JComboBox<>();
+        lbNombreCursoConsultaCorreqs = new javax.swing.JLabel();
+        tNombreCursoConsultarCorreqs = new javax.swing.JTextField();
+        bConsultarCorreqs = new javax.swing.JButton();
+        lbCorreqsConsultarCorreqs = new javax.swing.JLabel();
+        scrollPaneCorreqs = new javax.swing.JScrollPane();
+        listaCorreqs = new javax.swing.JList<>();
         jPanel1 = new javax.swing.JPanel();
         bVentanaRegistrarEscuela = new javax.swing.JButton();
         bVentanaRegistrarCursos = new javax.swing.JButton();
@@ -119,6 +155,8 @@ public class Principal extends javax.swing.JFrame {
         bVentanaEliminarCursoPlanDeEstudio = new javax.swing.JButton();
         bVentanaEliminarCurso = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
+
+        rQRegCursos.setSize(new java.awt.Dimension(650, 344));
 
         labelRegistroCursos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelRegistroCursos.setText("Registro de Cursos");
@@ -181,11 +219,6 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(rQRegCursosLayout.createSequentialGroup()
                 .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(rQRegCursosLayout.createSequentialGroup()
-                        .addGap(146, 146, 146)
-                        .addComponent(bRegistrarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(89, 89, 89)
-                        .addComponent(bLimpiarCamposRegCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(rQRegCursosLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelNombreCurso)
@@ -204,7 +237,13 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(labelRegistroCursos)
                             .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(cbCantHorasLectivas, javax.swing.GroupLayout.Alignment.LEADING, 0, 54, Short.MAX_VALUE)
-                                .addComponent(cbNumCreditos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(cbNumCreditos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rQRegCursosLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(bRegistrarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)
+                        .addComponent(bLimpiarCamposRegCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(93, 93, 93)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         rQRegCursosLayout.setVerticalGroup(
@@ -235,8 +274,8 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(cbCantHorasLectivas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(rQRegCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bRegistrarCurso)
-                    .addComponent(bLimpiarCamposRegCurso))
+                    .addComponent(bLimpiarCamposRegCurso)
+                    .addComponent(bRegistrarCurso))
                 .addGap(36, 36, 36))
         );
 
@@ -330,6 +369,8 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        rqRegistrarRequeCorreque.setSize(new java.awt.Dimension(543, 351));
 
         lbAsignarReqCorreq.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbAsignarReqCorreq.setText("Asignar requisitos y correquisitos a un curso");
@@ -640,9 +681,7 @@ public class Principal extends javax.swing.JFrame {
                                 .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jMostrarCodPlan, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jMostrarVigencia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
-                                .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
-                                    .addComponent(combEscuelaprop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(126, 126, 126)))
+                                .addComponent(combEscuelaprop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(21, 21, 21)
                             .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(bPDFCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -677,6 +716,265 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        rqConsultarRequesCurso.setSize(new java.awt.Dimension(659, 398));
+
+        lbConsultarReques.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbConsultarReques.setText("Consultar los requisitos de un curso");
+
+        lbEscuelasConsultarReqs.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbEscuelasConsultarReqs.setText("Escuela a la que pertenece el curso:");
+
+        lbCodCursoConsultarReqs.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbCodCursoConsultarReqs.setText("Código del curso:");
+
+        lbNombreCursoConsultarReques.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbNombreCursoConsultarReques.setText("Nombre del curso:");
+
+        cbEscuelasConsultarReqs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEscuelasConsultarReqsActionPerformed(evt);
+            }
+        });
+
+        cbCodsCursosConsultarReqs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCodsCursosConsultarReqsActionPerformed(evt);
+            }
+        });
+
+        lbReqsConsultarReqs.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbReqsConsultarReqs.setText("Requisitos:");
+
+        scrollPaneReqsCurso.setViewportView(llistaReqs);
+
+        bConsultarReqs.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        bConsultarReqs.setText("Consultar requisitos");
+        bConsultarReqs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bConsultarReqsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout rqConsultarRequesCursoLayout = new javax.swing.GroupLayout(rqConsultarRequesCurso.getContentPane());
+        rqConsultarRequesCurso.getContentPane().setLayout(rqConsultarRequesCursoLayout);
+        rqConsultarRequesCursoLayout.setHorizontalGroup(
+            rqConsultarRequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rqConsultarRequesCursoLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(rqConsultarRequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(rqConsultarRequesCursoLayout.createSequentialGroup()
+                        .addGroup(rqConsultarRequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(rqConsultarRequesCursoLayout.createSequentialGroup()
+                                .addComponent(lbReqsConsultarReqs, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(rqConsultarRequesCursoLayout.createSequentialGroup()
+                                .addGroup(rqConsultarRequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbEscuelasConsultarReqs)
+                                    .addComponent(lbCodCursoConsultarReqs, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbNombreCursoConsultarReques, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                                .addGroup(rqConsultarRequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbEscuelasConsultarReqs, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbCodsCursosConsultarReqs, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tNombreCursoConsultarReqs, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(bConsultarReqs)))
+                            .addComponent(scrollPaneReqsCurso))
+                        .addGap(26, 26, 26))
+                    .addGroup(rqConsultarRequesCursoLayout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addComponent(lbConsultarReques)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        rqConsultarRequesCursoLayout.setVerticalGroup(
+            rqConsultarRequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rqConsultarRequesCursoLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(lbConsultarReques, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(rqConsultarRequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbEscuelasConsultarReqs)
+                    .addComponent(cbEscuelasConsultarReqs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(rqConsultarRequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbCodsCursosConsultarReqs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbCodCursoConsultarReqs))
+                .addGap(26, 26, 26)
+                .addGroup(rqConsultarRequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbNombreCursoConsultarReques)
+                    .addComponent(tNombreCursoConsultarReqs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(bConsultarReqs)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbReqsConsultarReqs)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scrollPaneReqsCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        rqConsultarPlanesConCiertoCurso.setSize(new java.awt.Dimension(702, 600));
+
+        lbPlanesEstudioCiertoCurso.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lbPlanesEstudioCiertoCurso.setText("Consultar cuáles planes de estudio tienen registrado un curso particular");
+
+        cbEscuelasCiertoCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEscuelasCiertoCursoActionPerformed(evt);
+            }
+        });
+
+        lbNombreCursoCiertoCurso.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbNombreCursoCiertoCurso.setText("Nombre del curso:");
+
+        lbPlanesEstudioConCiertoCurso.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbPlanesEstudioConCiertoCurso.setText("Planes de estudio que tienen registrado el curso seleccionado:");
+
+        lbEscuelasCiertoCurso.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbEscuelasCiertoCurso.setText("Escuela a la que pertenece el curso:");
+
+        lbCodCursoCiertoCurso.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbCodCursoCiertoCurso.setText("Código del curso:");
+
+        scrollPanePlanesEstudioDeCurso.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        tablaInfoPlanesEstudioCiertoCurso.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        scrollPanePlanesEstudioDeCurso.setViewportView(tablaInfoPlanesEstudioCiertoCurso);
+
+        javax.swing.GroupLayout rqConsultarPlanesConCiertoCursoLayout = new javax.swing.GroupLayout(rqConsultarPlanesConCiertoCurso.getContentPane());
+        rqConsultarPlanesConCiertoCurso.getContentPane().setLayout(rqConsultarPlanesConCiertoCursoLayout);
+        rqConsultarPlanesConCiertoCursoLayout.setHorizontalGroup(
+            rqConsultarPlanesConCiertoCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rqConsultarPlanesConCiertoCursoLayout.createSequentialGroup()
+                .addContainerGap(60, Short.MAX_VALUE)
+                .addGroup(rqConsultarPlanesConCiertoCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbPlanesEstudioCiertoCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(scrollPanePlanesEstudioDeCurso)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rqConsultarPlanesConCiertoCursoLayout.createSequentialGroup()
+                        .addGroup(rqConsultarPlanesConCiertoCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbEscuelasCiertoCurso)
+                            .addComponent(lbCodCursoCiertoCurso)
+                            .addComponent(lbNombreCursoCiertoCurso))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(rqConsultarPlanesConCiertoCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tNombreCursoCiertoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbEscuelasCiertoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbCodsCursosDeEscuelaCiertoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lbPlanesEstudioConCiertoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60))
+        );
+        rqConsultarPlanesConCiertoCursoLayout.setVerticalGroup(
+            rqConsultarPlanesConCiertoCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rqConsultarPlanesConCiertoCursoLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(lbPlanesEstudioCiertoCurso)
+                .addGap(29, 29, 29)
+                .addGroup(rqConsultarPlanesConCiertoCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbEscuelasCiertoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbEscuelasCiertoCurso))
+                .addGap(18, 18, 18)
+                .addGroup(rqConsultarPlanesConCiertoCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbCodsCursosDeEscuelaCiertoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbCodCursoCiertoCurso))
+                .addGap(18, 18, 18)
+                .addGroup(rqConsultarPlanesConCiertoCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbNombreCursoCiertoCurso)
+                    .addComponent(tNombreCursoCiertoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(lbPlanesEstudioConCiertoCurso)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scrollPanePlanesEstudioDeCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(59, Short.MAX_VALUE))
+        );
+
+        rqConsultarCorrequesCurso.setSize(new java.awt.Dimension(669, 443));
+
+        lbConsultarCorreques.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbConsultarCorreques.setText("Consultar los correquisitos de un curso");
+
+        lbEscuelasConsultarCorreqs.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbEscuelasConsultarCorreqs.setText("Escuela a la que pertenece el curso:");
+
+        lbCodCursoConsultarCorreqs.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbCodCursoConsultarCorreqs.setText("Código del curso:");
+
+        lbNombreCursoConsultaCorreqs.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbNombreCursoConsultaCorreqs.setText("Nombre del curso:");
+
+        bConsultarCorreqs.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        bConsultarCorreqs.setText("Consultar correquisitos");
+        bConsultarCorreqs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bConsultarCorreqsActionPerformed(evt);
+            }
+        });
+
+        lbCorreqsConsultarCorreqs.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbCorreqsConsultarCorreqs.setText("Correquisitos:");
+
+        scrollPaneCorreqs.setViewportView(listaCorreqs);
+
+        javax.swing.GroupLayout rqConsultarCorrequesCursoLayout = new javax.swing.GroupLayout(rqConsultarCorrequesCurso.getContentPane());
+        rqConsultarCorrequesCurso.getContentPane().setLayout(rqConsultarCorrequesCursoLayout);
+        rqConsultarCorrequesCursoLayout.setHorizontalGroup(
+            rqConsultarCorrequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rqConsultarCorrequesCursoLayout.createSequentialGroup()
+                .addGroup(rqConsultarCorrequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(rqConsultarCorrequesCursoLayout.createSequentialGroup()
+                        .addGap(191, 191, 191)
+                        .addComponent(lbConsultarCorreques))
+                    .addGroup(rqConsultarCorrequesCursoLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(rqConsultarCorrequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(rqConsultarCorrequesCursoLayout.createSequentialGroup()
+                                .addGroup(rqConsultarCorrequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbEscuelasConsultarCorreqs)
+                                    .addComponent(lbCodCursoConsultarCorreqs, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbNombreCursoConsultaCorreqs)
+                                    .addComponent(lbCorreqsConsultarCorreqs))
+                                .addGap(51, 51, 51)
+                                .addGroup(rqConsultarCorrequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbEscuelasConsultarCorreqs, 0, 336, Short.MAX_VALUE)
+                                    .addComponent(cbCodsCursoConsultarCorreqs, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tNombreCursoConsultarCorreqs)
+                                    .addComponent(bConsultarCorreqs, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(scrollPaneCorreqs, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+        rqConsultarCorrequesCursoLayout.setVerticalGroup(
+            rqConsultarCorrequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rqConsultarCorrequesCursoLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(lbConsultarCorreques)
+                .addGap(28, 28, 28)
+                .addGroup(rqConsultarCorrequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbEscuelasConsultarCorreqs)
+                    .addComponent(cbEscuelasConsultarCorreqs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(rqConsultarCorrequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbCodCursoConsultarCorreqs)
+                    .addComponent(cbCodsCursoConsultarCorreqs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(rqConsultarCorrequesCursoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbNombreCursoConsultaCorreqs)
+                    .addComponent(tNombreCursoConsultarCorreqs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(bConsultarCorreqs)
+                .addGap(18, 18, 18)
+                .addComponent(lbCorreqsConsultarCorreqs)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scrollPaneCorreqs, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -732,12 +1030,27 @@ public class Principal extends javax.swing.JFrame {
 
         bVentanaConsultarPlanesConCiertoCurso.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         bVentanaConsultarPlanesConCiertoCurso.setText("Consultar planes de estudio con curso en particular");
+        bVentanaConsultarPlanesConCiertoCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bVentanaConsultarPlanesConCiertoCursoActionPerformed(evt);
+            }
+        });
 
         bVentanaConsultarRequisitos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         bVentanaConsultarRequisitos.setText("Consultar los requisitos de un curso");
+        bVentanaConsultarRequisitos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bVentanaConsultarRequisitosActionPerformed(evt);
+            }
+        });
 
         bVentanaConsultarCorrequisitos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         bVentanaConsultarCorrequisitos.setText("Consultar los correquisitos de un curso");
+        bVentanaConsultarCorrequisitos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bVentanaConsultarCorrequisitosActionPerformed(evt);
+            }
+        });
 
         bVentanaEliminarReqCurso.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         bVentanaEliminarReqCurso.setText("Eliminar el requisito de un curso");
@@ -922,12 +1235,12 @@ public class Principal extends javax.swing.JFrame {
         int cantCreditos = Integer.valueOf(cbNumCreditos.getSelectedItem().toString());        
         int cantHorasLectivas = Integer.valueOf(cbCantHorasLectivas.getSelectedItem().toString());
         
-        String codCurso = seleccionarCodigoEscuela() + this.tNumCodCurso.getText();
+        String codCurso = seleccionarCodigoEscuela(cbNombresEscuelas) + this.tNumCodCurso.getText();
 
         //validar num de 4 dig
         //validar que no repita el num 
         
-        entradaCon.crearCurso(seleccionarCodigoEscuela(), this.tNombreCurso.getText(), codCurso, cantCreditos, cantHorasLectivas);
+        entradaCon.crearCurso(seleccionarCodigoEscuela(cbNombresEscuelas), this.tNombreCurso.getText(), codCurso, cantCreditos, cantHorasLectivas);
          
         
     }//GEN-LAST:event_bRegistrarCursoActionPerformed
@@ -966,17 +1279,20 @@ public class Principal extends javax.swing.JFrame {
         contrl.poblarCboxEscuelas2(cboxPlanesEst);
         poblarCboxBloqueActivo(cboxBloqueActivo);
         this.rqAsignarPlanDeEstudio.setVisible(true);
+        this.rqAsignarPlanDeEstudio.setLocationRelativeTo(null);
     }//GEN-LAST:event_jBInterfRegPlanesEstudioActionPerformed
 
     private void bVentanaRegistrarCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVentanaRegistrarCursosActionPerformed
         contrl.poblarCboxEscuelas(cbNombresEscuelas);
         poblarCboxCreditos(cbNumCreditos);
         poblarCboxHorasLectivas(cbCantHorasLectivas);
-        this.rQRegCursos.setVisible(true);  
+        this.rQRegCursos.setVisible(true);
+        this.rQRegCursos.setLocationRelativeTo(null);
     }//GEN-LAST:event_bVentanaRegistrarCursosActionPerformed
 
     private void bVentanaRegistrarEscuelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVentanaRegistrarEscuelaActionPerformed
         this.rQRegistrarEsqArea.setVisible(true);
+        this.rQRegistrarEsqArea.setLocationRelativeTo(null);
     }//GEN-LAST:event_bVentanaRegistrarEscuelaActionPerformed
 
     private void cboxPlanesEstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxPlanesEstActionPerformed
@@ -1024,6 +1340,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jBVisualizarPlanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBVisualizarPlanesActionPerformed
        this.rqConsultaPlanEstudio.setVisible(true);
+       this.rqConsultaPlanEstudio.setLocationRelativeTo(null);
        this.contrl.poblarCboxEscuelas(combEscuelaprop);
        
        
@@ -1052,6 +1369,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void bVentanaRegistrarReqCorreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVentanaRegistrarReqCorreqActionPerformed
         contrl.poblarCboxEscuelas(cbEscuelasPropietariasCurso);
+        this.rqRegistrarRequeCorreque.setLocationRelativeTo(null);
         this.rqRegistrarRequeCorreque.setVisible(true);
     }//GEN-LAST:event_bVentanaRegistrarReqCorreqActionPerformed
 
@@ -1094,8 +1412,64 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBConsultarActionPerformed
 
-    private String seleccionarCodigoEscuela(){
-        String nombreEscuela = cbNombresEscuelas.getSelectedItem().toString();
+    private void bVentanaConsultarPlanesConCiertoCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVentanaConsultarPlanesConCiertoCursoActionPerformed
+        
+        this.rqConsultarPlanesConCiertoCurso.setVisible(true); 
+        this.rqConsultarPlanesConCiertoCurso.setLocationRelativeTo(null);
+    }//GEN-LAST:event_bVentanaConsultarPlanesConCiertoCursoActionPerformed
+
+    private void cbEscuelasCiertoCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEscuelasCiertoCursoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbEscuelasCiertoCursoActionPerformed
+
+    private void bConsultarReqsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultarReqsActionPerformed
+        String codCurso = cbCodsCursosConsultarReqs.getSelectedItem().toString();
+        contrl.consultarRequisitos(codCurso);
+    }//GEN-LAST:event_bConsultarReqsActionPerformed
+
+    private void bConsultarCorreqsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultarCorreqsActionPerformed
+        //t
+    }//GEN-LAST:event_bConsultarCorreqsActionPerformed
+
+    private void bVentanaConsultarRequisitosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVentanaConsultarRequisitosActionPerformed
+        this.rqConsultarRequesCurso.setVisible(true); 
+        this.rqConsultarRequesCurso.setLocationRelativeTo(null);
+        contrl.poblarCboxEscuelas(cbEscuelasConsultarReqs);
+        this.tNombreCursoConsultarReqs.setEditable(false);
+    }//GEN-LAST:event_bVentanaConsultarRequisitosActionPerformed
+
+    private void bVentanaConsultarCorrequisitosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVentanaConsultarCorrequisitosActionPerformed
+
+        this.rqConsultarCorrequesCurso.setVisible(true); 
+        this.rqConsultarCorrequesCurso.setLocationRelativeTo(null);
+        
+    }//GEN-LAST:event_bVentanaConsultarCorrequisitosActionPerformed
+
+    private void cbEscuelasConsultarReqsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEscuelasConsultarReqsActionPerformed
+        String codEscuela = seleccionarCodigoEscuela(cbEscuelasConsultarReqs);
+        this.cbCodsCursosConsultarReqs.removeAllItems();
+        this.tNombreCursoConsultarReqs.setText(null); 
+        try{
+            contrl.poblarCboxCursosDeEscuela(cbCodsCursosConsultarReqs, codEscuela);
+        }catch(NullPointerException e){
+            System.out.println(e.getMessage());
+        }
+
+    }//GEN-LAST:event_cbEscuelasConsultarReqsActionPerformed
+
+    private void cbCodsCursosConsultarReqsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCodsCursosConsultarReqsActionPerformed
+        try{
+            String codCurso = cbCodsCursosConsultarReqs.getSelectedItem().toString();
+            String nombreCurso = contrl.obtenerNombreCurso(codCurso);
+            this.tNombreCursoConsultarReqs.setText(nombreCurso);            
+        }catch(NullPointerException e){
+            System.out.println(e.getMessage());
+        }
+
+    }//GEN-LAST:event_cbCodsCursosConsultarReqsActionPerformed
+
+    private String seleccionarCodigoEscuela(JComboBox cbox_escuela){
+        String nombreEscuela = cbox_escuela.getSelectedItem().toString();
         String codEscuela = contrl.obtenerCodEscuela(nombreEscuela); 
         return codEscuela;
     }
@@ -1163,6 +1537,8 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JCalendar CalendVigencia;
     private javax.swing.JButton bCerrarRegReqCorreq;
+    private javax.swing.JButton bConsultarCorreqs;
+    private javax.swing.JButton bConsultarReqs;
     private javax.swing.JButton bLimpiarCamposRegCurso;
     private javax.swing.JButton bPDFCorreo;
     private javax.swing.JButton bPropioRegistroVentana;
@@ -1183,6 +1559,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbCodigoCursoCorreq;
     private javax.swing.JComboBox<String> cbCodigoCursoReq;
     private javax.swing.JComboBox<String> cbCodigosCursosDeEscuela;
+    private javax.swing.JComboBox<String> cbCodsCursoConsultarCorreqs;
+    private javax.swing.JComboBox<String> cbCodsCursosConsultarReqs;
+    private javax.swing.JComboBox<String> cbCodsCursosDeEscuelaCiertoCurso;
+    private javax.swing.JComboBox<String> cbEscuelasCiertoCurso;
+    private javax.swing.JComboBox<String> cbEscuelasConsultarCorreqs;
+    private javax.swing.JComboBox<String> cbEscuelasConsultarReqs;
     private javax.swing.JComboBox<String> cbEscuelasPropietariasCurso;
     private javax.swing.JComboBox<String> cbNombresEscuelas;
     private javax.swing.JComboBox<String> cbNumCreditos;
@@ -1225,22 +1607,49 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel labelRegistroCursos;
     private javax.swing.JLabel lbAsignarReqCorreq;
     private javax.swing.JLabel lbCodCurso;
+    private javax.swing.JLabel lbCodCursoCiertoCurso;
+    private javax.swing.JLabel lbCodCursoConsultarCorreqs;
+    private javax.swing.JLabel lbCodCursoConsultarReqs;
     private javax.swing.JLabel lbCodCursoCorreq;
     private javax.swing.JLabel lbCodCursoReq;
     private javax.swing.JLabel lbCodEscuelaCodCurso;
+    private javax.swing.JLabel lbConsultarCorreques;
+    private javax.swing.JLabel lbConsultarReques;
     private javax.swing.JLabel lbCorreqs;
+    private javax.swing.JLabel lbCorreqsConsultarCorreqs;
     private javax.swing.JLabel lbEscuelaPropietariaCurso;
+    private javax.swing.JLabel lbEscuelasCiertoCurso;
+    private javax.swing.JLabel lbEscuelasConsultarCorreqs;
+    private javax.swing.JLabel lbEscuelasConsultarReqs;
+    private javax.swing.JLabel lbNombreCursoCiertoCurso;
+    private javax.swing.JLabel lbNombreCursoConsultaCorreqs;
+    private javax.swing.JLabel lbNombreCursoConsultarReques;
+    private javax.swing.JLabel lbPlanesEstudioCiertoCurso;
+    private javax.swing.JLabel lbPlanesEstudioConCiertoCurso;
     private javax.swing.JLabel lbReqs;
+    private javax.swing.JLabel lbReqsConsultarReqs;
+    private javax.swing.JList<String> listaCorreqs;
+    private javax.swing.JList<String> llistaReqs;
     private javax.swing.JFrame rQRegCursos;
     private javax.swing.JFrame rQRegistrarEsqArea;
     private javax.swing.JFrame rqAsignarPlanDeEstudio;
     private javax.swing.JFrame rqConsultaPlanEstudio;
+    private javax.swing.JFrame rqConsultarCorrequesCurso;
+    private javax.swing.JFrame rqConsultarPlanesConCiertoCurso;
+    private javax.swing.JFrame rqConsultarRequesCurso;
     private javax.swing.JFrame rqRegistrarRequeCorreque;
+    private javax.swing.JScrollPane scrollPaneCorreqs;
+    private javax.swing.JScrollPane scrollPanePlanesEstudioDeCurso;
+    private javax.swing.JScrollPane scrollPaneReqsCurso;
     private javax.swing.JTextField tCodigoEscuela;
     private javax.swing.JTextField tNombreCurso;
+    private javax.swing.JTextField tNombreCursoCiertoCurso;
+    private javax.swing.JTextField tNombreCursoConsultarCorreqs;
+    private javax.swing.JTextField tNombreCursoConsultarReqs;
     private javax.swing.JTextField tNombreEA;
     private javax.swing.JTextField tNumCodCurso;
     private javax.swing.JTable tabPlanEstudio;
+    private javax.swing.JTable tablaInfoPlanesEstudioCiertoCurso;
     private javax.swing.JTextField txtCodigoCurso;
     private javax.swing.JTextField txtCodigoPlan;
     // End of variables declaration//GEN-END:variables
