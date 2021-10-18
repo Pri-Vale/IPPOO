@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.ResultSetMetaData;
 
 /**
  *
@@ -40,6 +41,7 @@ public class Consultas_BaseDatos {
             while(rs.next()){
                 listaResultSet.add(rs.getString(1));
             }            
+            
             return listaResultSet;
         }
     }
@@ -132,6 +134,7 @@ public class Consultas_BaseDatos {
         ArrayList<String> listaCursosDeEscuela = new ArrayList<>();
         try{
              listaCursosDeEscuela = EjecutarSelect(sqlQuery);        
+             System.out.println("lo intenta");
              return listaCursosDeEscuela;
         }
         catch (SQLException e){
@@ -140,7 +143,7 @@ public class Consultas_BaseDatos {
         return listaCursosDeEscuela;
     }
     
-       public ArrayList<String> seleccionarCursos(){
+    public ArrayList<String> seleccionarCursos(){
         String sqlQuery = "SELECT codCurso FROM CURSO";
         ArrayList<String> listaCursos = new ArrayList<>();
         try{
@@ -152,10 +155,23 @@ public class Consultas_BaseDatos {
         }
         return listaCursos;
     }
+    
+    public ArrayList<String> seleccionarCodPlanes(String codEscuela){
+        String sqlQuery = "Select numPlan From PlanDeEstudio Where escuelaAsociada = '"+codEscuela+"'";
+        ArrayList<String> listaCodPlanes = new ArrayList<>();
+        try{
+             listaCodPlanes = EjecutarSelect(sqlQuery);
+             System.out.println(listaCodPlanes);
+             return listaCodPlanes;
+        }
+        catch (SQLException e){
+            e.getErrorCode();
+        }
+        return listaCodPlanes;
+    }
        
     public void insertarRequisitoXCurso(String codCurso, String codRequisito){
         try{
-            System.out.println("CXP");
             
             String query ="INSERT INTO RequisitoXCurso VALUES('"+ codCurso +"','" + codRequisito + "')";
             System.out.println(query);
@@ -198,8 +214,24 @@ public class Consultas_BaseDatos {
                           "FROM (SELECT codRequisito FROM RequisitoXCurso WHERE codCurso = '" + codCurso +"') AS t1 " +
                           "INNER JOIN (SELECT codCurso, nombreCurso FROM Curso) AS t2 " +
                           "ON t1.codRequisito = t2.codCurso";
+        return null;
     }
-}
     
-
+    public ResultSet verPlanDeEstudio(String codigoEscuela) throws SQLException  {
+        System.out.println("Llego aca");
+        String query="Select * From Curso Inner join CursoXPlanDeEstudio ON Curso.codCurso =CursoXPlanDeEstudio.codCurso Where CursoXPlanDeEstudio.planEstudio = "+ codigoEscuela +"";
+        System.out.println(query);
+        ResultSet consulta = EjecutarSelectRS(query);
+        return consulta;
+    }
+    
+    public ResultSet EjecutarSelectRS(String query) throws SQLException {
+        java.sql.Connection eConect = con.Conectar_a_base();
+	Statement stmt= eConect.createStatement();
+	ResultSet rs= stmt.executeQuery(query);
+	return rs;
+        
+    }
+    
+}
 
