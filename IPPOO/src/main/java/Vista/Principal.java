@@ -11,6 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.PdfPTable;
 
 /**
  *
@@ -103,7 +107,6 @@ public class Principal extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jMostrarVigencia = new javax.swing.JTextField();
         cbox_codigosPlan2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
         rqConsultarRequesCurso = new javax.swing.JFrame();
         lbConsultarReques = new javax.swing.JLabel();
         lbEscuelasConsultarReqs = new javax.swing.JLabel();
@@ -638,6 +641,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel15.setText("Vigencia del plan de estudios:");
 
         bPDFCorreo.setText("Generar PDF y enviar por correo");
+        bPDFCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPDFCorreoActionPerformed(evt);
+            }
+        });
 
         tabPlanEstudio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -654,13 +662,6 @@ public class Principal extends javax.swing.JFrame {
         cbox_codigosPlan2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbox_codigosPlan2ActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
             }
         });
 
@@ -694,9 +695,7 @@ public class Principal extends javax.swing.JFrame {
                                     .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
                                         .addComponent(combEscuelaMP, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(174, 174, 174)))
-                                .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1)
-                                    .addComponent(bPDFCorreo))))
+                                .addComponent(bPDFCorreo)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
                         .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -712,8 +711,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(combEscuelaMP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(combEscuelaMP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rqConsultaPlanEstudioLayout.createSequentialGroup()
                         .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1510,18 +1508,18 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_combEscuelaMPActionPerformed
 
     private void cbox_codigosPlan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbox_codigosPlan2ActionPerformed
-       
-    }//GEN-LAST:event_cbox_codigosPlan2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     try {
+    try {
             String escuelaBuscar = cbox_codigosPlan2.getSelectedItem().toString();
             
             contrl.poblarJTable(tabPlanEstudio,escuelaBuscar);
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-    }//GEN-LAST:event_jButton1ActionPerformed
+        }    
+    }//GEN-LAST:event_cbox_codigosPlan2ActionPerformed
+
+    private void bPDFCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPDFCorreoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bPDFCorreoActionPerformed
 
     private String seleccionarCodigoEscuela(JComboBox cbox_escuela){
         String nombreEscuela = cbox_escuela.getSelectedItem().toString();
@@ -1631,7 +1629,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbox_codigosPlan2;
     private javax.swing.JComboBox<String> combEscuelaMP;
     private javax.swing.JButton jBInterfRegPlanesEstudio;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
