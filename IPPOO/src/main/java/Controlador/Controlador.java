@@ -9,7 +9,11 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -59,15 +63,11 @@ public class Controlador {
         //excepcion si lista vacia //tratar de hacer un if 
     }
     
-    
-    
     public String obtenerCodEscuela(String nombreEscuela){
         String codEscuela = consultaBase.seleccionarCodEscuela(nombreEscuela);
         return codEscuela;
     }
    
-    
-    
     public void crearCurso(String pCodEscuela, String pNombreCurso, String pCodCurso, int pCantCreditos, int pCantHorasLectivas){
         //ArrayList<String> listaEscuelas = consultaBase.seleccionarEscuelas();
         
@@ -110,6 +110,7 @@ public class Controlador {
         while (listaCursosDeEscuela.size() > contador){
             cbox_cursos.addItem(listaCursosDeEscuela.get(contador));
             contador++;
+            System.out.println("Contador " + contador);
         }
 
     //excepcion si lista vacia 
@@ -125,6 +126,16 @@ public class Controlador {
         }
 
     //excepcion si lista vacia 
+    }
+    public void poblarCboxCodigosPlan(JComboBox cbox_codigosPlan,String codEscuela){
+        
+        ArrayList<String> listaCodPlanes = consultaBase.seleccionarCodPlanes(codEscuela);
+        int contador = 0;
+        while (listaCodPlanes.size() > contador){
+            cbox_codigosPlan.addItem(listaCodPlanes.get(contador));
+            contador++;
+        }
+        
     }
     
     public void agregarRequisitoACurso(String codCurso, String codReq){      
@@ -162,4 +173,37 @@ public class Controlador {
         return listaRequisitosCurso;
     }
     
-}    
+    public void poblarJTable(JTable table, String escuelaBuscar) throws SQLException{
+        //envio la escuela
+        //String codigoEscuela= this.obtenerCodEscuela(escuelaBuscar);
+        //aqui falta un combo 
+        
+        System.out.println(escuelaBuscar);
+        
+        //recibe datos y construye la tabla 
+        ResultSet rst = salidaControlador.verPlanDeEstudio(escuelaBuscar);
+        ResultSetMetaData rsMd= rst.getMetaData();
+        
+        
+        int numeroColumnas= rsMd.getColumnCount();
+        
+        DefaultTableModel modelo = new DefaultTableModel();
+        table.setModel(modelo);
+        
+        for (int x=1; x<=numeroColumnas; x++){
+            modelo.addColumn(rsMd.getColumnLabel(x));    
+        }
+        
+        while(rst.next()){
+            Object [] fila= new Object[numeroColumnas];
+            
+            for(int y=0; y<numeroColumnas;y++){
+                fila[y]=rst.getObject(y+1);
+                
+            }
+            modelo.addRow(fila);
+        }
+}
+}
+     
+         
