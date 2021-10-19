@@ -1,17 +1,29 @@
 package Controlador;
 
 import Connect_BD.Consultas_BaseDatos;
+import Correo.Correo;
 import Modelo.logicaDeNegocio.Bloque;
 import Modelo.logicaDeNegocio.Escuela;
 import Modelo.logicaDeNegocio.Curso;
 import Modelo.logicaDeNegocio.PlanDeEstudio;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,6 +37,7 @@ public class Controlador {
     private final Escuela escuela= new Escuela();
     public static Consultas_BaseDatos salidaControlador = new Consultas_BaseDatos() ;
     private Consultas_BaseDatos consultaBase = new Consultas_BaseDatos();
+    private Correo salidaCorreo=new Correo();
     
     public boolean crearEscuela(String pNombreEscuela, String pCodEscuela) throws SQLException{
         try{
@@ -175,8 +188,6 @@ public class Controlador {
     
     public void poblarJTable(JTable table, String escuelaBuscar) throws SQLException{
         //envio la escuela
-        //String codigoEscuela= this.obtenerCodEscuela(escuelaBuscar);
-        //aqui falta un combo 
         
         System.out.println(escuelaBuscar);
         
@@ -204,6 +215,57 @@ public class Controlador {
             modelo.addRow(fila);
         }
 }
+    
+    public void poblarPDF(Document documento,String escuelaBuscar) throws SQLException{
+        ResultSet rst = salidaControlador.verPlanDeEstudio(escuelaBuscar);
+        
+        try{
+        
+        String ruta = System.getProperty("user.home");
+        PdfWriter.getInstance(documento, new FileOutputStream(ruta+"\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf"));
+        documento.open();
+        
+        PdfPTable tabla = new PdfPTable(7);
+        tabla.addCell("1");
+        tabla.addCell("1");
+        tabla.addCell("1");
+        tabla.addCell("1");
+        tabla.addCell("1");
+        tabla.addCell("1");
+        tabla.addCell("1");
+        
+        if(rst.next()){
+            do{
+                tabla.addCell(rst.getString(1));
+                tabla.addCell(rst.getString(2));
+                tabla.addCell(rst.getString(3));
+                tabla.addCell(rst.getString(4));
+                tabla.addCell(rst.getString(5));
+                tabla.addCell(rst.getString(6));
+                tabla.addCell(rst.getString(7));
+                
+            }while(rst.next());
+            documento.add(tabla);
+                
+            
+        }else{
+            System.out.println("No hay datos");
+        }
+    documento.close();
+    JOptionPane.showMessageDialog(null,"Reporte creado");
+    }
+    catch(DocumentException | FileNotFoundException e){
+        System.out.println(e);
+    }
+    }
+
+    public void poblarCorreo(Properties propiedades){
+        try {
+            salidaCorreo.generarCorreo(propiedades);
+        } catch (MessagingException ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
      
          
