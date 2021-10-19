@@ -15,6 +15,9 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.PdfPTable;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.Properties;
 
 /**
  *
@@ -1518,7 +1521,18 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cbox_codigosPlan2ActionPerformed
 
     private void bPDFCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPDFCorreoActionPerformed
-        // TODO add your handling code here:
+    String escuelaBuscar = cbox_codigosPlan2.getSelectedItem().toString();            
+    Document documento = new Document();
+    Properties propiedades = new Properties();
+    
+        try {
+            this.contrl.poblarPDF(documento,escuelaBuscar);
+            this.contrl.poblarCorreo(propiedades);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    
     }//GEN-LAST:event_bPDFCorreoActionPerformed
 
     private String seleccionarCodigoEscuela(JComboBox cbox_escuela){
