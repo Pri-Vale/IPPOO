@@ -182,8 +182,7 @@ public class Controlador {
     }
     
     public ArrayList<String> consultarRequisitos(String codCurso){
-        ArrayList<String> listaRequisitosCurso = salidaControlador.seleccionarRequisitosCurso(codCurso);
-        return listaRequisitosCurso;
+        return null;
     }
     
     public void poblarJTable(JTable table, String escuelaBuscar) throws SQLException{

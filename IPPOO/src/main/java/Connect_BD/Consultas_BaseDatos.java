@@ -209,12 +209,22 @@ public class Consultas_BaseDatos {
         return nombreCurso;
     }
     
-    public ArrayList<String> seleccionarRequisitosCurso(String codCurso){
+    public ResultSet seleccionarRequisitosCurso(String codCurso)throws SQLException{
         String sqlQuery = "SELECT codRequisito, nombreCurso " +
                           "FROM (SELECT codRequisito FROM RequisitoXCurso WHERE codCurso = '" + codCurso +"') AS t1 " +
                           "INNER JOIN (SELECT codCurso, nombreCurso FROM Curso) AS t2 " +
                           "ON t1.codRequisito = t2.codCurso";
-        return null;
+        ResultSet requisitos = EjecutarSelectRS(sqlQuery);
+        return requisitos;
+    }
+    
+    public ResultSet seleccionarCorrequisitosCurso(String codCurso) throws SQLException{
+        String sqlQuery = "SELECT codCorrequisito, nombreCurso " +
+                          "FROM (SELECT codCorrequisito FROM CorrequisitoXCurso WHERE codCurso = '" + codCurso +"') AS t1 " +
+                          "INNER JOIN (SELECT codCurso, nombreCurso FROM Curso) AS t2 " +
+                          "ON t1.codCorrequisito = t2.codCurso";
+        ResultSet correquisitos = EjecutarSelectRS(sqlQuery);
+        return correquisitos;
     }
     
     public ResultSet verPlanDeEstudio(String codigoEscuela) throws SQLException  {
