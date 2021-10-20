@@ -48,7 +48,8 @@ public class Correo {
         
         
         BodyPart pdf = new MimeBodyPart();
-        pdf.setDataHandler(new DataHandler(new FileDataSource("C:\\Users\\pri23\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf")));
+        String ruta = System.getProperty("user.home");
+        pdf.setDataHandler(new DataHandler(new FileDataSource(ruta+"\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf")));
         //DataHandler dh = new DataHandler(new FileDataSource("C:\\Users\\pri23\\Documents\\GitHub\\IPPOO\\Reportes"));
         
         MimeMultipart partes= new MimeMultipart();
