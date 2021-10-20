@@ -5,13 +5,18 @@
 package Correo;
 
 import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  *
@@ -20,7 +25,7 @@ import javax.mail.internet.MimeMessage;
 public class Correo {
     
     public void generarCorreo(Properties propiedades) throws AddressException, MessagingException{
-        propiedades.setProperty("mail.smtp.host", "smtp.gmail.com");
+        propiedades.setProperty("mail.smtp.host", "smtp.googlemail.com");
         propiedades.setProperty("mail.smtp.starttls.enable", "true");
         propiedades.setProperty("mail.smtp.port", "587");
         propiedades.setProperty("mail.smtp.auth", "true");
@@ -36,13 +41,33 @@ public class Correo {
         String asunto = "Estoy haciendo pruebas";
         String mensaje = "Hola Vale, soy Pri";
         
-        //Ahora esto es la construccion 
+        //PDF
+        BodyPart texto = new MimeBodyPart();
+        texto.setContent(mensaje,"text/html");
         
-         MimeMessage message = new MimeMessage(sesion);
+        
+        
+        BodyPart pdf = new MimeBodyPart();
+        pdf.setDataHandler(new DataHandler(new FileDataSource("C:\\Users\\pri23\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf")));
+        //DataHandler dh = new DataHandler(new FileDataSource("C:\\Users\\pri23\\Documents\\GitHub\\IPPOO\\Reportes"));
+        
+        MimeMultipart partes= new MimeMultipart();
+        partes.addBodyPart(texto);
+        partes.addBodyPart(pdf);
+
+        
+        
+        
+        //
+       
+        //Ahora esto es la construccion 
+        MimeMessage message = new MimeMessage(sesion);
         message.setFrom(new InternetAddress(correo_emisor));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(correo_receptor));
         message.setSubject(asunto);
-        message.setText(mensaje);
+        //message.setText(mensaje);
+        message.setContent(partes);
+         
         
         //Esto es lo que hace el transporte
         Transport transporte = sesion.getTransport("smtp");
