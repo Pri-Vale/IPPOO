@@ -24,7 +24,7 @@ import javax.mail.internet.MimeMultipart;
  */
 public class Correo {
     
-    public void generarCorreo(Properties propiedades) throws AddressException, MessagingException{
+    public void generarCorreo(Properties propiedades, String correoDestinatario) throws AddressException, MessagingException{
         propiedades.setProperty("mail.smtp.host", "smtp.googlemail.com");
         propiedades.setProperty("mail.smtp.starttls.enable", "true");
         propiedades.setProperty("mail.smtp.port", "587");
@@ -33,13 +33,13 @@ public class Correo {
         
         Session sesion = Session.getDefaultInstance(propiedades);
         //tenemos que valorar crearnos un correo XD
-        String correo_emisor = "pri231296@gmail.com";
-        String contraseña_emisor = "ilove6-2";
+        String correo_emisor = "ati.sgpe@gmail.com";
+        String contraseña_emisor = "privalePOO123";
         
         //Me falta pegar la ventana de correo
-        String correo_receptor = "valeria700602@gmail.com";
-        String asunto = "Estoy haciendo pruebas";
-        String mensaje = "Hola Vale, soy Pri";
+        String correo_receptor = correoDestinatario;
+        String asunto = "Reporte de plan ATI-SGPE!";
+        String mensaje = "El sistema gestor de planes de estudio ATI-SGPE! adjunta su reporte ";
         
         //PDF
         BodyPart texto = new MimeBodyPart();
@@ -49,16 +49,15 @@ public class Correo {
         
         BodyPart pdf = new MimeBodyPart();
         String ruta = System.getProperty("user.home");
-        pdf.setDataHandler(new DataHandler(new FileDataSource(ruta+"\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf")));
+        //pdf.setDataHandler(new DataHandler(new FileDataSource(ruta+"\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf")));
+        pdf.setDataHandler(new DataHandler(new FileDataSource(ruta+"\\OneDrive\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf")));
+        
         //DataHandler dh = new DataHandler(new FileDataSource("C:\\Users\\pri23\\Documents\\GitHub\\IPPOO\\Reportes"));
         
         MimeMultipart partes= new MimeMultipart();
         partes.addBodyPart(texto);
         partes.addBodyPart(pdf);
 
-        
-        
-        
         //
        
         //Ahora esto es la construccion 
