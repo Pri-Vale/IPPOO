@@ -221,17 +221,18 @@ public class Controlador {
         try{
         
         String ruta = System.getProperty("user.home");
-        PdfWriter.getInstance(documento, new FileOutputStream(ruta+"\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf"));
+        //PdfWriter.getInstance(documento, new FileOutputStream(ruta+"\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf"));
+        PdfWriter.getInstance(documento, new FileOutputStream(ruta+"\\OneDrive\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf"));
         documento.open();
         
         PdfPTable tabla = new PdfPTable(7);
-        tabla.addCell("1");
-        tabla.addCell("1");
-        tabla.addCell("1");
-        tabla.addCell("1");
-        tabla.addCell("1");
-        tabla.addCell("1");
-        tabla.addCell("1");
+        tabla.addCell("Codigo de curso");
+        tabla.addCell("Nombre del curso");
+        tabla.addCell("Cantidad de Creditos");
+        tabla.addCell("Cantidad de horas lectivas");
+        tabla.addCell("Escuela asociada");
+        tabla.addCell("Curso");
+        tabla.addCell("Codigo de plan");
         
         if(rst.next()){
             do{
@@ -251,16 +252,16 @@ public class Controlador {
             System.out.println("No hay datos");
         }
     documento.close();
-    JOptionPane.showMessageDialog(null,"Reporte creado");
+    
     }
     catch(DocumentException | FileNotFoundException e){
         System.out.println(e);
     }
     }
 
-    public void poblarCorreo(Properties propiedades){
+    public void poblarCorreo(Properties propiedades,String correoDestinatario){
         try {
-            salidaCorreo.generarCorreo(propiedades);
+            salidaCorreo.generarCorreo(propiedades, correoDestinatario);
         } catch (MessagingException ex) {
             Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
         }

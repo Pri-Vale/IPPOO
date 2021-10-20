@@ -145,6 +145,7 @@ public class Principal extends javax.swing.JFrame {
         lbCorreqsConsultarCorreqs = new javax.swing.JLabel();
         scrollPaneCorreqs = new javax.swing.JScrollPane();
         listaCorreqs = new javax.swing.JList<>();
+        rqAccionesEliminacion = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
         bVentanaRegistrarEscuela = new javax.swing.JButton();
         bVentanaRegistrarCursos = new javax.swing.JButton();
@@ -158,8 +159,6 @@ public class Principal extends javax.swing.JFrame {
         bVentanaConsultarRequisitos = new javax.swing.JButton();
         bVentanaConsultarCorrequisitos = new javax.swing.JButton();
         bVentanaEliminarReqCurso = new javax.swing.JButton();
-        bVentanaEliminarCursoPlanDeEstudio = new javax.swing.JButton();
-        bVentanaEliminarCurso = new javax.swing.JButton();
 
         rQRegCursos.setSize(new java.awt.Dimension(650, 344));
 
@@ -1005,6 +1004,17 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
+        javax.swing.GroupLayout rqAccionesEliminacionLayout = new javax.swing.GroupLayout(rqAccionesEliminacion.getContentPane());
+        rqAccionesEliminacion.getContentPane().setLayout(rqAccionesEliminacionLayout);
+        rqAccionesEliminacionLayout.setHorizontalGroup(
+            rqAccionesEliminacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        rqAccionesEliminacionLayout.setVerticalGroup(
+            rqAccionesEliminacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         bVentanaRegistrarEscuela.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -1081,16 +1091,10 @@ public class Principal extends javax.swing.JFrame {
         });
 
         bVentanaEliminarReqCurso.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        bVentanaEliminarReqCurso.setText("Eliminar el requisito de un curso");
-
-        bVentanaEliminarCursoPlanDeEstudio.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        bVentanaEliminarCursoPlanDeEstudio.setText("Eliminar un curso de un plan de estudios");
-
-        bVentanaEliminarCurso.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        bVentanaEliminarCurso.setText("Eliminar un curso");
-        bVentanaEliminarCurso.addActionListener(new java.awt.event.ActionListener() {
+        bVentanaEliminarReqCurso.setText("Acciones de Eliminación");
+        bVentanaEliminarReqCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bVentanaEliminarCursoActionPerformed(evt);
+                bVentanaEliminarReqCursoActionPerformed(evt);
             }
         });
 
@@ -1103,18 +1107,19 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bVentanaRegistrarReqCorreq, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jBInterfRegPlanesEstudio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bVentanaVisualizarPlanes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bVentanaRegistrarCursos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bVentanaRegistrarEscuela, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bVentanaRegistrarEscuela, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(bVentanaConsultarPlanesConCiertoCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bVentanaConsultarRequisitos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bVentanaConsultarCorrequisitos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bVentanaEliminarReqCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bVentanaEliminarCursoPlanDeEstudio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bVentanaEliminarCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(bVentanaEliminarReqCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(54, 54, 54))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(233, 233, 233))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1122,48 +1127,43 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(150, 150, 150)
-                        .addComponent(jLabel16)))
+                        .addComponent(jLabel16))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(239, 239, 239)
+                        .addComponent(bVentanaVisualizarPlanes, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(233, 233, 233))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(bVentanaConsultarPlanesConCiertoCurso)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bVentanaConsultarRequisitos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bVentanaConsultarCorrequisitos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bVentanaEliminarReqCurso)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bVentanaEliminarCursoPlanDeEstudio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bVentanaEliminarCurso)
-                        .addGap(22, 22, 22))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
                         .addComponent(bVentanaRegistrarEscuela)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bVentanaRegistrarCursos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bVentanaRegistrarReqCorreq)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jBInterfRegPlanesEstudio)
+                        .addComponent(jBInterfRegPlanesEstudio))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(bVentanaConsultarPlanesConCiertoCurso)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bVentanaVisualizarPlanes)
-                        .addGap(41, 41, 41))))
+                        .addComponent(bVentanaConsultarRequisitos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bVentanaConsultarCorrequisitos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bVentanaEliminarReqCurso)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bVentanaVisualizarPlanes)
+                .addGap(41, 41, 41))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1384,10 +1384,6 @@ public class Principal extends javax.swing.JFrame {
          
     }//GEN-LAST:event_bRegistrarRequisitoActionPerformed
 
-    private void bVentanaEliminarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVentanaEliminarCursoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bVentanaEliminarCursoActionPerformed
-
     private void bVentanaRegistrarReqCorreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVentanaRegistrarReqCorreqActionPerformed
         //Vale
         contrl.poblarCboxEscuelas(cbEscuelasPropietariasCurso);
@@ -1514,19 +1510,31 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cbox_codigosPlan2ActionPerformed
 
     private void bPDFCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPDFCorreoActionPerformed
-    String escuelaBuscar = cbox_codigosPlan2.getSelectedItem().toString();            
+
+    String correoDestinatario = JOptionPane.showInputDialog("Escriba el correo al cual desea enviar el reporte");
+    if(correoDestinatario == null){
+            
+    }
+    else{
+        String escuelaBuscar = cbox_codigosPlan2.getSelectedItem().toString();            
     Document documento = new Document();
     Properties propiedades = new Properties();
     
         try {
             this.contrl.poblarPDF(documento,escuelaBuscar);
-            this.contrl.poblarCorreo(propiedades);
+            this.contrl.poblarCorreo(propiedades, correoDestinatario);
+            JOptionPane.showMessageDialog(null,"Reporte creado");
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
-    
+        
+    }
+   
     }//GEN-LAST:event_bPDFCorreoActionPerformed
+
+    private void bVentanaEliminarReqCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVentanaEliminarReqCursoActionPerformed
+      this.rqAccionesEliminacion.setVisible(true);
+    }//GEN-LAST:event_bVentanaEliminarReqCursoActionPerformed
 
     private String seleccionarCodigoEscuela(JComboBox cbox_escuela){
         String nombreEscuela = cbox_escuela.getSelectedItem().toString();
@@ -1611,8 +1619,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton bVentanaConsultarCorrequisitos;
     private javax.swing.JButton bVentanaConsultarPlanesConCiertoCurso;
     private javax.swing.JButton bVentanaConsultarRequisitos;
-    private javax.swing.JButton bVentanaEliminarCurso;
-    private javax.swing.JButton bVentanaEliminarCursoPlanDeEstudio;
     private javax.swing.JButton bVentanaEliminarReqCurso;
     private javax.swing.JButton bVentanaRegistrarCursos;
     private javax.swing.JButton bVentanaRegistrarEscuela;
@@ -1692,6 +1698,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JList<String> llistaReqs;
     private javax.swing.JFrame rQRegCursos;
     private javax.swing.JFrame rQRegistrarEsqArea;
+    private javax.swing.JFrame rqAccionesEliminacion;
     private javax.swing.JFrame rqAsignarPlanDeEstudio;
     private javax.swing.JFrame rqConsultaPlanEstudio;
     private javax.swing.JFrame rqConsultarCorrequesCurso;
