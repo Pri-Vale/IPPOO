@@ -37,6 +37,9 @@ public class Curso {
         this.codCurso = pCodCurso;
         this.cantCreditos = pCantCreditos;
         this.cantHorasLectivas = pCantHorasLectivas;
+        
+        this.requisitos = new ArrayList<Curso>();
+        this.correquisitos = new ArrayList<Curso>();
     }
     
     /**

@@ -21,7 +21,7 @@ public class Bloque {
      */
     public Bloque(String idBloque) {
         this.idBloque = idBloque;
-        //cursos = new ArrayList<Curso>();
+        this.cursos = new ArrayList<Curso>();
     }
 
     public String getIdBloque() {
@@ -45,7 +45,6 @@ public class Bloque {
      */
     public void agregarCurso(Curso curso){
         //aqui creo que tambien va otra validacion si existe o no 
-        ArrayList<Curso> cursos = new ArrayList<Curso>();
         cursos.add(curso);
     }
 
