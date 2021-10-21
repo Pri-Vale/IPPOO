@@ -36,12 +36,17 @@ import javax.swing.table.DefaultTableModel;
 public class Controlador {
     
     //Atributos 
-    private final Escuela escuela= new Escuela();
+    //private final Escuela escuela= new Escuela();
+    
     private ArrayList<Escuela> escuelas = new ArrayList<Escuela>();
     private ArrayList<Curso> cursos = new ArrayList<Curso>();
+    
+    
     public static Consultas_BaseDatos salidaControlador = new Consultas_BaseDatos() ;
+    
     private Consultas_BaseDatos consultaBase = new Consultas_BaseDatos();
     private Correo salidaCorreo=new Correo();
+    
     
     /**
      * 
@@ -57,6 +62,7 @@ public class Controlador {
             System.out.println(pCodEscuela);
             escuelas.add(escuela);
             salidaControlador.insertarEscuela(escuela);
+            System.out.println(escuelas.toString());
             return true;
         
         }catch(NullPointerException a){
@@ -116,13 +122,15 @@ public class Controlador {
      */
     public void crearCurso(String pCodEscuela, String pNombreCurso, String pCodCurso, int pCantCreditos, int pCantHorasLectivas){        
         Curso nuevoCurso = new Curso(pNombreCurso, pCodCurso, pCantCreditos, pCantHorasLectivas);
-        //salidaControlador.insertarCurso(pCodEscuela, nuevoCurso);
         
         //buscar la Escuela a la que pertenece el curso para hacer la asociacion correspondiente
         for (Escuela escuela : escuelas){ 
+            System.out.print(escuela.getCodEscuela());
             if (pCodEscuela.equals(escuela.getCodEscuela()) == true){
                 escuela.asociarCurso(nuevoCurso);
                 salidaControlador.insertarCurso(pCodEscuela, nuevoCurso);
+                System.out.println(escuelas.toString());
+                System.out.println(cursos.toString());
                 break;
             }
         }  
@@ -210,8 +218,10 @@ public class Controlador {
      */
     public void agregarRequisitoACurso(String codCurso, String codReq){      
         for (Curso curso: cursos){
+            System.out.println("Codigo del curso: " + curso.getCodCurso());
             if(codCurso.equals(curso.getCodCurso()) == true){
                 for (Curso cursoRequisito : cursos){
+                    System.out.println("Codigo del requisito: " + cursoRequisito.getCodCurso());
                     if(codReq.equals(cursoRequisito.getCodCurso()) == true){
                         curso.registrarRequisito(cursoRequisito);
                         salidaControlador.insertarRequisitoXCurso(codCurso, codReq); //Persistencia almacenado
@@ -367,7 +377,7 @@ public class Controlador {
      * @return las escuelas almacenadas en la base de datos en su forma de objeto declarado en el programa
      * @throws SQLException 
      */
-    private ArrayList<Escuela> crearObjetosEscuela() throws SQLException{
+    private void crearObjetosEscuela() throws SQLException{
         ResultSet escuelasObtenidas; 
         escuelasObtenidas = consultaBase.CargarDatosEscuelas();
         
@@ -382,10 +392,10 @@ public class Controlador {
             nombreEscuela = escuelasObtenidas.getString("nombreEscuela");
             codEscuela = escuelasObtenidas.getString("codEscuela");
             System.out.println("Escuelas creadas a partir de la info de la base");
-            System.out.println("nombreEscuela: " + nombreEscuela + "codEscuela: " + codEscuela);
+            System.out.println("nombreEscuela: " + nombreEscuela + " codEscuela: " + codEscuela);
             nuevaEscuela = new Escuela(nombreEscuela, codEscuela);
+            escuelas.add(nuevaEscuela);
         }
-        return escuelas;
     }
 
     /**
@@ -393,7 +403,7 @@ public class Controlador {
      * @return los cursos almacenados en la base de datos en su forma de objeto declarado en el programa
      * @throws SQLException
      */
-    private ArrayList<Curso> crearObjetosCurso() throws SQLException{
+    private void crearObjetosCurso() throws SQLException{
         ResultSet cursosObtenidos; 
         cursosObtenidos = consultaBase.CargarDatosCursos();
         
@@ -413,9 +423,10 @@ public class Controlador {
             cantHorasLectivas = cursosObtenidos.getInt(4);
             codEscuela = cursosObtenidos.getString(5);
             System.out.println("Cursos creados a partir de la info desde la base: \n");
-            System.out.println("codCurso: " + codCurso + "nombreCurso" + nombreCurso + "cantCreditos" + cantCreditos + "cantHorasLectivas" + cantHorasLectivas +"\n");
+            System.out.println("codCurso: " + codCurso + " nombreCurso: " + nombreCurso + " cantCreditos: " + cantCreditos + " cantHorasLectivas: " + cantHorasLectivas +"\n");
             
             nuevoCurso = new Curso(nombreCurso, codCurso, cantCreditos, cantHorasLectivas);
+            cursos.add(nuevoCurso);
             
             for (Escuela escuelaEncontrada : escuelas){
                 if(codEscuela.equals(escuelaEncontrada.getCodEscuela()) == true){
@@ -423,7 +434,6 @@ public class Controlador {
                 }
             }
         }
-        return cursos;
     }
     
      /**
@@ -531,15 +541,24 @@ public class Controlador {
         }
     }
     
-    public void crearObjetos() throws SQLException{
-        crearObjetosEscuela();
-        crearObjetosCurso(); 
-        crearRelacionRequisitosCursos();
-        crearRelacionCorrequisitosCursos();
-        crearObjetosPlanDeEstudio();
-        relacionarCursoPlan();
+    public void generarObjetosEscuela(){
+        try{
+            crearObjetosEscuela(); 
+            crearObjetosCurso(); 
+            crearRelacionRequisitosCursos();
+            crearRelacionCorrequisitosCursos();
+            crearObjetosPlanDeEstudio();
+            relacionarCursoPlan();
+            crearObjetosPlanDeEstudio();
+            relacionarCursoPlan();
+            System.out.println(escuelas.toString());
+            //System.out.println();
+        }
+        catch(SQLException e){
+            e.getErrorCode();
+        }
     }
-        
+     
 }
      
          

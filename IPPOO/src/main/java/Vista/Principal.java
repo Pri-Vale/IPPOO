@@ -20,20 +20,20 @@ import java.io.FileOutputStream;
 import java.util.Properties;
 
 /**
- *
- * @author pri23
+ * Clase Consultas_BaseDatos para realizar consultas a la base de datos
+ * @author Valeria Fernández y Priscilla Ramírez
+ * @version 2.5 
+ * @since 1.0
  */
 public class Principal extends javax.swing.JFrame {
     Controlador contrl = new Controlador();
     
-               
     /**
      * Creates new form Principal
      */
     public Principal(){
-        initComponents();
-        
-        
+        initComponents();  
+        contrl.generarObjetosEscuela();
     }
 
     /**
@@ -1191,7 +1191,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_tCodigoEscuelaActionPerformed
 
     private void bRegEsqAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegEsqAreaActionPerformed
-        Controlador entradaCon = new Controlador();
+
         if(this.tNombreEA.getText().equals("")){
             JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de escuela válido");
         }
@@ -1201,7 +1201,7 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un codigo de escuela válido");
         }
         try {
-            entradaCon.crearEscuela(tNombreEA.getText(), tCodigoEscuela.getText());
+            contrl.crearEscuela(tNombreEA.getText(), tCodigoEscuela.getText());
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1235,8 +1235,6 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cantHorasLectivasActionPerformed
 
     private void bRegistrarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarCursoActionPerformed
-        Controlador entradaCon = new Controlador();
-        //String nombreEscuela = cbNombresEscuelas.getSelectedItem().toString();
         if(this.tNombreCurso.getText().equals("")){
             JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de curso válido");
         }
@@ -1262,7 +1260,7 @@ public class Principal extends javax.swing.JFrame {
         //validar num de 4 dig
         //validar que no repita el num 
         
-        entradaCon.crearCurso(seleccionarCodigoEscuela(cbNombresEscuelas), this.tNombreCurso.getText(), codCurso, cantCreditos, cantHorasLectivas);
+        contrl.crearCurso(seleccionarCodigoEscuela(cbNombresEscuelas), this.tNombreCurso.getText(), codCurso, cantCreditos, cantHorasLectivas);
          
         
     }//GEN-LAST:event_bRegistrarCursoActionPerformed
@@ -1407,8 +1405,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cbCodigosCursosDeEscuelaActionPerformed
 
     private void bRegistrarCorrequisitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarCorrequisitoActionPerformed
-        //String nombreEscuela = cbEscuelasPropietariasCurso.getSelectedItem().toString();
-        //String codEscuela = contrl.obtenerCodEscuela(nombreEscuela);
+
         try{
             String codCurso = cbCodigosCursosDeEscuela.getSelectedItem().toString();
             String codCursoCorrequisito = cbCodigoCursoCorreq.getSelectedItem().toString();

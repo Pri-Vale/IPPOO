@@ -60,8 +60,8 @@ public class Escuela{
     }
             
     /**
-     * 
-     * @param pNumPlan
+     * Método que permite agregar planes de estudio a una escuela
+     * @param pNumPlan número del plan de estudio 
      * @param pFechaVigencia 
      */
     public void agregarPlanesEstudio(int pNumPlan, Date pFechaVigencia){
@@ -71,8 +71,8 @@ public class Escuela{
     }
     
     /**
-     * 
-     * @param pCurso 
+     * Método que permite asociar cursos con una escuela 
+     * @param pCurso el objeto de tipo Curso que se asociará con la escuela
      */
     public void asociarCurso(Curso pCurso){
         misCursos.add(pCurso);

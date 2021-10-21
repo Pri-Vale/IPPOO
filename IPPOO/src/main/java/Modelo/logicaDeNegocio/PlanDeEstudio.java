@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modelo.logicaDeNegocio;
 
 
@@ -27,10 +22,16 @@ public class PlanDeEstudio {
     public PlanDeEstudio(){
         
     }    
+    
+    /**
+     * Constructor para objetos de la clase PlanDeEstudio
+     * @param codPlanEstudio número del plan de estudios (consecutivo numérico de 4 dígitos)
+     * @param fechaVigencia 
+     */
     public PlanDeEstudio(int codPlanEstudio, Date fechaVigencia) {
         this.codPlanEstudio = codPlanEstudio;
         this.fechaVigencia = fechaVigencia;
-        //ArrayList<Bloque> bloques = new ArrayList<Bloque>();
+        this.bloques = new ArrayList<Bloque>();
     }
 
     public int getCodPlanEstudio() {
@@ -66,9 +67,8 @@ public class PlanDeEstudio {
     public Bloque agregarBloque(String pIdBloque){
         //validación de si existe o no
         Bloque bloqueNuevo = new Bloque(pIdBloque);
-        ArrayList<Bloque> bloques = new ArrayList<Bloque>();
         //me parece que acá no hace falta declarar un nuevo arraylist de bloques pq ya está el creado en los atributos de la clase
-        //entonces más bien lo inicializas en el constructor (te lo dejé comentado) y acá solo agregas los bloques ahí :D
+        //entonces más bien lo inicializas en el constructor y acá solo agregas los bloques ahí :D
         bloques.add(bloqueNuevo);
         return bloqueNuevo;
     }
