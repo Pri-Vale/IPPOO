@@ -1544,15 +1544,15 @@ public class Principal extends javax.swing.JFrame {
     
     private void poblarCboxCreditos(JComboBox cbox_Creditos){
         int contador = 0;
-        while (10 > contador){
+        while (4 >= contador){
             cbox_Creditos.addItem(contador);
             contador++;
         }   
     } 
     
     private void poblarCboxHorasLectivas(JComboBox cbox_horasLectivas){
-        int contador = 0;
-        while (24 > contador){
+        int contador = 1;
+        while (5 >= contador){
             cbox_horasLectivas.addItem(contador);
             contador++;
         }  
