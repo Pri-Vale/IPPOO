@@ -2,17 +2,11 @@ package Modelo.logicaDeNegocio;
 
 import java.util.ArrayList;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 /**
- * Abstraccion de la clase Curso y su informacion referente
- * @author Valeria
- * @version 08 octubre, 2021
+ * Abstracción de la clase Curso y su informacion referente
+ * @author Valeria Fernández y Priscilla Ramírez
+ * @version 1.4
+ * @since 1.0
  */
 public class Curso {
     private String nombreCurso;
@@ -30,20 +24,25 @@ public class Curso {
     public Curso(){
         
     }
+    
     /**
      * Constructor para objetos de la clase Curso
-     * @param pNombreCurso
-     * @param pCodCurso
-     * @param pCantCreditos
-     * @param pCantHorasLectivas 
+     * @param pNombreCurso nombre del curso
+     * @param pCodCurso código del curso alfanumérico de 6 caracteres (2 caracteres del código de la escuela + 4 enteros positivos)
+     * @param pCantCreditos valor entero que representa la cantidad de créditos (rango 0-4)
+     * @param pCantHorasLectivas valor entero que representa la cantidad de horas lectivas (rango 1-5)
      */
     public Curso(String pNombreCurso, String pCodCurso, int pCantCreditos, int pCantHorasLectivas) {
-        setNombreCurso(pNombreCurso);
-        setCodCurso(pCodCurso);
-        setCantCreditos(pCantCreditos);
-        setCantHorasLectivas(pCantHorasLectivas);
+        this.nombreCurso = pNombreCurso;
+        this.codCurso = pCodCurso;
+        this.cantCreditos = pCantCreditos;
+        this.cantHorasLectivas = pCantHorasLectivas;
     }
-
+    
+    /**
+     * Constructor para objetos de la clase Curso
+     * @param codCurso código del curso alfanumérico de 6 caracteres (2 caracteres del código de la escuela + 4 enteros positivos)
+     */
     public Curso(String codCurso) {
         this.codCurso = codCurso;
     }
@@ -80,11 +79,52 @@ public class Curso {
         this.cantHorasLectivas = pCantHorasLectivas;
     }
 
-    @Override
-    public String toString() {
-        return "Curso{" + "nombreCurso=" + nombreCurso + ", codCurso=" + codCurso + ", cantCreditos=" + cantCreditos + ", cantHorasLectivas=" + cantHorasLectivas + ", requisitos=" + requisitos + ", correquisitos=" + correquisitos + '}';
+    /**
+     * Método para registrar un requisito perteneciente a un curso
+     * @param pCurso el curso que es requisito de un curso en particular
+     */
+    public void registrarRequisito(Curso pCurso){
+        requisitos.add(pCurso);
+        //existe o no el curso que se va a agregar como requisito
+        //requisito ya está agregado al curso como requisito o correquisito
     }
     
-    
+    /**
+     * Método para registrar un correquisito perteneciente a un curso
+     * @param pCurso el curso que es correquisito de un curso en particular
+     */
+    public void registrarCorrequisito(Curso pCurso){
+        correquisitos.add(pCurso);
+        //existe o no el curso que se va a agregar como requisito
+        //requisito ya está agregado al curso como requisito o correquisito
+    }
    
+    /**
+     * Método para representar en caracteres el estado de un objeto de tipo Curso
+     * @return a representación en caracteres de los atributos del objeto de tipo Curso
+     */
+    @Override
+    public String toString() {
+        String msg ="";
+        
+        msg += "Curso{\n";
+        msg += "Nombre del curso: " + nombreCurso + "\n";
+        msg += "Código del curso: " + codCurso + "\n";
+        msg += "Cantidad de créditos: " + cantCreditos + "\n";
+        msg += "Cantidad de horas lectivas " +cantHorasLectivas + "\n";
+        msg += "Requisitos: \n";
+        for (Curso requisito : requisitos){
+            msg += requisito.getCodCurso() + "\n";
+            msg += requisito.getNombreCurso() + "\n";
+        } 
+        msg += "Correquisitos: \n";
+        for (Curso correquisito : correquisitos){
+            msg += correquisito.getCodCurso() + "\n";
+            msg += correquisito.getNombreCurso() + "\n";
+        }
+        msg += "}";
+        
+        return msg;
+    }
+ 
 }
