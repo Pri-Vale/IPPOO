@@ -120,7 +120,7 @@ public class Principal extends javax.swing.JFrame {
         tNombreCursoConsultarReqs = new javax.swing.JTextField();
         lbReqsConsultarReqs = new javax.swing.JLabel();
         scrollPaneReqsCurso = new javax.swing.JScrollPane();
-        llistaReqs = new javax.swing.JList<>();
+        tablaReques = new javax.swing.JTable();
         bConsultarReqs = new javax.swing.JButton();
         rqConsultarPlanesConCiertoCurso = new javax.swing.JFrame();
         lbPlanesEstudioCiertoCurso = new javax.swing.JLabel();
@@ -144,7 +144,7 @@ public class Principal extends javax.swing.JFrame {
         bConsultarCorreqs = new javax.swing.JButton();
         lbCorreqsConsultarCorreqs = new javax.swing.JLabel();
         scrollPaneCorreqs = new javax.swing.JScrollPane();
-        listaCorreqs = new javax.swing.JList<>();
+        tablaCorreques = new javax.swing.JTable();
         rqAccionesEliminacion = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
         bVentanaRegistrarEscuela = new javax.swing.JButton();
@@ -762,7 +762,18 @@ public class Principal extends javax.swing.JFrame {
         lbReqsConsultarReqs.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbReqsConsultarReqs.setText("Requisitos:");
 
-        scrollPaneReqsCurso.setViewportView(llistaReqs);
+        tablaReques.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        scrollPaneReqsCurso.setViewportView(tablaReques);
 
         bConsultarReqs.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         bConsultarReqs.setText("Consultar requisitos");
@@ -932,8 +943,20 @@ public class Principal extends javax.swing.JFrame {
         lbEscuelasConsultarCorreqs.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbEscuelasConsultarCorreqs.setText("Escuela a la que pertenece el curso:");
 
+        cbEscuelasConsultarCorreqs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEscuelasConsultarCorreqsActionPerformed(evt);
+            }
+        });
+
         lbCodCursoConsultarCorreqs.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbCodCursoConsultarCorreqs.setText("Código del curso:");
+
+        cbCodsCursoConsultarCorreqs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCodsCursoConsultarCorreqsActionPerformed(evt);
+            }
+        });
 
         lbNombreCursoConsultaCorreqs.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbNombreCursoConsultaCorreqs.setText("Nombre del curso:");
@@ -949,7 +972,18 @@ public class Principal extends javax.swing.JFrame {
         lbCorreqsConsultarCorreqs.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbCorreqsConsultarCorreqs.setText("Correquisitos:");
 
-        scrollPaneCorreqs.setViewportView(listaCorreqs);
+        tablaCorreques.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        scrollPaneCorreqs.setViewportView(tablaCorreques);
 
         javax.swing.GroupLayout rqConsultarCorrequesCursoLayout = new javax.swing.GroupLayout(rqConsultarCorrequesCurso.getContentPane());
         rqConsultarCorrequesCurso.getContentPane().setLayout(rqConsultarCorrequesCursoLayout);
@@ -1398,7 +1432,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cbEscuelasPropietariasCursoActionPerformed
 
     private void cbCodigosCursosDeEscuelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCodigosCursosDeEscuelaActionPerformed
+        this.cbCodigoCursoReq.removeAllItems();
         contrl.poblarCboxCursos(cbCodigoCursoReq);
+        this.cbCodigoCursoCorreq.removeAllItems();
         contrl.poblarCboxCursos(cbCodigoCursoCorreq);
         cbCodigoCursoReq.setSelectedIndex(-1);
         cbCodigoCursoCorreq.setSelectedIndex(-1);
@@ -1436,7 +1472,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void bConsultarReqsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultarReqsActionPerformed
         String codCurso = cbCodsCursosConsultarReqs.getSelectedItem().toString();
-        contrl.consultarRequisitos(codCurso);
+        contrl.poblarTablaRequisitos(codCurso, tablaReques);
+        
     }//GEN-LAST:event_bConsultarReqsActionPerformed
 
     private void bConsultarCorreqsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultarCorreqsActionPerformed
@@ -1454,11 +1491,14 @@ public class Principal extends javax.swing.JFrame {
 
         this.rqConsultarCorrequesCurso.setVisible(true); 
         this.rqConsultarCorrequesCurso.setLocationRelativeTo(null);
+        contrl.poblarCboxEscuelas(cbEscuelasConsultarCorreqs);
+        this.tNombreCursoConsultarCorreqs.setEditable(false);
         
     }//GEN-LAST:event_bVentanaConsultarCorrequisitosActionPerformed
 
     private void cbEscuelasConsultarReqsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEscuelasConsultarReqsActionPerformed
         String codEscuela = seleccionarCodigoEscuela(cbEscuelasConsultarReqs);
+        System.out.println("codEscuela es" + codEscuela);
         this.cbCodsCursosConsultarReqs.removeAllItems();
         this.tNombreCursoConsultarReqs.setText(null); 
         try{
@@ -1532,6 +1572,28 @@ public class Principal extends javax.swing.JFrame {
     private void bVentanaEliminarReqCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVentanaEliminarReqCursoActionPerformed
       this.rqAccionesEliminacion.setVisible(true);
     }//GEN-LAST:event_bVentanaEliminarReqCursoActionPerformed
+
+    private void cbEscuelasConsultarCorreqsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEscuelasConsultarCorreqsActionPerformed
+        String codEscuela = seleccionarCodigoEscuela(cbEscuelasConsultarCorreqs);
+        System.out.println("codEscuela es" + codEscuela);
+        this.cbCodsCursoConsultarCorreqs.removeAllItems();
+        this.tNombreCursoConsultarCorreqs.setText(null); 
+        try{
+            contrl.poblarCboxCursosDeEscuela(cbCodsCursoConsultarCorreqs, codEscuela);
+        }catch(NullPointerException e){
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_cbEscuelasConsultarCorreqsActionPerformed
+
+    private void cbCodsCursoConsultarCorreqsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCodsCursoConsultarCorreqsActionPerformed
+        try{
+            String codCurso = cbCodsCursoConsultarCorreqs.getSelectedItem().toString();
+            String nombreCurso = contrl.obtenerNombreCurso(codCurso);
+            this.tNombreCursoConsultarCorreqs.setText(nombreCurso);            
+        }catch(NullPointerException e){
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_cbCodsCursoConsultarCorreqsActionPerformed
 
     private String seleccionarCodigoEscuela(JComboBox cbox_escuela){
         String nombreEscuela = cbox_escuela.getSelectedItem().toString();
@@ -1691,8 +1753,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lbPlanesEstudioConCiertoCurso;
     private javax.swing.JLabel lbReqs;
     private javax.swing.JLabel lbReqsConsultarReqs;
-    private javax.swing.JList<String> listaCorreqs;
-    private javax.swing.JList<String> llistaReqs;
     private javax.swing.JFrame rQRegCursos;
     private javax.swing.JFrame rQRegistrarEsqArea;
     private javax.swing.JFrame rqAccionesEliminacion;
@@ -1713,7 +1773,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField tNombreEA;
     private javax.swing.JTextField tNumCodCurso;
     private javax.swing.JTable tabPlanEstudio;
+    private javax.swing.JTable tablaCorreques;
     private javax.swing.JTable tablaInfoPlanesEstudioCiertoCurso;
+    private javax.swing.JTable tablaReques;
     private javax.swing.JTextField txtCodigoCurso;
     private javax.swing.JTextField txtCodigoPlan;
     // End of variables declaration//GEN-END:variables

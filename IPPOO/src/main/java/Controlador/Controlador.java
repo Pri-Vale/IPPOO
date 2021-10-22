@@ -75,11 +75,12 @@ public class Controlador {
      * @param cbox_escuelas 
      */
     public void poblarCboxEscuelas(JComboBox cbox_escuelas){
-        ArrayList<String> listaEscuelas = consultaBase.seleccionarEscuelas();
+        //ArrayList<String> listaEscuelas = consultaBase.seleccionarEscuelas();
         
         int contador = 0;
-        while (listaEscuelas.size() > contador){
-            cbox_escuelas.addItem(listaEscuelas.get(contador));
+        while (escuelas.size() > contador){
+            cbox_escuelas.addItem(escuelas.get(contador).getNombreEscuela());
+            System.out.println("sirve cbox");
             contador++;
         }
         
@@ -130,7 +131,8 @@ public class Controlador {
                 escuelaEncontrada.asociarCurso(nuevoCurso);
                 cursos.add(nuevoCurso);
                 //insertar cod escuela en la tabla intermedia
-                salidaControlador.insertarCurso(pCodEscuela, nuevoCurso);
+                salidaControlador.insertarCurso(nuevoCurso);
+                salidaControlador.insertarCursoXEscuela(pCodEscuela, nuevoCurso);
                 System.out.println(escuelas.toString());
                 System.out.println(cursos.toString());
                 break;
@@ -171,15 +173,25 @@ public class Controlador {
      * @param codEscuela 
      */
     public void poblarCboxCursosDeEscuela(JComboBox cbox_cursos, String codEscuela){
-        ArrayList<String> listaCursosDeEscuela = consultaBase.seleccionarCursosDeEscuela(codEscuela);
-
+        //ArrayList<String> listaCursosDeEscuela = consultaBase.seleccionarCursosDeEscuela(codEscuela);
+        ArrayList<Curso> cursosEscuela = new ArrayList<>();
+        
         int contador = 0;
-        while (listaCursosDeEscuela.size() > contador){
-            cbox_cursos.addItem(listaCursosDeEscuela.get(contador));
-            contador++;
-            System.out.println("Contador " + contador);
+        
+        for (Escuela escuelaEncontrada : escuelas){
+            System.out.println(codEscuela + "abeja");
+            System.out.println(escuelaEncontrada.getCodEscuela() + "abeja2");
+            if(codEscuela.equals(escuelaEncontrada.getCodEscuela()) == true){
+                cursosEscuela = escuelaEncontrada.getCursos();
+                System.out.println(cursosEscuela);
+                while (cursosEscuela.size() > contador){
+                    cbox_cursos.addItem(cursosEscuela.get(contador).getCodCurso());
+                    contador++;
+                    System.out.println("Contador " + contador);
+                }
+            }
         }
-
+       
     //excepcion si lista vacia 
     }
     
@@ -188,11 +200,11 @@ public class Controlador {
      * @param cbox_cursos 
      */
     public void poblarCboxCursos(JComboBox cbox_cursos){
-        ArrayList<String> listaCursos = consultaBase.seleccionarCursos();
+        //ArrayList<String> listaCursos = consultaBase.seleccionarCursos();
 
         int contador = 0;
-        while (listaCursos.size() > contador){
-            cbox_cursos.addItem(listaCursos.get(contador));
+        while (cursos.size() > contador){
+            cbox_cursos.addItem(cursos.get(contador).getCodCurso());
             contador++;
         }
 
@@ -275,8 +287,52 @@ public class Controlador {
      * @param codCurso
      * @return 
      */
-    public ArrayList<String> consultarRequisitos(String codCurso){
-        return null;
+    private ArrayList<Curso> consultarRequisitos(String codCurso){
+        ArrayList<Curso> requisitos = new ArrayList<>();
+        for (Curso curso : cursos){
+            if(codCurso.equals(curso.getCodCurso()) == true){
+                requisitos = curso.getRequisitos();
+                break;
+            }
+        }
+        return requisitos;
+    }
+    
+    public void poblarTablaRequisitos(String codCursoReqs, JTable tablaRequisitos){
+        ArrayList<Curso> requisitos = consultarRequisitos(codCursoReqs);
+        
+        String col[] = {"Código curso", "Nombre curso", "Créditos", "Horas lectivas"};
+        
+        DefaultTableModel modelo = new DefaultTableModel(col, 0);
+  
+        for (int i = 0; i < requisitos.size(); i++){
+            String codCurso = requisitos.get(i).getCodCurso();
+            String nombreCurso = requisitos.get(i).getNombreCurso();
+            int cantCreditos = requisitos.get(i).getCantCreditos();
+            int cantHorasLectivas = requisitos.get(i).getCantHorasLectivas();
+            
+             Object[] datos = {codCurso, nombreCurso, cantCreditos, cantHorasLectivas};
+             
+             modelo.addRow(datos);
+        }   
+        
+        tablaRequisitos = new JTable(modelo);
+    }
+    
+    /**
+     * 
+     * @param codCurso
+     * @return 
+     */
+    public ArrayList<Curso> consultarCorrequisitos(String codCurso){
+        ArrayList<Curso> correquisitos = new ArrayList<>();
+        for (Curso curso : cursos){
+            if(codCurso.equals(curso.getCodCurso()) == true){
+                correquisitos = curso.getCorrequisitos();
+                break;
+            }
+        }
+        return correquisitos;
     }
     
     /**
@@ -424,20 +480,36 @@ public class Controlador {
             nombreCurso = cursosObtenidos.getString(2);
             cantCreditos = cursosObtenidos.getInt(3);
             cantHorasLectivas = cursosObtenidos.getInt(4);
-            codEscuela = cursosObtenidos.getString(5);
             System.out.println("Cursos creados a partir de la info desde la base: \n");
             System.out.println("codCurso: " + codCurso + " nombreCurso: " + nombreCurso + " cantCreditos: " + cantCreditos + " cantHorasLectivas: " + cantHorasLectivas +"\n");
             
             nuevoCurso = new Curso(nombreCurso, codCurso, cantCreditos, cantHorasLectivas);
             cursos.add(nuevoCurso);
-            
+        }
+    }
+    
+    private void crearRelacionCursosEscuela() throws SQLException{
+        ResultSet cursosObtenidosEscuela; 
+        cursosObtenidosEscuela = consultaBase.CargarDatosCursosDeEscuela();
+        
+        String codCurso;
+        String codEscuela;
+        
+        while (cursosObtenidosEscuela.next()){
+            codCurso = cursosObtenidosEscuela.getString(1);
+            codEscuela = cursosObtenidosEscuela.getString(2);
             for (Escuela escuelaEncontrada : escuelas){
                 if(codEscuela.equals(escuelaEncontrada.getCodEscuela()) == true){
-                    escuelaEncontrada.asociarCurso(nuevoCurso);
+                    for (Curso cursoEncontrado : cursos ){
+                        if(codCurso.equals(cursoEncontrado.getCodCurso()) == true){
+                            escuelaEncontrada.asociarCurso(cursoEncontrado);
+                        }
+                    }
                 }
             }
         }
     }
+    
     
      /**
      * Método que relaciona los objetos de tipo Curso que son correquisitos de un curso con su curso respectivo
@@ -527,6 +599,7 @@ public class Controlador {
         String semestreActivo;
         
         ArrayList<PlanDeEstudio> planes;
+        ArrayList<Bloque> bloques;
         
         while (cursosObtenidosPlan.next()){
             codCurso = cursosObtenidosPlan.getString(1);
@@ -536,7 +609,16 @@ public class Controlador {
                 planes = escuelaEncontrada.getPlanesDeEstudio();
                 for (PlanDeEstudio plan : planes){
                     if (plan.getCodPlanEstudio() == numPlan){
-                        //
+                        bloques = plan.getBloques();
+                        for (Bloque bloqueEncontrado : bloques){
+                            if (semestreActivo.equals(bloqueEncontrado.getIdBloque()) == true){
+                                for(Curso cursoEncontrado : cursos){
+                                    if(codCurso.equals(cursoEncontrado.getCodCurso()) == true){
+                                        bloqueEncontrado.agregarCurso(cursoEncontrado);
+                                    }
+                                }   
+                            }
+                        }
                     }
                 }
             }
@@ -547,6 +629,7 @@ public class Controlador {
         try{
             crearObjetosEscuela(); 
             crearObjetosCurso(); 
+            crearRelacionCursosEscuela();
             crearRelacionRequisitosCursos();
             crearRelacionCorrequisitosCursos();
             crearObjetosPlanDeEstudio();
@@ -554,7 +637,7 @@ public class Controlador {
             crearObjetosPlanDeEstudio();
             relacionarCursoPlan();
             System.out.println(escuelas.toString());
-            //System.out.println();
+            System.out.println(cursos.toString());
         }
         catch(SQLException e){
             e.getErrorCode();
