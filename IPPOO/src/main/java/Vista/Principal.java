@@ -33,7 +33,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal(){
         initComponents();  
-        contrl.generarObjetosEscuela();
+        contrl.generarObjetos();
     }
 
     /**
@@ -1209,8 +1209,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bRegEsqAreaActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-    this.tCodigoEscuela.setText(null);
-    this.tNombreEA.setText(null);
+        this.tCodigoEscuela.setText(null);
+        this.tNombreEA.setText(null);
     }//GEN-LAST:event_jButton6ActionPerformed
 
 

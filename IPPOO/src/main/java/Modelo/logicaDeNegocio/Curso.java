@@ -81,6 +81,14 @@ public class Curso {
     public void setCantHorasLectivas(int pCantHorasLectivas) {
         this.cantHorasLectivas = pCantHorasLectivas;
     }
+    
+    public ArrayList<Curso> getRequisitos(){
+        return requisitos;
+    }
+    
+    public ArrayList<Curso> getCorrequisitos(){
+        return correquisitos;
+    }
 
     /**
      * Método para registrar un requisito perteneciente a un curso
