@@ -371,6 +371,11 @@ public class Consultas_BaseDatos {
         return cursosRS;
     }
     
+    /**
+     * 
+     * @return
+     * @throws SQLException 
+     */
     public ResultSet CargarDatosRequisitos() throws SQLException{
         ResultSet requisitosRS = null;
         try{
@@ -418,7 +423,6 @@ public class Consultas_BaseDatos {
         }
         return cursosPlanesRS;
     }
-    
-    
+       
 }
 

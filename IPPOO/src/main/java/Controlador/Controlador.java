@@ -124,17 +124,21 @@ public class Controlador {
         Curso nuevoCurso = new Curso(pNombreCurso, pCodCurso, pCantCreditos, pCantHorasLectivas);
         
         //buscar la Escuela a la que pertenece el curso para hacer la asociacion correspondiente
-        for (Escuela escuela : escuelas){ 
-            System.out.print(escuela.getCodEscuela());
-            if (pCodEscuela.equals(escuela.getCodEscuela()) == true){
-                escuela.asociarCurso(nuevoCurso);
+        for (Escuela escuelaEncontrada : escuelas){ 
+            System.out.print(escuelaEncontrada.getCodEscuela());
+            if (pCodEscuela.equals(escuelaEncontrada.getCodEscuela()) == true){
+                escuelaEncontrada.asociarCurso(nuevoCurso);
+                cursos.add(nuevoCurso);
+                //insertar cod escuela en la tabla intermedia
                 salidaControlador.insertarCurso(pCodEscuela, nuevoCurso);
                 System.out.println(escuelas.toString());
                 System.out.println(cursos.toString());
                 break;
             }
         }  
-        //falta manejo de excepciones       
+        //falta manejo de excepciones
+        //existe curso en escuela
+        //existe escuela
     }
     
     /**
@@ -156,7 +160,7 @@ public class Controlador {
         //Persistencia almacenado de plan de estudios
         salidaControlador.insertarPlanEstudio(plan,pNombreEscuela);
         
-        salidaControlador.insertarCursoXPlan(pCodigoCurso, plan,pBloqueActivo);
+        salidaControlador.insertarCursoXPlan(pCodigoCurso, plan, pBloqueActivo);
         
         System.out.println("FUN4 COMPLETE");
     }
@@ -310,6 +314,8 @@ public class Controlador {
             modelo.addRow(fila);
         }
     }
+    
+    //RECORDAR PASAR A CLASE PDF :D
     /**
      * 
      * @param documento
@@ -374,7 +380,6 @@ public class Controlador {
     
     /**
      * Método que toma los datos en la base y crea los objetos de tipo Escuela
-     * @return las escuelas almacenadas en la base de datos en su forma de objeto declarado en el programa
      * @throws SQLException 
      */
     private void crearObjetosEscuela() throws SQLException{
@@ -383,9 +388,7 @@ public class Controlador {
         
         String nombreEscuela;
         String codEscuela;
-        ArrayList<PlanDeEstudio> planesDeEstudio;
-        
-        
+  
         Escuela nuevaEscuela;
         
         while (escuelasObtenidas.next()){
@@ -400,7 +403,6 @@ public class Controlador {
 
     /**
      * Método que toma los datos en la base y crea los objetos de tipo Curso y su relación con los objetos de tipo Escuela
-     * @return los cursos almacenados en la base de datos en su forma de objeto declarado en el programa
      * @throws SQLException
      */
     private void crearObjetosCurso() throws SQLException{
@@ -412,6 +414,7 @@ public class Controlador {
         String codCurso;
         int cantCreditos;
         int cantHorasLectivas;
+        //cambiar porque existe la tabla intermedia
         String codEscuela;
         
         Curso nuevoCurso;
@@ -482,7 +485,7 @@ public class Controlador {
                 if (codCurso.equals(cursoEncontrado.getCodCurso()) == true){
                     for (Curso cursoCorreq : cursos){
                         if (codCorrequisito.equals(cursoCorreq.getCodCurso()) == true){
-                            cursoEncontrado.registrarRequisito(cursoCorreq);
+                            cursoEncontrado.registrarCorrequisito(cursoCorreq);
                         }
                     }
                 }
@@ -499,10 +502,9 @@ public class Controlador {
         planesObtenidos = consultaBase.CargarDatosPlanesDeEstudio();
         
         int numPlan;
+        //hacer conversion de sql a sql convencional
         Date fechaVigencia; 
         String codEscuela;
-        
-        PlanDeEstudio nuevoPlan;
         
         while(planesObtenidos.next()){
             numPlan = planesObtenidos.getInt(1);
@@ -517,8 +519,8 @@ public class Controlador {
     }
     
     private void relacionarCursoPlan() throws SQLException{
-        ResultSet cursosObtenidosRS;
-        cursosObtenidosRS = consultaBase.CargarDatosCursosPertenecientesPlan();
+        ResultSet cursosObtenidosPlan;
+        cursosObtenidosPlan = consultaBase.CargarDatosCursosPertenecientesPlan();
         
         String codCurso;
         int numPlan; 
@@ -526,10 +528,10 @@ public class Controlador {
         
         ArrayList<PlanDeEstudio> planes;
         
-        while (cursosObtenidosRS.next()){
-            codCurso = cursosObtenidosRS.getString(1);
-            numPlan = cursosObtenidosRS.getInt(2);
-            semestreActivo = cursosObtenidosRS.getString(3);
+        while (cursosObtenidosPlan.next()){
+            codCurso = cursosObtenidosPlan.getString(1);
+            numPlan = cursosObtenidosPlan.getInt(2);
+            semestreActivo = cursosObtenidosPlan.getString(3);
             for (Escuela escuelaEncontrada : escuelas){
                 planes = escuelaEncontrada.getPlanesDeEstudio();
                 for (PlanDeEstudio plan : planes){
@@ -541,7 +543,7 @@ public class Controlador {
         }
     }
     
-    public void generarObjetosEscuela(){
+    public void generarObjetos(){
         try{
             crearObjetosEscuela(); 
             crearObjetosCurso(); 
