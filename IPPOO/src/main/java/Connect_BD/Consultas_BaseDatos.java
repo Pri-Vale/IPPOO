@@ -110,17 +110,26 @@ public class Consultas_BaseDatos {
      * @param pCodEscuela
      * @param pCurso 
      */
-    public void insertarCurso(String pCodEscuela, Curso pCurso){
+    public void insertarCurso(Curso pCurso){
         try{
             String query="INSERT INTO Curso VALUES('"+ pCurso.getCodCurso()+"','"
                     + pCurso.getNombreCurso() + "',"
                     + pCurso.getCantCreditos()+ ","
-                    + pCurso.getCantHorasLectivas()+ ",'"
-                    + pCodEscuela + "')";
+                    + pCurso.getCantHorasLectivas()+ ")";
             System.out.println(query);
             EjecutarQuery(query);             
         }
         catch(SQLException e){
+            e.getErrorCode();
+        }
+    }
+    
+    public void insertarCursoXEscuela(String pCodEscuela, Curso pCurso){
+        try{
+            String query="INSERT INTO CursoXEscuela VALUES('"+ pCurso.getCodCurso()+"','" + pCodEscuela + "')";
+            System.out.println(query);
+            EjecutarQuery(query);
+        }catch(SQLException e){
             e.getErrorCode();
         }
     }
@@ -370,6 +379,19 @@ public class Consultas_BaseDatos {
         }
         return cursosRS;
     }
+    
+    public ResultSet CargarDatosCursosDeEscuela() throws SQLException{
+        ResultSet cursosEscuelaRS = null;
+        try{
+            String sqlQuery = "SELECT * FROM CursoXEscuela";
+            cursosEscuelaRS = EjecutarSelectRS(sqlQuery);
+            return cursosEscuelaRS;
+        }catch(SQLException e){
+            e.getErrorCode();
+        }
+        return cursosEscuelaRS;
+    }
+    
     
     /**
      * 
