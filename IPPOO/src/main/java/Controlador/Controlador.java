@@ -1,7 +1,8 @@
 package Controlador;
 
 import Connect_BD.Consultas_BaseDatos;
-import Correo.Correo;
+import API.Correo;
+import API.PDF;
 import Modelo.logicaDeNegocio.Bloque;
 import Modelo.logicaDeNegocio.Escuela;
 import Modelo.logicaDeNegocio.Curso;
@@ -46,6 +47,7 @@ public class Controlador {
     
     private Consultas_BaseDatos consultaBase = new Consultas_BaseDatos();
     private Correo salidaCorreo=new Correo();
+    private PDF salidaPDF =new PDF();
     
     
     /**
@@ -88,7 +90,7 @@ public class Controlador {
     }
     
     /**
-     * 
+     * Vale porque tenemos 2 de escuelas? 
      * @param cboxPlanesEst 
      */
     public void poblarCboxEscuelas2(JComboBox cboxPlanesEst){
@@ -319,12 +321,24 @@ public class Controlador {
         tablaRequisitos = new JTable(modelo);
     }
     
+    public void poblarCBoxRequisitos(JComboBox jCBRequisitosEliminar, String codCursoReqs){
+        ArrayList<Curso> requisitos = consultarRequisitos(codCursoReqs);
+        
+        
+        int contador = 0;
+        while (requisitos.size() > contador){
+            jCBRequisitosEliminar.addItem(requisitos.get(contador).getCodCurso());
+            contador++;
+        }
+        
+    }
+    
     /**
      * 
      * @param codCurso
      * @return 
      */
-    public ArrayList<Curso> consultarCorrequisitos(String codCurso){
+    private ArrayList<Curso> consultarCorrequisitos(String codCurso){
         ArrayList<Curso> correquisitos = new ArrayList<>();
         for (Curso curso : cursos){
             if(codCurso.equals(curso.getCodCurso()) == true){
@@ -381,43 +395,7 @@ public class Controlador {
     public void poblarPDF(Document documento,String escuelaBuscar) throws SQLException{
         ResultSet rst = salidaControlador.verPlanDeEstudio(escuelaBuscar);
         
-        try{
-            String ruta = System.getProperty("user.home");
-            //PdfWriter.getInstance(documento, new FileOutputStream(ruta+"\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf"));
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta+"\\OneDrive\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf"));
-            documento.open();
-
-            PdfPTable tabla = new PdfPTable(7);
-            tabla.addCell("Codigo de curso");
-            tabla.addCell("Nombre del curso");
-            tabla.addCell("Cantidad de Creditos");
-            tabla.addCell("Cantidad de horas lectivas");
-            tabla.addCell("Escuela asociada");
-            tabla.addCell("Curso");
-            tabla.addCell("Codigo de plan");
-
-            if(rst.next()){
-                do{
-                    tabla.addCell(rst.getString(1));
-                    tabla.addCell(rst.getString(2));
-                    tabla.addCell(rst.getString(3));
-                    tabla.addCell(rst.getString(4));
-                    tabla.addCell(rst.getString(5));
-                    tabla.addCell(rst.getString(6));
-                    tabla.addCell(rst.getString(7));
-
-                }while(rst.next());
-                documento.add(tabla);
-
-
-            }else{
-                System.out.println("No hay datos");
-            }
-            documento.close();
-        }
-        catch(DocumentException | FileNotFoundException e){
-            System.out.println(e);
-        }
+        this.salidaPDF.generarPDF(documento,rst);
     }
     
     /**
@@ -642,6 +620,34 @@ public class Controlador {
         catch(SQLException e){
             e.getErrorCode();
         }
+    }
+    
+    
+    public void eliminarRequisitoCurso(String cursoEliminar,String requisitoEliminar){
+        for (Curso curso: cursos){
+            //System.out.println("Codigo del curso: " + curso.getCodCurso());
+            if(cursoEliminar.equals(curso.getCodCurso()) == true){
+                for (Curso cursoRequisito : cursos){
+                    //System.out.println("Codigo del requisito: " + cursoRequisito.getCodCurso());
+                    if(requisitoEliminar.equals(cursoRequisito.getCodCurso()) == true){
+                        cursoRequisito.eliminarRequisito(curso);//Elimino la relaci[on
+                        this.consultaBase.eliminarRequisitos(cursoEliminar, requisitoEliminar);
+                        
+                    }
+                }    
+            }
+        }
+        
+        
+    }
+    
+    public void eliminarCursoPlanEstudio(String cursoEliminar){
+        
+        
+    }    
+    
+    public void eliminarCurso(String cursoEliminar){
+        
     }
      
 }

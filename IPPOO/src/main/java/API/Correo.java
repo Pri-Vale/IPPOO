@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Correo;
+package API;
 
 import java.util.Properties;
 import javax.activation.DataHandler;
@@ -49,8 +49,8 @@ public class Correo {
         
         BodyPart pdf = new MimeBodyPart();
         String ruta = System.getProperty("user.home");
-        //pdf.setDataHandler(new DataHandler(new FileDataSource(ruta+"\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf")));
-        pdf.setDataHandler(new DataHandler(new FileDataSource(ruta+"\\OneDrive\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf")));
+        pdf.setDataHandler(new DataHandler(new FileDataSource(ruta+"\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf")));
+        //pdf.setDataHandler(new DataHandler(new FileDataSource(ruta+"\\OneDrive\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf")));
         
         //DataHandler dh = new DataHandler(new FileDataSource("C:\\Users\\pri23\\Documents\\GitHub\\IPPOO\\Reportes"));
         

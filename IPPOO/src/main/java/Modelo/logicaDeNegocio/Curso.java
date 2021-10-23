@@ -109,6 +109,11 @@ public class Curso {
         //existe o no el curso que se va a agregar como requisito
         //requisito ya está agregado al curso como requisito o correquisito
     }
+    
+    public void eliminarRequisito(Curso pCurso){
+        requisitos.remove(pCurso);
+    }
+    
    
     /**
      * Método para representar en caracteres el estado de un objeto de tipo Curso
