@@ -445,6 +445,16 @@ public class Consultas_BaseDatos {
         }
         return cursosPlanesRS;
     }
+    
+    public void eliminarRequisitos(String codCurso, String reqCurso){
+        try{
+            String query= "DELETE FROM RequisitoXCurso WHERE codCurso = '" + codCurso +"' AND codRequisito = '" + reqCurso +"'";
+            EjecutarSelectRS(query);
+            System.out.println("Eliminado");
+        }catch(SQLException e){
+            e.getErrorCode();
+        }
+    }
        
 }
 

@@ -47,6 +47,9 @@ public class Bloque {
         //aqui creo que tambien va otra validacion si existe o no 
         cursos.add(curso);
     }
+    public void eliminarCurso(Curso curso){
+        cursos.remove(curso);
+    }
 
     /**
      * Método para representar en caracteres el estado de un objeto de tipo Bloque
