@@ -219,7 +219,6 @@ public class Controlador {
      * @param codEscuela 
      */
     public void poblarCboxCodigosPlan(JComboBox cbox_codigosPlan,String codEscuela){
-        
         ArrayList<String> listaCodPlanes = consultaBase.seleccionarCodPlanes(codEscuela);
         int contador = 0;
         while (listaCodPlanes.size() > contador){
@@ -355,7 +354,7 @@ public class Controlador {
      * @param escuelaBuscar
      * @throws SQLException 
      */
-    public void poblarJTable(JTable table, String escuelaBuscar) throws SQLException{
+    public void poblarCursoEnPlan(JTable table, String escuelaBuscar) throws SQLException{
         //envio la escuela
         
         System.out.println(escuelaBuscar);
@@ -385,7 +384,7 @@ public class Controlador {
         }
     }
     
-    //RECORDAR PASAR A CLASE PDF :D
+    
     /**
      * 
      * @param documento
@@ -411,7 +410,40 @@ public class Controlador {
         }
     }
     
-    
+    public void poblarCBCursosXPlan(JComboBox jCBCursosAsEliminar, String escuelaBuscar, int planBuscar) throws SQLException {
+        //primero debo de  buscar en la escuela 
+        try{
+           for (Escuela escuelaEncontrada : escuelas) {
+            if (escuelaBuscar.equals(escuelaEncontrada.getCodEscuela()) == true) {
+                
+                ArrayList<PlanDeEstudio> planesTotales = escuelaEncontrada.getPlanesDeEstudio();
+                for (int i = 0; i <= planesTotales.size(); i++) {
+                    if (planesTotales.get(i).getCodPlanEstudio() == planBuscar) {
+                        
+                        ArrayList<Bloque> bloqueEncontrados = planesTotales.get(i).getBloques();
+                        for (int y = 0; y <= bloqueEncontrados.size(); y++) {
+                            
+                            for (int j = 0; j <= bloqueEncontrados.size(); j++) {
+                                System.out.println(bloqueEncontrados.size());
+                                jCBCursosAsEliminar.addItem(bloqueEncontrados.get(y).getCursos().get(j));
+                                System.out.println(bloqueEncontrados.get(y).getCursos().get(j));
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                //segundo debo de buscar el plan en la escuela 
+                //debo buscar los cursos asociados
+            }
+        }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+        
     /**
      * Método que toma los datos en la base y crea los objetos de tipo Escuela
      * @throws SQLException 
@@ -644,9 +676,12 @@ public class Controlador {
     public void eliminarCursoPlanEstudio(String cursoEliminar){
         
         
+        
+        
     }    
     
     public void eliminarCurso(String cursoEliminar){
+        
         
     }
      
