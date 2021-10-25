@@ -1,11 +1,13 @@
 package Modelo.logicaDeNegocio;
 
 import java.util.ArrayList;
+import Excepciones.RequisitoDoesNotExistException;
+import Excepciones.CorrequisitoDoesNotExistException;
 
 /**
  * Abstracción de la clase Curso y su informacion referente
  * @author Valeria Fernández y Priscilla Ramírez
- * @version 1.4
+ * @version 1.5
  * @since 1.0
  */
 public class Curso {
@@ -108,6 +110,35 @@ public class Curso {
         correquisitos.add(pCurso);
         //existe o no el curso que se va a agregar como requisito
         //requisito ya está agregado al curso como requisito o correquisito
+    }
+    
+    public Curso buscarRequisito(String codRequisito) throws RequisitoDoesNotExistException{
+        Curso requisitoEncontrado = null;
+        for (Curso requisito : requisitos){
+            if (codRequisito.equals(requisito.getCodCurso()) == true){
+                requisitoEncontrado = requisito;
+                return requisito;
+            }
+        }
+        if (requisitoEncontrado == null){
+            throw new RequisitoDoesNotExistException(this.getCodCurso());
+        }
+        return requisitoEncontrado;
+    }
+    
+    
+    public Curso buscarCorrequisito(String codCorrequisito) throws CorrequisitoDoesNotExistException{
+        Curso correquisitoEncontrado = null;
+        for (Curso correquisito : correquisitos){
+            if (codCorrequisito.equals(correquisito.getCodCurso()) == true){
+                correquisitoEncontrado = correquisito;
+                return correquisito;
+            }
+        }
+        if (correquisitoEncontrado == null){
+            throw new CorrequisitoDoesNotExistException(this.getCodCurso());
+        }
+        return correquisitoEncontrado;
     }
     
     public void eliminarRequisito(Curso pCurso){
