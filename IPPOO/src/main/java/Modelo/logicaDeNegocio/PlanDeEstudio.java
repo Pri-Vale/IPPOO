@@ -1,13 +1,13 @@
 package Modelo.logicaDeNegocio;
 
-
 import java.util.ArrayList;
 import java.sql.Date;
+import Excepciones.BloqueDoesNotExistException;
 
 /**
  * Abstracción de la clase PlanDeEstudio y su información referente
  * @author Valeria Fernández y Priscilla Ramírez
- * @version 1.1
+ * @version 1.2
  * @since 1.0
  */
 
@@ -42,14 +42,6 @@ public class PlanDeEstudio {
         this.codPlanEstudio = codPlanEstudio;
     }
 
-    public ArrayList<Bloque> getBloques() {
-        return bloques;
-    }
-
-    public void setBloques(ArrayList<Bloque> bloques) {
-        this.bloques = bloques;
-    }
-
     //hay que arreglar los de fecha
     public Date getFechaVigencia() {
         return fechaVigencia;
@@ -57,6 +49,25 @@ public class PlanDeEstudio {
 
     public void setFechaVigencia(Date fechaVigencia) {
         this.fechaVigencia = fechaVigencia;
+    }
+    
+    public ArrayList<Bloque> getBloques() {
+        return bloques;
+    }
+    
+    public Bloque buscarBloquePlan(String semestreActivo) throws BloqueDoesNotExistException{
+        Bloque bloqueEncontrado = null;
+        for (Bloque bloque : bloques){
+            if (semestreActivo.equals(bloque.getIdBloque()) == true){
+                bloqueEncontrado = bloque;
+                return bloqueEncontrado;
+            }
+        }
+        if (bloqueEncontrado == null){
+            throw new BloqueDoesNotExistException(this.getCodPlanEstudio());
+        }
+        
+        return bloqueEncontrado;
     }
     
     /**
@@ -83,12 +94,6 @@ public class PlanDeEstudio {
         msg += "Código del plan de estudio: " + codPlanEstudio + "\n";
         msg += "Fecha de vigencia del plan: " + fechaVigencia + "\n";
         msg += "Bloques que conforman el plan: ";
-        /*
-        for (Bloque bloque : bloques){
-            msg += bloque.toString();
-        }
-        */
-        //no sé si ese msg += bloques los imprime bien entonces por si las moscas dejo este ciclo for
         msg += bloques;
         return msg;
     }

@@ -1,11 +1,12 @@
 package Modelo.logicaDeNegocio;
 
 import java.util.ArrayList;
+import Excepciones.CursoDoesNotExistException;
 
 /**
  * Abstracción de la clase Bloque y su información referente
  * @author Valeria Fernández y Priscilla Ramírez
- * @version 1.1
+ * @version 1.3
  * @since 1.0
  */
 public class Bloque {
@@ -50,6 +51,22 @@ public class Bloque {
     public void eliminarCurso(Curso curso){
         cursos.remove(curso);
     }
+    
+    public Curso buscarCursoBloque(String codCurso) throws CursoDoesNotExistException{
+        Curso cursoEncontrado = null;
+        for (Curso curso : cursos){
+            if (codCurso.equals(curso.getCodCurso()) == true){
+                cursoEncontrado = curso;
+                return curso;
+            }
+        }
+        if (cursoEncontrado == null){
+            throw new CursoDoesNotExistException(codCurso);
+        }
+        
+        return cursoEncontrado;
+    }
+    
 
     /**
      * Método para representar en caracteres el estado de un objeto de tipo Bloque
@@ -59,9 +76,8 @@ public class Bloque {
         String msg = "";
         
         msg += "Bloque{\n";
-        msg += "Identificador del bloque: \n";
-        msg += "Cursos pertenecientes: \n";
-        msg += cursos;
+        msg += "Identificador del bloque: " + this.idBloque + "\n";
+        msg += "Cursos pertenecientes: " + this.cursos + "\n";
         msg += "}";
         
         return msg;

@@ -2,11 +2,13 @@ package Modelo.logicaDeNegocio;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import Excepciones.CursoDoesNotExistException;
+import Excepciones.PlanDeEstudioDoesNotExistException;
 
 /**
  * Abstracción de la clase Escuela y su información referente
  * @author Valeria Fernández y Priscilla Ramírez
- * @version 1.2
+ * @version 1.3
  * @since 1.0
  */
 public class Escuela{
@@ -79,6 +81,37 @@ public class Escuela{
         //excepcion si el curso existe o no
         //excepcion si el curso ya estaba asociado
     }
+    
+    public Curso buscarCursosEscuela(String codCurso) throws CursoDoesNotExistException{
+        Curso cursoEncontrado = null;
+        for (Curso curso : misCursos){
+            if (codCurso.equals(curso.getCodCurso()) == true){
+                cursoEncontrado = curso;
+                return cursoEncontrado;
+            }
+        }
+        if (cursoEncontrado == null){
+            throw new CursoDoesNotExistException(codCurso);
+        }
+        
+        return cursoEncontrado;
+    }
+    
+    public PlanDeEstudio buscarPlanEscuela(int numPlan) throws PlanDeEstudioDoesNotExistException{
+        PlanDeEstudio planEncontrado = null;
+        for (PlanDeEstudio plan : planesDeEstudio){
+            if (numPlan == plan.getCodPlanEstudio()){
+                planEncontrado = plan;
+                return planEncontrado;
+            }
+        }
+        if (planEncontrado == null){
+            throw new PlanDeEstudioDoesNotExistException(this.getNombreEscuela());
+        }
+        
+        return planEncontrado;
+    }
+    
 
     /**
      * Método para representar en caracteres el estado de un objeto de tipo Escuela
