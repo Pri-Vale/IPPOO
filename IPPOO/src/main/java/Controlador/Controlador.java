@@ -400,25 +400,31 @@ public class Controlador {
     }
     
     
-    public void poblarTablaPlanesCiertoCurso(String codCurso, JTable tablaPlanes){
-        try{
-            ArrayList<PlanDeEstudio> planesConCurso = consultarPlanesConCiertoCurso(codCurso);
-            DefaultTableModel modelo = (DefaultTableModel)tablaPlanes.getModel();
+    public void poblarTablaPlanesCiertoCurso(String codCurso, JTable tablaPlanes) throws CursoDoesNotExistException{
+        //Cambiar los otros table
+        DefaultTableModel modelo = new DefaultTableModel();
         
-            Object datos[] = new Object[2];
+        ArrayList<PlanDeEstudio> planesConCurso = consultarPlanesConCiertoCurso(codCurso);
+        ArrayList<Object> columna = new ArrayList<Object>();
         
-            for (int i = 0; i < planesConCurso.size(); i++){
+        columna.add("1");
+        columna.add("2");
+        
+        for(Object col: columna){
+            modelo.addColumn(col);
+        }
+        tablaPlanes.setModel(modelo);
+        
+        
+        Object datos[] = new Object[2]; 
+        for (int i = 0; i < planesConCurso.size(); i++){
                 datos[0] = planesConCurso.get(i).getCodPlanEstudio();
                 datos[1] = planesConCurso.get(i).getFechaVigencia();
 
                 modelo.addRow(datos);
-            } 
-        }catch(CursoDoesNotExistException e){
-            e.mensajeError();
-        }
-        
-        
-  
+        } 
+        tablaPlanes.setModel(modelo);
+                
     }
     
     
