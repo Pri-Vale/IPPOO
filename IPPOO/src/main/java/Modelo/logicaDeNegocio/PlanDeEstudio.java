@@ -55,18 +55,13 @@ public class PlanDeEstudio {
         return bloques;
     }
     
-    public Bloque buscarBloquePlan(String semestreActivo) throws BloqueDoesNotExistException{
+    public Bloque buscarBloquePlan(String semestreActivo){
         Bloque bloqueEncontrado = null;
         for (Bloque bloque : bloques){
             if (semestreActivo.equals(bloque.getIdBloque()) == true){
                 bloqueEncontrado = bloque;
-                return bloqueEncontrado;
             }
-        }
-        if (bloqueEncontrado == null){
-            throw new BloqueDoesNotExistException(this.getCodPlanEstudio());
-        }
-        
+        } 
         return bloqueEncontrado;
     }
     

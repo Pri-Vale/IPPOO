@@ -52,18 +52,13 @@ public class Bloque {
         cursos.remove(curso);
     }
     
-    public Curso buscarCursoBloque(String codCurso) throws CursoDoesNotExistException{
+    public Curso buscarCursoBloque(String codCurso){
         Curso cursoEncontrado = null;
         for (Curso curso : cursos){
             if (codCurso.equals(curso.getCodCurso()) == true){
                 cursoEncontrado = curso;
-                return curso;
             }
         }
-        if (cursoEncontrado == null){
-            throw new CursoDoesNotExistException(codCurso);
-        }
-        
         return cursoEncontrado;
     }
     
