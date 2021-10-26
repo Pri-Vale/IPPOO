@@ -1557,7 +1557,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_tNombreCursoActionPerformed
 
     private void jBInterfRegPlanesEstudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInterfRegPlanesEstudioActionPerformed
-        contrl.poblarCboxEscuelas2(cboxPlanesEst);
+        contrl.poblarCboxEscuelas(cboxPlanesEst);
         poblarCboxBloqueActivo(cboxBloqueActivo);
         this.rqAsignarPlanDeEstudio.setVisible(true);
         this.rqAsignarPlanDeEstudio.setLocationRelativeTo(null);
