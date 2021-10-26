@@ -90,9 +90,7 @@ public class Controlador {
         //excepcion si lista vacia 
     }
     
-   
-    
-    /**
+  /**
      * 
      * @param nombreEscuela
      * @return 
