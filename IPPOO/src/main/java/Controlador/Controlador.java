@@ -40,7 +40,6 @@ import javax.swing.table.DefaultTableModel;
 public class Controlador {
     
     //Atributos 
-    //private final Escuela escuela= new Escuela();
     
     private ArrayList<Escuela> escuelas = new ArrayList<Escuela>();
     private ArrayList<Curso> cursos = new ArrayList<Curso>();
@@ -48,7 +47,6 @@ public class Controlador {
     
     public static Consultas_BaseDatos salidaControlador = new Consultas_BaseDatos() ;
     
-    private Consultas_BaseDatos consultaBase = new Consultas_BaseDatos();
     private Correo salidaCorreo=new Correo();
     private PDF salidaPDF =new PDF();
     
@@ -80,7 +78,7 @@ public class Controlador {
      * @param cbox_escuelas 
      */
     public void poblarCboxEscuelas(JComboBox cbox_escuelas){
-        //ArrayList<String> listaEscuelas = consultaBase.seleccionarEscuelas();
+        //ArrayList<String> listaEscuelas = salidaControlador.seleccionarEscuelas();
         
         int contador = 0;
         while (escuelas.size() > contador){
@@ -97,7 +95,7 @@ public class Controlador {
      * @param cboxPlanesEst 
      */
     public void poblarCboxEscuelas2(JComboBox cboxPlanesEst){
-        ArrayList<String> listaEscuelas = consultaBase.seleccionarEscuelas();
+        ArrayList<String> listaEscuelas = salidaControlador.seleccionarEscuelas();
         
         int contador = 0;
         while (listaEscuelas.size() > contador){
@@ -114,7 +112,7 @@ public class Controlador {
      * @return 
      */
     public String obtenerCodEscuela(String nombreEscuela){
-        String codEscuela = consultaBase.seleccionarCodEscuela(nombreEscuela);
+        String codEscuela = salidaControlador.seleccionarCodEscuela(nombreEscuela);
         return codEscuela;
     }
    
@@ -178,7 +176,7 @@ public class Controlador {
      * @param codEscuela 
      */
     public void poblarCboxCursosDeEscuela(JComboBox cbox_cursos, String codEscuela){
-        //ArrayList<String> listaCursosDeEscuela = consultaBase.seleccionarCursosDeEscuela(codEscuela);
+        //ArrayList<String> listaCursosDeEscuela = salidaControlador.seleccionarCursosDeEscuela(codEscuela);
         ArrayList<Curso> cursosEscuela = new ArrayList<>();
         
         int contador = 0;
@@ -205,7 +203,7 @@ public class Controlador {
      * @param cbox_cursos 
      */
     public void poblarCboxCursos(JComboBox cbox_cursos){
-        //ArrayList<String> listaCursos = consultaBase.seleccionarCursos();
+        //ArrayList<String> listaCursos = salidaControlador.seleccionarCursos();
 
         int contador = 0;
         while (cursos.size() > contador){
@@ -222,7 +220,7 @@ public class Controlador {
      * @param codEscuela 
      */
     public void poblarCboxCodigosPlan(JComboBox cbox_codigosPlan,String codEscuela){
-        ArrayList<String> listaCodPlanes = consultaBase.seleccionarCodPlanes(codEscuela);
+        ArrayList<String> listaCodPlanes = salidaControlador.seleccionarCodPlanes(codEscuela);
         int contador = 0;
         while (listaCodPlanes.size() > contador){
             cbox_codigosPlan.addItem(listaCodPlanes.get(contador));
@@ -545,7 +543,7 @@ public class Controlador {
      */
     private void crearObjetosEscuela() throws SQLException{
         ResultSet escuelasObtenidas; 
-        escuelasObtenidas = consultaBase.CargarDatosEscuelas();
+        escuelasObtenidas = salidaControlador.CargarDatosEscuelas();
         
         String nombreEscuela;
         String codEscuela;
@@ -568,7 +566,7 @@ public class Controlador {
      */
     private void crearObjetosCurso() throws SQLException{
         ResultSet cursosObtenidos; 
-        cursosObtenidos = consultaBase.CargarDatosCursos();
+        cursosObtenidos = salidaControlador.CargarDatosCursos();
         
         
         String nombreCurso;
@@ -593,7 +591,7 @@ public class Controlador {
     
     private void crearRelacionCursosEscuela() throws SQLException{
         ResultSet cursosObtenidosEscuela; 
-        cursosObtenidosEscuela = consultaBase.CargarDatosCursosDeEscuela();
+        cursosObtenidosEscuela = salidaControlador.CargarDatosCursosDeEscuela();
         
         String codCurso;
         String codEscuela;
@@ -625,7 +623,7 @@ public class Controlador {
      */
     private void crearRelacionRequisitosCursos() throws SQLException{
         ResultSet requisitosObtenidos; 
-        requisitosObtenidos = consultaBase.CargarDatosRequisitos();
+        requisitosObtenidos = salidaControlador.CargarDatosRequisitos();
         
         String codCurso;
         String codRequisito;
@@ -652,7 +650,7 @@ public class Controlador {
      */
     private void crearRelacionCorrequisitosCursos() throws SQLException{
         ResultSet correquisitosObtenidos; 
-        correquisitosObtenidos = consultaBase.CargarDatosCorrequisitos();
+        correquisitosObtenidos = salidaControlador.CargarDatosCorrequisitos();
         
         String codCurso;
         String codCorrequisito;
@@ -679,7 +677,7 @@ public class Controlador {
      */
     private void crearObjetosPlanDeEstudio() throws SQLException{
         ResultSet planesObtenidos;
-        planesObtenidos = consultaBase.CargarDatosPlanesDeEstudio();
+        planesObtenidos = salidaControlador.CargarDatosPlanesDeEstudio();
         
         int numPlan;
 
@@ -700,7 +698,7 @@ public class Controlador {
     
     private void relacionarCursoPlan() throws SQLException{
         ResultSet cursosObtenidosPlan;
-        cursosObtenidosPlan = consultaBase.CargarDatosCursosPertenecientesPlan();
+        cursosObtenidosPlan = salidaControlador.CargarDatosCursosPertenecientesPlan();
         
         String codCurso;
         int numPlan; 
@@ -764,7 +762,7 @@ public class Controlador {
                     //System.out.println("Codigo del requisito: " + cursoRequisito.getCodCurso());
                     if(requisitoEliminar.equals(cursoRequisito.getCodCurso()) == true){
                         cursoRequisito.eliminarRequisito(curso);//Elimino la relaci[on
-                        this.consultaBase.eliminarRequisitos(cursoEliminar, requisitoEliminar);    
+                        this.salidaControlador.eliminarRequisitos(cursoEliminar, requisitoEliminar);    
                     }
                 }    
             }
@@ -793,7 +791,7 @@ public class Controlador {
 
                             bloqueSeleccionado.eliminarCurso(cursoEncontrado);
                             String numConvString=Integer.toString(numPlan);  
-                            this.consultaBase.eliminarCursoXPlanEstudio(cursoEliminar,numConvString);
+                            this.salidaControlador.eliminarCursoXPlanEstudio(cursoEliminar,numConvString);
                             System.out.println("Eliminado");
                         }
                     }
@@ -832,7 +830,7 @@ public class Controlador {
                                 cursoEncontrado2 = escuelaSeleccionada.buscarCursosEscuela(cursoEliminar);
                                 cursos.remove(cursoEncontrado2);
 
-                                this.consultaBase.eliminarCurso(cursoEliminar);
+                                this.salidaControlador.eliminarCurso(cursoEliminar);
                                 System.out.println("Eliminado");
 
                                 break;
