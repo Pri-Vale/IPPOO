@@ -27,12 +27,12 @@ public class Consultas_BaseDatos {
      * @throws SQLException
      */
     public void EjecutarQuery(String query) throws SQLException {
-
-        System.out.print("Ejecuta");
         try (java.sql.Connection eConect = con.Conectar_a_base()) {
             Statement stmt = eConect.createStatement();
             stmt.execute(query); //execute se puede utilizar con cualquier tipo de sentencias SQL y devuelve un booleano.
             stmt.close();
+        }catch(SQLException e){
+            System.out.println(e.getErrorCode() + "" + e.getMessage());
         }
     }
 

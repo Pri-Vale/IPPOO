@@ -3,7 +3,10 @@ package Controlador;
 import Connect_BD.Consultas_BaseDatos;
 import API.Correo;
 import API.PDF;
+import Excepciones.CursoAlreadyExistsException;
 import Excepciones.CursoDoesNotExistException;
+import Excepciones.EscuelaAlreadyExistsException;
+import Excepciones.PlanDeEstudioAlreadyExistsException;
 import Excepciones.PlanDeEstudioDoesNotExistException;
 import Excepciones.RequisitoDoesNotExistException;
 import Modelo.logicaDeNegocio.Bloque;
@@ -39,16 +42,44 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Controlador {
     
-    //Atributos 
-    
+    //Atributos de instancia
     private ArrayList<Escuela> escuelas = new ArrayList<Escuela>();
     private ArrayList<Curso> cursos = new ArrayList<Curso>();
-    
-    
-    public static Consultas_BaseDatos salidaControlador = new Consultas_BaseDatos() ;
-    
     private Correo salidaCorreo=new Correo();
     private PDF salidaPDF =new PDF();
+    
+    //Atributos de clase
+    public static Consultas_BaseDatos salidaControlador = new Consultas_BaseDatos() ;
+    
+    /**
+     * Método que retorna el objeto de tipo Escuela encontrado en el registro de escuelas del programa a partir de su código
+     * @param codEscuela el código de la escuela que se quiere encontrar
+     * @return objeto de tipo Escuela
+     */
+    public Escuela buscarEscuela(String codEscuela){
+        Escuela escuela = null;
+        for (Escuela escuelaEncontrada : escuelas){
+            if (codEscuela.equals(escuelaEncontrada.getCodEscuela()) == true){
+                escuela = escuelaEncontrada;
+            }
+        }
+        return escuela;
+    }
+    
+    /**
+     * Método que retorna el objeto de tipo Curso encontrado en el registro de cursos del programa a partir de su código
+     * @param codCurso el código del curso que se quiere encontrar
+     * @return objeto de tipo Escuela
+     */
+    public Curso buscarCurso(String pCodCurso){
+        Curso curso = null;
+        for (Curso cursoEncontrado : cursos){
+            if(pCodCurso.equals(cursoEncontrado.getCodCurso()) == true){
+                curso = cursoEncontrado;
+            }
+        }
+        return curso;
+    }
     
     
     /**
@@ -58,20 +89,24 @@ public class Controlador {
      * @return
      * @throws SQLException 
      */
-    public boolean crearEscuela(String pNombreEscuela, String pCodEscuela) throws SQLException{
+    public boolean crearEscuela(String pNombreEscuela, String pCodEscuela) throws SQLException, EscuelaAlreadyExistsException{
         try{
-            Escuela escuela= new Escuela(pNombreEscuela, pCodEscuela);
-            System.out.println(pNombreEscuela);
-            System.out.println(pCodEscuela);
-            escuelas.add(escuela);
-            salidaControlador.insertarEscuela(escuela);
-            System.out.println(escuelas.toString());
-            return true;
-        
+            if (buscarEscuela(pCodEscuela) == null){
+                Escuela escuela= new Escuela(pNombreEscuela, pCodEscuela);
+                escuelas.add(escuela);
+                salidaControlador.insertarEscuela(escuela);
+                System.out.println(escuelas.toString());
+                return true;
+            }else{
+                throw new EscuelaAlreadyExistsException(pCodEscuela);
+            }
         }catch(NullPointerException a){
           return false;  
         }                            
     }
+    
+
+    
     
     /**
      * 
@@ -108,26 +143,23 @@ public class Controlador {
      * @param pCantCreditos
      * @param pCantHorasLectivas 
      */
-    public void crearCurso(String pCodEscuela, String pNombreCurso, String pCodCurso, int pCantCreditos, int pCantHorasLectivas){        
-        Curso nuevoCurso = new Curso(pNombreCurso, pCodCurso, pCantCreditos, pCantHorasLectivas);
-        
-        //buscar la Escuela a la que pertenece el curso para hacer la asociacion correspondiente
+    public void crearCurso(String pCodEscuela, String pNombreCurso, String pCodCurso, int pCantCreditos, int pCantHorasLectivas) throws CursoAlreadyExistsException{        
         for (Escuela escuelaEncontrada : escuelas){ 
-            System.out.print(escuelaEncontrada.getCodEscuela());
-            if (pCodEscuela.equals(escuelaEncontrada.getCodEscuela()) == true){
-                escuelaEncontrada.asociarCurso(nuevoCurso);
-                cursos.add(nuevoCurso);
-                //insertar cod escuela en la tabla intermedia
-                salidaControlador.insertarCurso(nuevoCurso);
-                salidaControlador.insertarCursoXEscuela(pCodEscuela, nuevoCurso);
-                System.out.println(escuelas.toString());
-                System.out.println(cursos.toString());
-                break;
+            if (escuelaEncontrada != null){
+                if (pCodEscuela.equals(escuelaEncontrada.getCodEscuela()) == true){
+                    if (escuelaEncontrada.buscarCursosEscuela(pCodCurso) == null){
+                        Curso nuevoCurso = new Curso(pNombreCurso, pCodCurso, pCantCreditos, pCantHorasLectivas);
+                        escuelaEncontrada.asociarCurso(nuevoCurso);
+                        cursos.add(nuevoCurso);
+                        salidaControlador.insertarCurso(nuevoCurso);
+                        salidaControlador.insertarCursoXEscuela(pCodEscuela, nuevoCurso);
+                        break;
+                    }else{
+                        throw new CursoAlreadyExistsException(pCodCurso);
+                    }
+                }
             }
         }  
-        //falta manejo de excepciones
-        //existe curso en escuela
-        //existe escuela
     }
     
     /**
@@ -138,20 +170,61 @@ public class Controlador {
      * @param pCodigoCurso
      * @param pBloqueActivo 
      */
-    public void crearPlanEstudios(String pNombreEscuela,int pCodigoPlan,Date pVigenciaPlan,String pCodigoCurso,String pBloqueActivo){
-        PlanDeEstudio plan = new PlanDeEstudio(pCodigoPlan, pVigenciaPlan);
-        Bloque bloque = plan.agregarBloque(pBloqueActivo);
-        //Este curso no se si va aca
-        Curso cursoBloque = new Curso(pCodigoCurso);
-        bloque.agregarCurso(cursoBloque);
-        //Aqui tengo la duda si es el objeto curso o el int
+    public void crearPlanEstudios(String pNombreEscuela,int pCodigoPlan,Date pVigenciaPlan,String pCodigoCurso,String pBloqueActivo) 
+            throws CursoAlreadyExistsException, CursoDoesNotExistException, PlanDeEstudioAlreadyExistsException{
         
-        //Persistencia almacenado de plan de estudios
-        salidaControlador.insertarPlanEstudio(plan,pNombreEscuela);
+        String codEscuela = obtenerCodEscuela(pNombreEscuela); //buscar el codigo de una escuela a partir de su nombre
+        Escuela escuelaEncontrada = buscarEscuela(codEscuela); //buscar el objeto Escuela en la que vamos a crear el plan de estudios
         
-        salidaControlador.insertarCursoXPlan(pCodigoCurso, plan, pBloqueActivo);
-        
-        System.out.println("FUN4 COMPLETE");
+        PlanDeEstudio planExistente = escuelaEncontrada.buscarPlanEscuela(pCodigoPlan);
+        boolean planYaExiste = false;
+        //buscar que el plan no exista ya en esa escuela u otras
+        for (Escuela escuela : escuelas){
+            for (PlanDeEstudio planExiste : escuela.getPlanesDeEstudio()){
+                if (pCodigoPlan == planExiste.getCodPlanEstudio()){
+                    planYaExiste = true;
+                }
+            }
+        }
+        if (planYaExiste == false){
+            escuelaEncontrada.agregarPlanesEstudio(pCodigoPlan, pVigenciaPlan); //relación de composición: la creación del plan se hace dentro de Escuela
+
+            PlanDeEstudio nuevoPlan = escuelaEncontrada.buscarPlanEscuela(pCodigoPlan); //buscar el objeto PlanDeEstudio que acabamos de crear en escuelaEncontrada
+
+            nuevoPlan.agregarBloque(pBloqueActivo); //relación de composición: la creación del bloque se hace dentro del plan
+
+            Bloque bloque = nuevoPlan.buscarBloquePlan(pBloqueActivo); //buscar el objeto Bloque que acabamos de crear en nuevoPlan
+
+            Curso cursoBloque = bloque.buscarCursoBloque(pCodigoCurso); //buscar el objeto Curso 
+
+            ArrayList<PlanDeEstudio> planesEscuela = escuelaEncontrada.getPlanesDeEstudio();
+
+            boolean cursoExisteEnPlan = false; 
+            //buscar que el curso no exista en ese plan de estudios
+            for (PlanDeEstudio plan : planesEscuela){
+                for (Bloque bloqueEncontrado : plan.getBloques()){
+                    if (bloqueEncontrado.buscarCursoBloque(pCodigoCurso) != null){
+                        cursoExisteEnPlan = true;
+                    }
+                }
+            }
+
+            if (cursoExisteEnPlan == false){
+                Curso nuevoCurso = buscarCurso(pCodigoCurso);
+                if (nuevoCurso != null){
+                    bloque.agregarCurso(nuevoCurso); //relación de agregación: la creación del curso en el bloque se hace pasando el objeto
+                    //Persistencia almacenado de plan de estudios
+                    salidaControlador.insertarPlanEstudio(nuevoPlan,pNombreEscuela);
+                    salidaControlador.insertarCursoXPlan(pCodigoCurso, nuevoPlan, pBloqueActivo);
+                }else{
+                    throw new CursoDoesNotExistException(pCodigoCurso);
+                }  
+            }else{
+                throw new CursoAlreadyExistsException(pCodigoCurso);
+            }
+        }else{
+            throw new PlanDeEstudioAlreadyExistsException(pCodigoPlan);
+        }
     }
     
     /**
@@ -360,7 +433,7 @@ public class Controlador {
         }   
     }
     
-    public ArrayList <PlanDeEstudio> consultarPlanesConCiertoCurso(String codCurso) throws CursoDoesNotExistException{
+    public ArrayList <PlanDeEstudio> consultarPlanesConCiertoCurso(String codCurso){
         ArrayList <PlanDeEstudio> planesEscuela;
         ArrayList <Bloque> bloquesPlan;
         ArrayList <Curso> cursosBloque;
@@ -371,32 +444,20 @@ public class Controlador {
             for (PlanDeEstudio planEncontrado : planesEscuela){
                 bloquesPlan = planEncontrado.getBloques();
                 for (Bloque bloqueEncontrado : bloquesPlan){
-                    try{
-                        bloqueEncontrado.buscarCursoBloque(codCurso);
-                        planesConCurso.add(planEncontrado);
+                    bloqueEncontrado.buscarCursoBloque(codCurso);
+                    planesConCurso.add(planEncontrado);
+                    cursosBloque = bloqueEncontrado.getCursos();
+                    for (Curso cursoEncontrado : cursosBloque){
+                        cursoEncontrado.buscarRequisito(codCurso);
                     }
-                    catch(CursoDoesNotExistException e){
-                        e.mensajeError();
-                    }finally{
-                        cursosBloque = bloqueEncontrado.getCursos();
-                            for (Curso cursoEncontrado : cursosBloque){
-                                try{
-                                    cursoEncontrado.buscarRequisito(codCurso);
-                                }
-                                catch(RequisitoDoesNotExistException eReq){
-                                    eReq.mensajeError();
-                                }    
-                        }
-                    }
-
-                }
+                }    
             }
         }
         return planesConCurso;
     }
     
     
-    public void poblarTablaPlanesCiertoCurso(String codCurso, JTable tablaPlanes) throws CursoDoesNotExistException{
+    public void poblarTablaPlanesCiertoCurso(String codCurso, JTable tablaPlanes){
         //Cambiar los otros table
         DefaultTableModel modelo = new DefaultTableModel();
         
@@ -469,7 +530,6 @@ public class Controlador {
      */
     public void poblarPDF(Document documento,String escuelaBuscar) throws SQLException{
         ResultSet rst = salidaControlador.verPlanDeEstudio(escuelaBuscar);
-        
         this.salidaPDF.generarPDF(documento,rst);
     }
     
@@ -495,23 +555,18 @@ public class Controlador {
                 ArrayList<PlanDeEstudio> planesTotales = escuelaEncontrada.getPlanesDeEstudio();
                 for (int i = 0; i <= planesTotales.size(); i++) {
                     if (planesTotales.get(i).getCodPlanEstudio() == planBuscar) {
-                        
                         ArrayList<Bloque> bloqueEncontrados = planesTotales.get(i).getBloques();
                         for (int y = 0; y <= bloqueEncontrados.size(); y++) {
-                            
                             for (int j = 0; j <= bloqueEncontrados.size(); j++) {
                                 System.out.println(bloqueEncontrados.size());
                                 String a = bloqueEncontrados.get(y).getCursos().get(j).getCodCurso();
                                 jCBCursosAsEliminar.addItem(a);
                                 System.out.println(a);
                             }
-
                         }
-
                     }
 
                 }
-
                 //segundo debo de buscar el plan en la escuela 
                 //debo buscar los cursos asociados
             }
@@ -680,6 +735,10 @@ public class Controlador {
         }
     }
     
+    /**
+     * 
+     * @throws SQLException 
+     */
     private void relacionarCursoPlan() throws SQLException{
         ResultSet cursosObtenidosPlan;
         cursosObtenidosPlan = salidaControlador.CargarDatosCursosPertenecientesPlan();
@@ -754,78 +813,59 @@ public class Controlador {
     }
     
     public void eliminarCursoPlanEstudio(String codEscuela, int numPlan, String cursoEliminar) throws CursoDoesNotExistException,
-            PlanDeEstudioDoesNotExistException {
-       try {
-            for (Escuela escuelaSeleccionada : escuelas) {
-                if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == true) {
-                    //declarar el objeto de tipo plan que vamos a buscar:
-
-                    PlanDeEstudio planEncontrado;
-                    planEncontrado = escuelaSeleccionada.buscarPlanEscuela(numPlan);
-
-                    ArrayList<Bloque> bloquesDePlan;
-                    bloquesDePlan = planEncontrado.getBloques();
-
-                    for (Bloque bloqueSeleccionado : bloquesDePlan) {
-
-                        Curso cursoEncontrado;
-
-                        cursoEncontrado = bloqueSeleccionado.buscarCursoBloque(cursoEliminar);
-                        if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == true) {
-
-                            bloqueSeleccionado.eliminarCurso(cursoEncontrado);
-                            String numConvString=Integer.toString(numPlan);  
-                            this.salidaControlador.eliminarCursoXPlanEstudio(cursoEliminar,numConvString);
-                            System.out.println("Eliminado");
-                        }
+        PlanDeEstudioDoesNotExistException {
+        for (Escuela escuelaSeleccionada : escuelas) {
+            if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == true) {
+                //declarar el objeto de tipo plan que vamos a buscar:
+                PlanDeEstudio planEncontrado;
+                planEncontrado = escuelaSeleccionada.buscarPlanEscuela(numPlan);
+                ArrayList<Bloque> bloquesDePlan;
+                bloquesDePlan = planEncontrado.getBloques();
+                for (Bloque bloqueSeleccionado : bloquesDePlan) {
+                    Curso cursoEncontrado;
+                    cursoEncontrado = bloqueSeleccionado.buscarCursoBloque(cursoEliminar);
+                    if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == true) {
+                        bloqueSeleccionado.eliminarCurso(cursoEncontrado);
+                        String numConvString=Integer.toString(numPlan);  
+                        this.salidaControlador.eliminarCursoXPlanEstudio(cursoEliminar,numConvString);
+                        System.out.println("Eliminado");
                     }
                 }
             }
-        }catch (CursoDoesNotExistException eCurso){
-            eCurso.mensajeError();
-        }catch(PlanDeEstudioDoesNotExistException ePlan){
-            ePlan.mensajeError();
         }
     }
     
     public void eliminarCurso(String codEscuela, String cursoEliminar) {
         //cualquier cosa que necesites con este me avisas
         ArrayList<PlanDeEstudio> planEscuela;
-        try {
-            for (Escuela escuelaSeleccionada : escuelas) {
-                if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == true) {
-                    
-                    
-                    planEscuela = escuelaSeleccionada.getPlanesDeEstudio();
-                    for (PlanDeEstudio planesEncontrado : planEscuela) {
+        for (Escuela escuelaSeleccionada : escuelas) {
+            if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == true) {
+                planEscuela = escuelaSeleccionada.getPlanesDeEstudio();
+                for (PlanDeEstudio planesEncontrado : planEscuela) {
 
-                        ArrayList<Bloque> bloquesDePlan;
-                        bloquesDePlan = planesEncontrado.getBloques();
+                    ArrayList<Bloque> bloquesDePlan;
+                    bloquesDePlan = planesEncontrado.getBloques();
 
-                        for (Bloque bloqueSeleccionado : bloquesDePlan) {
+                    for (Bloque bloqueSeleccionado : bloquesDePlan) {
 
-                            Curso cursoEncontrado;
+                        Curso cursoEncontrado;
 
-                            cursoEncontrado = bloqueSeleccionado.buscarCursoBloque(cursoEliminar);
-                            if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == false) {
+                        cursoEncontrado = bloqueSeleccionado.buscarCursoBloque(cursoEliminar);
+                        if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == false) {
 
-                            } else if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == true) {
-                                Curso cursoEncontrado2;
-                                cursoEncontrado2 = escuelaSeleccionada.buscarCursosEscuela(cursoEliminar);
-                                cursos.remove(cursoEncontrado2);
+                        } else if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == true) {
+                            Curso cursoEncontrado2;
+                            cursoEncontrado2 = escuelaSeleccionada.buscarCursosEscuela(cursoEliminar);
+                            cursos.remove(cursoEncontrado2);
 
-                                this.salidaControlador.eliminarCurso(cursoEliminar);
-                                System.out.println("Eliminado");
+                            this.salidaControlador.eliminarCurso(cursoEliminar);
+                            System.out.println("Eliminado curso de Escuela");
 
-                                break;
-                            }
+                            break;
                         }
                     }
                 }
             }
-        } catch (CursoDoesNotExistException eCurso) {
-            eCurso.mensajeError();
- 
-    }
-}  
+        }
+    }  
 }

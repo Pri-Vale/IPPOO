@@ -112,31 +112,23 @@ public class Curso {
         //requisito ya está agregado al curso como requisito o correquisito
     }
     
-    public Curso buscarRequisito(String codRequisito) throws RequisitoDoesNotExistException{
+    public Curso buscarRequisito(String codRequisito){
         Curso requisitoEncontrado = null;
         for (Curso requisito : requisitos){
             if (codRequisito.equals(requisito.getCodCurso()) == true){
                 requisitoEncontrado = requisito;
-                return requisito;
             }
-        }
-        if (requisitoEncontrado == null){
-            throw new RequisitoDoesNotExistException(this.getCodCurso());
         }
         return requisitoEncontrado;
     }
     
     
-    public Curso buscarCorrequisito(String codCorrequisito) throws CorrequisitoDoesNotExistException{
+    public Curso buscarCorrequisito(String codCorrequisito){
         Curso correquisitoEncontrado = null;
         for (Curso correquisito : correquisitos){
             if (codCorrequisito.equals(correquisito.getCodCurso()) == true){
                 correquisitoEncontrado = correquisito;
-                return correquisito;
             }
-        }
-        if (correquisitoEncontrado == null){
-            throw new CorrequisitoDoesNotExistException(this.getCodCurso());
         }
         return correquisitoEncontrado;
     }

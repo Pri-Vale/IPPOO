@@ -142,9 +142,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="tNombreCurso">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tNombreCursoActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="cbNombresEscuelas">
           <Events>

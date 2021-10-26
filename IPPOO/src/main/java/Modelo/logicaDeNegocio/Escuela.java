@@ -1,8 +1,8 @@
 package Modelo.logicaDeNegocio;
 
+import Excepciones.CursoAlreadyExistsException;
 import java.sql.Date;
 import java.util.ArrayList;
-import Excepciones.CursoDoesNotExistException;
 import Excepciones.PlanDeEstudioDoesNotExistException;
 
 /**
@@ -78,37 +78,26 @@ public class Escuela{
      */
     public void asociarCurso(Curso pCurso){
         misCursos.add(pCurso);
-        //excepcion si el curso existe o no
         //excepcion si el curso ya estaba asociado
     }
     
-    public Curso buscarCursosEscuela(String codCurso) throws CursoDoesNotExistException{
+    public Curso buscarCursosEscuela(String codCurso){
         Curso cursoEncontrado = null;
         for (Curso curso : misCursos){
             if (codCurso.equals(curso.getCodCurso()) == true){
                 cursoEncontrado = curso;
-                return cursoEncontrado;
             }
         }
-        if (cursoEncontrado == null){
-            throw new CursoDoesNotExistException(codCurso);
-        }
-        
         return cursoEncontrado;
     }
     
-    public PlanDeEstudio buscarPlanEscuela(int numPlan) throws PlanDeEstudioDoesNotExistException{
+    public PlanDeEstudio buscarPlanEscuela(int numPlan){
         PlanDeEstudio planEncontrado = null;
         for (PlanDeEstudio plan : planesDeEstudio){
             if (numPlan == plan.getCodPlanEstudio()){
                 planEncontrado = plan;
-                return planEncontrado;
             }
         }
-        if (planEncontrado == null){
-            throw new PlanDeEstudioDoesNotExistException(this.getNombreEscuela());
-        }
-        
         return planEncontrado;
     }
     

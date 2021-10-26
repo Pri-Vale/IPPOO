@@ -26,7 +26,7 @@ public class CursoDoesNotExistException extends Exception{
     public String mensajeError(){
         String msg = "";
         
-        msg += "El curso de código " + codCurso + "no existe";
+        msg += "El curso de código " + codCurso + " no existe";
         
         return msg;
     }

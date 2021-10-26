@@ -1,7 +1,10 @@
 package Vista;
 
 import Controlador.Controlador;
+import Excepciones.CursoAlreadyExistsException;
 import Excepciones.CursoDoesNotExistException;
+import Excepciones.EscuelaAlreadyExistsException;
+import Excepciones.PlanDeEstudioAlreadyExistsException;
 import Excepciones.PlanDeEstudioDoesNotExistException;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -202,12 +205,6 @@ public class Principal extends javax.swing.JFrame {
 
         labelHorasLectivas.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         labelHorasLectivas.setText("Horas lectivas: ");
-
-        tNombreCurso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tNombreCursoActionPerformed(evt);
-            }
-        });
 
         cbNombresEscuelas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1452,21 +1449,22 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_tCodigoEscuelaActionPerformed
 
     private void bRegEsqAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegEsqAreaActionPerformed
-
         if(this.tNombreEA.getText().equals("")){
             JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de escuela válido");
-        }
-        
-            
+        }    
         if(this.tCodigoEscuela.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un codigo de escuela válido");
-        }
-        try {
-            contrl.crearEscuela(tNombreEA.getText(), tCodigoEscuela.getText());
-        } catch (SQLException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+            JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un código de escuela válido");
+        }else{
+            try {
+                contrl.crearEscuela(tNombreEA.getText(), tCodigoEscuela.getText());
+                JOptionPane.showMessageDialog(null,"¡Escuela registrada con éxito!");
+                rQRegistrarEsqArea.dispose();
+            }catch(EscuelaAlreadyExistsException eCodEscuela){ 
+                JOptionPane.showMessageDialog(null,eCodEscuela.mensajeError());   
+            }catch (SQLException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }    
     }//GEN-LAST:event_bRegEsqAreaActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -1496,40 +1494,47 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cantHorasLectivasActionPerformed
 
     private void bRegistrarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarCursoActionPerformed
-        if(this.tNombreCurso.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de curso válido");
-        }
-        //validar que no repita el nombre
-        
         String numCodCurso = this.tNumCodCurso.getText();
-        if(this.tNumCodCurso.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un número de curso válido");
-        }
+        String nombreCurso = this.tNombreCurso.getText();
+        int cantCreditos = Integer.valueOf(cbNumCreditos.getSelectedItem().toString());        
+        int cantHorasLectivas = Integer.valueOf(cbCantHorasLectivas.getSelectedItem().toString()); 
         
         try{
-            int intCodCurso = Integer.parseInt(numCodCurso);
-        }
-        catch(NumberFormatException e){
+            String codEscuela = seleccionarCodigoEscuela(cbNombresEscuelas);
+            if(nombreCurso.equals("")){
+                JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de curso válido");
+            }else{
+                if(numCodCurso.equals("")){
+                    JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un número de curso válido");
+                }else{
+                    int intCodCurso = Integer.parseInt(numCodCurso);
+                    int largoNum = String.valueOf(intCodCurso).length();
+                    if (largoNum > 4 || largoNum < 4){
+                        JOptionPane.showMessageDialog(null,"Debe ingresar un número de curso de 4 dígitos");
+                    }else{
+                        String codCurso = codEscuela + numCodCurso;
+                        contrl.crearCurso(codEscuela, nombreCurso, codCurso, cantCreditos, cantHorasLectivas);
+                        JOptionPane.showMessageDialog(null,"¡Curso registrado con éxito!");
+                        rQRegCursos.dispose();
+                    }
+                }     
+            }
+        }catch(CursoAlreadyExistsException eCodCurso){
+            JOptionPane.showMessageDialog(null,eCodCurso.mensajeError());
+        }catch(NumberFormatException e){
             JOptionPane.showMessageDialog(null,"¡Entrada inválida! Por favor, ingrese un número entero para el curso");
+        }catch(NullPointerException cboxEscuelasVacio){
+            JOptionPane.showMessageDialog(null,"No hay escuelas registradas para agregarles un curso");
+            this.rQRegCursos.dispose();
         }
-        
-        int cantCreditos = Integer.valueOf(cbNumCreditos.getSelectedItem().toString());        
-        int cantHorasLectivas = Integer.valueOf(cbCantHorasLectivas.getSelectedItem().toString());
-        
-        String codCurso = seleccionarCodigoEscuela(cbNombresEscuelas) + this.tNumCodCurso.getText();
-
-        //validar num de 4 dig
-        //validar que no repita el num 
-        
-        contrl.crearCurso(seleccionarCodigoEscuela(cbNombresEscuelas), this.tNombreCurso.getText(), codCurso, cantCreditos, cantHorasLectivas);
-         
-        
     }//GEN-LAST:event_bRegistrarCursoActionPerformed
 
     private void bLimpiarCamposRegCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimpiarCamposRegCursoActionPerformed
         this.tNombreCurso.setText(null);
         this.tNumCodCurso.setText(null);
-        this.lbCodEscuelaCodCurso.setText(null);
+        this.cbNumCreditos.setSelectedIndex(0);
+        this.cbCantHorasLectivas.setSelectedIndex(0);
+        this.cbNombresEscuelas.setSelectedIndex(0);
     }//GEN-LAST:event_bLimpiarCamposRegCursoActionPerformed
 
     private void botonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -1544,17 +1549,12 @@ public class Principal extends javax.swing.JFrame {
     private void cbNombresEscuelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNombresEscuelasActionPerformed
         String nombreEscuela = cbNombresEscuelas.getSelectedItem().toString();
         String codEscuela = contrl.obtenerCodEscuela(nombreEscuela); 
-        System.out.println(codEscuela);
         this.lbCodEscuelaCodCurso.setText(codEscuela);
     }//GEN-LAST:event_cbNombresEscuelasActionPerformed
 
     private void tNumCodCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tNumCodCursoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tNumCodCursoActionPerformed
-
-    private void tNombreCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tNombreCursoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tNombreCursoActionPerformed
 
     private void jBInterfRegPlanesEstudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInterfRegPlanesEstudioActionPerformed
         contrl.poblarCboxEscuelas(cboxPlanesEst);
@@ -1581,7 +1581,6 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cboxPlanesEstActionPerformed
 
     private void bPropioRegistroVentanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPropioRegistroVentanaActionPerformed
-   
         try{
             cboxPlanesEst.getSelectedItem().toString();
         }
@@ -1616,7 +1615,16 @@ public class Principal extends javax.swing.JFrame {
         java.sql.Date fechaSql= new java.sql.Date(fechaconv);
         
         //Llamada al controlador
-        contrl.crearPlanEstudios(nombreEscuela,codigoPlan,fechaSql,codigoCurso,bloqueActivo);        
+        try{
+            contrl.crearPlanEstudios(nombreEscuela, codigoPlan, fechaSql, codigoCurso, bloqueActivo);
+        }catch(CursoDoesNotExistException eCursoNoExiste){
+            JOptionPane.showMessageDialog(null,eCursoNoExiste.mensajeError() + ". Ingrese un curso existente.");
+        }catch(CursoAlreadyExistsException eCursoExiste){
+            JOptionPane.showMessageDialog(null,eCursoExiste.mensajeError() + " en este plan de estudios.");
+        }catch(PlanDeEstudioAlreadyExistsException ePlanExiste){
+            JOptionPane.showMessageDialog(null,ePlanExiste.mensajeError());
+        }
+                
     }//GEN-LAST:event_bPropioRegistroVentanaActionPerformed
 
     private void bVentanaVisualizarPlanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVentanaVisualizarPlanesActionPerformed
@@ -1627,24 +1635,19 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bVentanaVisualizarPlanesActionPerformed
 
     private void bRegistrarRequisitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarRequisitoActionPerformed
-        //String nombreEscuela = cbEscuelasPropietariasCurso.getSelectedItem().toString();
-        //String codEscuela = contrl.obtenerCodEscuela(nombreEscuela);
         try{
             String codCurso = cbCodigosCursosDeEscuela.getSelectedItem().toString();
             String codCursoRequisito = cbCodigoCursoReq.getSelectedItem().toString();
             System.out.println(codCursoRequisito);
-            //Llamar al controlador para hacer la insercion del requisito
             contrl.agregarRequisitoACurso(codCurso, codCursoRequisito); 
         }
         catch(NullPointerException e){
-            //agregar mensajito de error
-            System.out.println("Codreq vacio");
+            JOptionPane.showMessageDialog(null, "Requisito no seleccionado");
         }
          
     }//GEN-LAST:event_bRegistrarRequisitoActionPerformed
 
     private void bVentanaRegistrarReqCorreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVentanaRegistrarReqCorreqActionPerformed
-        //Vale
         contrl.poblarCboxEscuelas(cbEscuelasPropietariasCurso);
         this.rqRegistrarRequeCorreque.setLocationRelativeTo(null);
         this.rqRegistrarRequeCorreque.setVisible(true);
@@ -1667,18 +1670,15 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cbCodigosCursosDeEscuelaActionPerformed
 
     private void bRegistrarCorrequisitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarCorrequisitoActionPerformed
-
         try{
             String codCurso = cbCodigosCursosDeEscuela.getSelectedItem().toString();
             String codCursoCorrequisito = cbCodigoCursoCorreq.getSelectedItem().toString();
             System.out.println(codCursoCorrequisito);
         
-            //Llamar al controlador para hacer la insercion del requisito
             contrl.agregarCorrequisitoACurso(codCurso, codCursoCorrequisito);
         }
         catch(NullPointerException e){
-            //agregar mensajito de error
-            System.out.println("CodCorreq vacio");
+            JOptionPane.showMessageDialog(null, "Correquisito no seleccionado");
         }
     }//GEN-LAST:event_bRegistrarCorrequisitoActionPerformed
 
@@ -1890,12 +1890,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void bConsultarPlanesCiertoCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultarPlanesCiertoCursoActionPerformed
         String codCurso = cbCodsCursosDeEscuelaCiertoCurso.getSelectedItem().toString();
+        contrl.poblarTablaPlanesCiertoCurso(codCurso, tablaInfoPlanesEstudioCiertoCurso);
 
-        try {
-            contrl.poblarTablaPlanesCiertoCurso(codCurso, tablaInfoPlanesEstudioCiertoCurso);
-        } catch (CursoDoesNotExistException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_bConsultarPlanesCiertoCursoActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
