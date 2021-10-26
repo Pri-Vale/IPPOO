@@ -1,6 +1,8 @@
 package Vista;
 
 import Controlador.Controlador;
+import Excepciones.CursoDoesNotExistException;
+import Excepciones.PlanDeEstudioDoesNotExistException;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
@@ -304,7 +306,6 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(36, 36, 36))
         );
 
-        rQRegistrarEsqArea.setMaximumSize(new java.awt.Dimension(425, 302));
         rQRegistrarEsqArea.setMinimumSize(new java.awt.Dimension(425, 302));
         rQRegistrarEsqArea.setSize(new java.awt.Dimension(425, 302));
 
@@ -1195,6 +1196,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel24.setText("Ingrese el curso");
 
         jButton3.setText("Eliminar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jComboBoxEscuelasElim1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1810,7 +1816,23 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_cbCodsCursoConsultarCorreqsActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    String cursoEliminar= jCBCursosAsEliminar.getSelectedItem().toString();
+    String preCode= jComboBoxEscuelasElim.getSelectedItem().toString();
+    String codeSchool= this.contrl.obtenerCodEscuela(preCode);
+        
+        
+    String planEstudiosElim = jComboBoxPlanesElim.getSelectedItem().toString();
+    int codePlanconvert = Integer.parseInt(planEstudiosElim);    
+    
+            
+            
+        try {
+            contrl.eliminarCursoPlanEstudio(codeSchool, codePlanconvert, cursoEliminar);
+        } catch (CursoDoesNotExistException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PlanDeEstudioDoesNotExistException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jbBuscarRECDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarRECDeleteActionPerformed
@@ -1848,7 +1870,7 @@ public class Principal extends javax.swing.JFrame {
        
         
         try {
-            this.contrl.poblarCBCursosXPlan(jComboBoxPlanesElim,codeSchool, codePlanconvert);
+            this.contrl.poblarCBCursosXPlan(jCBCursosAsEliminar,codeSchool, codePlanconvert);
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1869,8 +1891,23 @@ public class Principal extends javax.swing.JFrame {
     private void bConsultarPlanesCiertoCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultarPlanesCiertoCursoActionPerformed
         String codCurso = cbCodsCursosDeEscuelaCiertoCurso.getSelectedItem().toString();
 
-        contrl.poblarTablaPlanesCiertoCurso(codCurso, tablaInfoPlanesEstudioCiertoCurso);
+        try {
+            contrl.poblarTablaPlanesCiertoCurso(codCurso, tablaInfoPlanesEstudioCiertoCurso);
+        } catch (CursoDoesNotExistException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_bConsultarPlanesCiertoCursoActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    jCBCursoEliminar.removeAllItems();
+    jComboBoxEscuelasElim1.removeAllItems();
+    String cursoEliminar= jCBCursoEliminar.getSelectedItem().toString();
+    String preCode= jComboBoxEscuelasElim1.getSelectedItem().toString();
+    String codeSchool= this.contrl.obtenerCodEscuela(preCode);
+          
+    contrl.eliminarCurso(codeSchool, cursoEliminar);
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private String seleccionarCodigoEscuela(JComboBox cbox_escuela){
         String nombreEscuela = cbox_escuela.getSelectedItem().toString();

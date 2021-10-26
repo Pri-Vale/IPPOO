@@ -444,14 +444,24 @@ public class Consultas_BaseDatos {
         }
     }
 
-    public void eliminarCursoXPlanEstudio() {
-
-    }
-
-    ;
+    public void eliminarCursoXPlanEstudio(String codCurso, String codplanEstudio) {
+        try {
+            String query = "DELETE FROM CursoXPlanDeEstudio WHERE codCurso = '" + codCurso + "' AND planEstudio = '" + codplanEstudio + "'";
+            EjecutarSelectRS(query);
+            System.out.println("Eliminado");
+        } catch (SQLException e) {
+            e.getErrorCode();
+        }
+    };
     
-    public void eliminarCurso() {
-
+    public void eliminarCurso(String codCurso) {
+        try {
+            String query = "DELETE FROM Curso WHERE codCurso = '" + codCurso + "'";
+            EjecutarSelectRS(query);
+            System.out.println("Eliminado");
+        } catch (SQLException e) {
+            e.getErrorCode();
+        }
     };
 
 }
