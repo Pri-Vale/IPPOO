@@ -303,9 +303,22 @@ public class Controlador {
     }
     
     public void poblarTablaRequisitos(String codCursoReqs, JTable tablaRequisitos){
+        DefaultTableModel modelo = new DefaultTableModel();
+        
         ArrayList<Curso> requisitos = consultarRequisitos(codCursoReqs);
         
-        DefaultTableModel modelo = (DefaultTableModel)tablaRequisitos.getModel();
+        ArrayList<Object> columna = new ArrayList<Object>();
+        
+        columna.add("Codigo Curso");
+        columna.add("Nombre Curso");
+        columna.add("Cantidad de creditos");
+        columna.add("Cantidad de horas lectivas");
+        
+        for(Object col: columna){
+            modelo.addColumn(col);
+        }
+        //tablaRequisitos.setModel(modelo);
+        
         
         Object datosFila[] = new Object[4];
         
@@ -316,7 +329,8 @@ public class Controlador {
             datosFila[3] = requisitos.get(i).getCantHorasLectivas();
              
              modelo.addRow(datosFila);
-        }   
+        } 
+        tablaRequisitos.setModel(modelo);
     }
     
     public void poblarCBoxRequisitos(JComboBox jCBRequisitosEliminar, String codCursoReqs){
@@ -407,13 +421,13 @@ public class Controlador {
         ArrayList<PlanDeEstudio> planesConCurso = consultarPlanesConCiertoCurso(codCurso);
         ArrayList<Object> columna = new ArrayList<Object>();
         
-        columna.add("1");
-        columna.add("2");
+        columna.add("Codigo Plan Estudios");
+        columna.add("Fecha de Vigencia");
         
         for(Object col: columna){
             modelo.addColumn(col);
         }
-        tablaPlanes.setModel(modelo);
+        //tablaPlanes.setModel(modelo);
         
         
         Object datos[] = new Object[2]; 
@@ -505,8 +519,9 @@ public class Controlador {
                             
                             for (int j = 0; j <= bloqueEncontrados.size(); j++) {
                                 System.out.println(bloqueEncontrados.size());
-                                jCBCursosAsEliminar.addItem(bloqueEncontrados.get(y).getCursos().get(j));
-                                System.out.println(bloqueEncontrados.get(y).getCursos().get(j));
+                                String a = bloqueEncontrados.get(y).getCursos().get(j).getCodCurso();
+                                jCBCursosAsEliminar.addItem(a);
+                                System.out.println(a);
                             }
 
                         }
@@ -756,63 +771,79 @@ public class Controlador {
         }    
     }
     
-    public void eliminarCursoPlanEstudio(String codEscuela, int numPlan, String cursoEliminar) throws CursoDoesNotExistException, 
-            PlanDeEstudioDoesNotExistException{
-        
-        /*holis :D
-        sugerencia para hacer el método:
-        primero agarras la escuela seleccionada del combobox verdad
-        entonces puedes recorrer la lista general de escuelas para encontrarla con un ciclo
-        for (Escuela escuelaSeleccionada : escuelas){
-            if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == true){
-                ya aquí estarías dentro del objeto de la escuela, lo atrapaste con el if
-                    declarar el objeto de tipo plan que vamos a buscar:
-        
+    public void eliminarCursoPlanEstudio(String codEscuela, int numPlan, String cursoEliminar) throws CursoDoesNotExistException,
+            PlanDeEstudioDoesNotExistException {
+       try {
+            for (Escuela escuelaSeleccionada : escuelas) {
+                if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == true) {
+                    //declarar el objeto de tipo plan que vamos a buscar:
+
                     PlanDeEstudio planEncontrado;
-        
-                    ahora puedes buscar buscar el plan con el siguiente metodo y asignarle el valor a la variable plan
-        
-                    planEncontrado = escuelaSeleccionada.buscarPlanEscuela(numPlan)
-        
-                    ya una vez dentro del plan
-                        ahora hay que buscar el curso, que solo va a estar una vez en el plan entonces 
-                        hay que ir bloque por bloque
-                        con algo asi:
-                        ArrayList<Bloque> bloquesDePlan;
-                        bloquesDePlan = planSeleccionado.getBloques();
-                        y luego el ciclo for
-                        for (Bloque bloqueSeleccionado : bloquesDePlan)
-                            y ya aca dentro declaramos un objeto de tipo Curso
-        
-                            Curso cursoEncontrado;
-        
-                            y le asignamos su valor con el metodo siguiente
-        
-                            cursoEncontrado = buscarCursoBloque(cursoEliminar);
-        
-                            yyy ahora si aqui ya tienes el objeto curso que hay que eliminar asi que aca 
-                            nada mas agregas el metodo para eliminar el curso de un plan, pasandole el objeto cursoEncontrado
-        
+                    planEncontrado = escuelaSeleccionada.buscarPlanEscuela(numPlan);
+
+                    ArrayList<Bloque> bloquesDePlan;
+                    bloquesDePlan = planEncontrado.getBloques();
+
+                    for (Bloque bloqueSeleccionado : bloquesDePlan) {
+
+                        Curso cursoEncontrado;
+
+                        cursoEncontrado = bloqueSeleccionado.buscarCursoBloque(cursoEliminar);
+                        if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == true) {
+
                             bloqueSeleccionado.eliminarCurso(cursoEncontrado);
-        
-                            y listoooo :D
+                            String numConvString=Integer.toString(numPlan);  
+                            this.consultaBase.eliminarCursoXPlanEstudio(cursoEliminar,numConvString);
+                            System.out.println("Eliminado");
+                        }
+                    }
+                }
             }
-        }
-        recorda poner todo lo anterior dentro de un try y atrapar las dos excepciones 
-        
-        catch (CursoDoesNotExistException eCurso){
+        }catch (CursoDoesNotExistException eCurso){
             eCurso.mensajeError();
-        } catch(PlanDeEstudioDoesNotExistException ePlan){
+        }catch(PlanDeEstudioDoesNotExistException ePlan){
             ePlan.mensajeError();
         }
-        
-        */    
-    }    
-    
-    public void eliminarCurso(String cursoEliminar){
-        //cualquier cosa que necesites con este me avisas
     }
-     
+    
+    public void eliminarCurso(String codEscuela, String cursoEliminar) {
+        //cualquier cosa que necesites con este me avisas
+        ArrayList<PlanDeEstudio> planEscuela;
+        try {
+            for (Escuela escuelaSeleccionada : escuelas) {
+                if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == true) {
+                    
+                    
+                    planEscuela = escuelaSeleccionada.getPlanesDeEstudio();
+                    for (PlanDeEstudio planesEncontrado : planEscuela) {
+
+                        ArrayList<Bloque> bloquesDePlan;
+                        bloquesDePlan = planesEncontrado.getBloques();
+
+                        for (Bloque bloqueSeleccionado : bloquesDePlan) {
+
+                            Curso cursoEncontrado;
+
+                            cursoEncontrado = bloqueSeleccionado.buscarCursoBloque(cursoEliminar);
+                            if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == false) {
+
+                            } else if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == true) {
+                                Curso cursoEncontrado2;
+                                cursoEncontrado2 = escuelaSeleccionada.buscarCursosEscuela(cursoEliminar);
+                                cursos.remove(cursoEncontrado2);
+
+                                this.consultaBase.eliminarCurso(cursoEliminar);
+                                System.out.println("Eliminado");
+
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (CursoDoesNotExistException eCurso) {
+            eCurso.mensajeError();
+ 
+    }
+}  
 }
-     
-         
