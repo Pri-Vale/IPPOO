@@ -22,8 +22,8 @@ public class Consultas_BaseDatos {
     Conexion con = new Conexion();
 
     /**
-     *
-     * @param query
+     *Método que permite realizar la ejecución de un query en la base 
+     * @param query Contiene la consulta sql que se desea realizar
      * @throws SQLException
      */
     public void EjecutarQuery(String query) throws SQLException {
@@ -37,8 +37,8 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param query
+     * Método que permite realizar la ejecución especifica de un select en la base de datos
+     * @param query ontiene la consulta sql que se desea realizar
      * @return
      * @throws SQLException
      */
@@ -57,8 +57,8 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param escuela
+     * Método que permite la preparación para insertar una escuela en la base de datos
+     * @param escuela Objeto escuela a almacenar
      * @throws SQLException
      */
     public void insertarEscuela(Escuela escuela) throws SQLException {
@@ -68,7 +68,7 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
+     * Método que realiza la preparación del query para selección de los nombres de escuela en la base de datos 
      * @return
      */
     public ArrayList<String> seleccionarEscuelas() {
@@ -84,7 +84,7 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
+     * Método que realiza la preparación del query para seleccionar los codigos de escuela en la base de datos
      * @param nombreEscuela
      * @return
      */
@@ -105,9 +105,8 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param pCodEscuela
-     * @param pCurso
+     * Método que permite la preparación para insertar uun curso en la base de datos 
+     * @param pCurso codigo del curso 
      */
     public void insertarCurso(Curso pCurso) {
         try {
@@ -122,6 +121,12 @@ public class Consultas_BaseDatos {
         }
     }
 
+    /**
+     * Método que permite la preparación para insertar un curso en una escuela en la base de datos
+     * @param pCodEscuela codigo de la escuela
+     * @param pCurso codigo del curso
+     */
+    
     public void insertarCursoXEscuela(String pCodEscuela, Curso pCurso) {
         try {
             String query = "INSERT INTO CursoXEscuela VALUES('" + pCurso.getCodCurso() + "','" + pCodEscuela + "')";
@@ -133,9 +138,9 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param plan
-     * @param pNombreEscuela
+     * Método que permite la preparación para insertar un plan de estudio en la base de datos
+     * @param plan Objeto plan a insertar
+     * @param pNombreEscuela Código de escuela a la que se le afia el plan
      */
     public void insertarPlanEstudio(PlanDeEstudio plan, String pNombreEscuela) {
         String pCodEscuela = seleccionarCodEscuela(pNombreEscuela);
@@ -153,10 +158,10 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param codCurso
-     * @param plan
-     * @param pBloqueActivo
+     * Método que permite la preparación para insertar un curso en un plan en la base de datos
+     * @param codCurso Código a afiliar a un plan
+     * @param plan plan al que se afiliara el curso
+     * @param pBloqueActivo bloque en el que se encuentra activo el curso
      */
     public void insertarCursoXPlan(String codCurso, PlanDeEstudio plan, String pBloqueActivo) {
         try {
@@ -174,8 +179,8 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param codEscuela
+     *  Método que realiza la preparación del query para seleccionar los codigos de curso de escuela en la base de datos
+     * @param codEscuela Código de escuela sobre la que se van a buscar los cursos
      * @return
      */
     public ArrayList<String> seleccionarCursosDeEscuela(String codEscuela) {
@@ -192,7 +197,7 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
+     *  Método que realiza la preparación del query para seleccionar todos los codigos de curso
      * @return
      */
     public ArrayList<String> seleccionarCursos() {
@@ -208,8 +213,9 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param codEscuela
+     * Método que realiza la preparación del query para seleccionar los planes 
+     * existentes en una escuela en la base de datos
+     * @param codEscuela Código de la escuela sobre la que se buscaran los planes
      * @return
      */
     public ArrayList<String> seleccionarCodPlanes(String codEscuela) {
@@ -226,9 +232,9 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param codCurso
-     * @param codRequisito
+     * Método que permite la preparación para insertar un requisito a un curso en la base de datos
+     * @param codCurso Código del curso al que se le afiliara un requisito
+     * @param codRequisito Código del curso que se volvera requisito
      */
     public void insertarRequisitoXCurso(String codCurso, String codRequisito) {
         try {
@@ -243,9 +249,9 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param codCurso
-     * @param codCorrequisito
+     * Método que permite la preparación para insertar un corequisito a un curso en la base de datos
+     * @param codCurso Código del curso al que se le afiliara un requisito 
+     * @param codCorrequisito Código del curso que se volvera correquisito
      */
     public void insertarCorrequisitoXCurso(String codCurso, String codCorrequisito) {
         try {
@@ -261,8 +267,8 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param codCurso
+     *Método que realiza la preparación del query para seleccionar un curso especifico
+     * @param codCurso Código del curso a seleccionar
      * @return
      */
     public ArrayList<String> seleccionarNombreCurso(String codCurso) {
@@ -277,8 +283,8 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param codCurso
+     * Método que permite buscar los requisitos asosciados a un curso
+     * @param codCurso Código del curso al que se le desean buscar los requiitos
      * @return
      * @throws SQLException
      */
@@ -292,8 +298,8 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param codCurso
+     * Método que buscar los correquisitos de un curso en particular 
+     * @param codCurso Código del curso al que se le desean buscar los requisitos
      * @return
      * @throws SQLException
      */
@@ -307,8 +313,8 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param codigoEscuela
+     * Método que permite seleccionar toda la información relacionada a un plan de estudio 
+     * @param codigoEscuela Código de la escuela a buscar
      * @return
      * @throws SQLException
      */
@@ -321,8 +327,8 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param query
+     * Mtodo que ejecuta un select con salida de ResultSet
+     * @param query Contiene la consulta sql que se desea realizar
      * @return
      * @throws SQLException
      */
@@ -335,8 +341,7 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param escuelas
+     * Método que permite realizar la carga de las escuelas a los arrayList iniciales
      * @return
      * @throws SQLException
      */
@@ -353,10 +358,9 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
-     * @param cursos
+     * Método que permite realizar la carga de los cursos a los arrayList iniciales
      * @return
-     * @throws SQLException
+     * @throws SQLException 
      */
     public ResultSet CargarDatosCursos() throws SQLException {
         ResultSet cursosRS = null;
@@ -369,7 +373,11 @@ public class Consultas_BaseDatos {
         }
         return cursosRS;
     }
-
+    /**
+     * Método que permite realizar la carga de los cursos de escuelas a los arrayList iniciales
+     * @return
+     * @throws SQLException 
+     */
     public ResultSet CargarDatosCursosDeEscuela() throws SQLException {
         ResultSet cursosEscuelaRS = null;
         try {
@@ -383,7 +391,7 @@ public class Consultas_BaseDatos {
     }
 
     /**
-     *
+     * Método que permite realizar la carga de los requistos a los arraylist iniciales
      * @return @throws SQLException
      */
     public ResultSet CargarDatosRequisitos() throws SQLException {
@@ -397,6 +405,12 @@ public class Consultas_BaseDatos {
         }
         return requisitosRS;
     }
+    
+    /**
+     * Método que permite realizar la carga de los correquistos a los arraylist iniciales
+     * @return
+     * @throws SQLException 
+     */
 
     public ResultSet CargarDatosCorrequisitos() throws SQLException {
         ResultSet correquisitosRS = null;
@@ -409,6 +423,11 @@ public class Consultas_BaseDatos {
         }
         return correquisitosRS;
     }
+    /**
+     * Método que permite realizar la carga de los planes de estudio a los arraylist iniciales
+     * @return
+     * @throws SQLException 
+     */
 
     public ResultSet CargarDatosPlanesDeEstudio() throws SQLException {
         ResultSet planesRS = null;
@@ -421,6 +440,11 @@ public class Consultas_BaseDatos {
         }
         return planesRS;
     }
+    /**
+     * Método que permite realizar la carga de los cursos pertenecientes a un plan a los arraylist iniciales
+     * @return
+     * @throws SQLException 
+     */
 
     public ResultSet CargarDatosCursosPertenecientesPlan() throws SQLException {
         ResultSet cursosPlanesRS = null;
@@ -433,6 +457,11 @@ public class Consultas_BaseDatos {
         }
         return cursosPlanesRS;
     }
+    /**
+     * Método que permite realizar la eliminación de requisitos
+     * @param codCurso codigo del curso a eliminar el requisito
+     * @param reqCurso codigo del requisito a eliminar 
+     */
 
     public void eliminarRequisitos(String codCurso, String reqCurso) {
         try {
@@ -443,7 +472,11 @@ public class Consultas_BaseDatos {
             e.getErrorCode();
         }
     }
-
+    /**
+     * Método que permite realizar la eliminación de cursos en plan de estudio
+     * @param codCurso codigo del curso que se desea eliminar del plan 
+     * @param codplanEstudio plan del que se va a eliminar el curso
+     */
     public void eliminarCursoXPlanEstudio(String codCurso, String codplanEstudio) {
         try {
             String query = "DELETE FROM CursoXPlanDeEstudio WHERE codCurso = '" + codCurso + "' AND planEstudio = '" + codplanEstudio + "'";
@@ -454,6 +487,10 @@ public class Consultas_BaseDatos {
         }
     };
     
+    /**
+     * Método que permite eliminar un curso
+     * @param codCurso Código del curso a eliminar
+     */
     public void eliminarCurso(String codCurso) {
         try {
             String query = "DELETE FROM Curso WHERE codCurso = '" + codCurso + "'";

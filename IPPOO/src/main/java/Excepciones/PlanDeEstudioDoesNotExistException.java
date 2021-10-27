@@ -18,7 +18,10 @@ public class PlanDeEstudioDoesNotExistException extends Exception{
     public String getNumeroDePlan(){
         return nombreEscuela;
     }
-    
+    /**
+     * Método para obtener el mensaje de error correspondiente a la excepción atrapada
+     * @return el mensaje de error sobre un plan de estudio que no existe
+     */
     public String mensajeError(){
         String msg="";
         

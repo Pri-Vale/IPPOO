@@ -11,6 +11,10 @@ package Excepciones;
 public class BloqueDoesNotExistException extends Exception{
     private int numPlanPerteneciente;
     
+    /**
+     * Metodo que permite realizar la excepción
+     * @param pNumPlanPerteneciente 
+     */
     public BloqueDoesNotExistException(int pNumPlanPerteneciente){
         numPlanPerteneciente = pNumPlanPerteneciente;
     }
@@ -18,7 +22,10 @@ public class BloqueDoesNotExistException extends Exception{
     public int getSemestreBloque(){
         return numPlanPerteneciente;
     }
-    
+    /**
+     * Método para obtener el mensaje de error correspondiente a la excepción atrapada
+     * @return el mensaje de error sobre que un bloque no existe 
+     */
     public String mensajeError(){
         String msg = "";
         
