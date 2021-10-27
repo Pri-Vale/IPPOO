@@ -1,8 +1,6 @@
 package Modelo.logicaDeNegocio;
 
 import java.util.ArrayList;
-import Excepciones.RequisitoDoesNotExistException;
-import Excepciones.CorrequisitoDoesNotExistException;
 
 /**
  * Abstracción de la clase Curso y su informacion referente
@@ -11,11 +9,11 @@ import Excepciones.CorrequisitoDoesNotExistException;
  * @since 1.0
  */
 public class Curso {
+    //Atributos de instancia
     private String nombreCurso;
     private String codCurso;
     private int cantCreditos;
-    private int cantHorasLectivas;
-    
+    private int cantHorasLectivas; 
     private ArrayList<Curso> requisitos;
     private ArrayList<Curso> correquisitos;
  
@@ -38,18 +36,9 @@ public class Curso {
         this.nombreCurso = pNombreCurso;
         this.codCurso = pCodCurso;
         this.cantCreditos = pCantCreditos;
-        this.cantHorasLectivas = pCantHorasLectivas;
-        
-        this.requisitos = new ArrayList<Curso>();
-        this.correquisitos = new ArrayList<Curso>();
-    }
-    
-    /**
-     * Constructor para objetos de la clase Curso
-     * @param codCurso código del curso alfanumérico de 6 caracteres (2 caracteres del código de la escuela + 4 enteros positivos)
-     */
-    public Curso(String codCurso) {
-        this.codCurso = codCurso;
+        this.cantHorasLectivas = pCantHorasLectivas; 
+        this.requisitos = new ArrayList<>();
+        this.correquisitos = new ArrayList<>();
     }
 
     public String getNombreCurso() {
@@ -98,8 +87,6 @@ public class Curso {
      */
     public void registrarRequisito(Curso pCurso){
         requisitos.add(pCurso);
-        //existe o no el curso que se va a agregar como requisito
-        //requisito ya está agregado al curso como requisito o correquisito
     }
     
     /**
@@ -108,10 +95,13 @@ public class Curso {
      */
     public void registrarCorrequisito(Curso pCurso){
         correquisitos.add(pCurso);
-        //existe o no el curso que se va a agregar como requisito
-        //requisito ya está agregado al curso como requisito o correquisito
     }
     
+    /**
+     * Método para encontrar un curso que es requisito de un curso en particular
+     * @param codRequisito código del requisito que se quiere encontrar
+     * @return el requisito encontrado
+     */
     public Curso buscarRequisito(String codRequisito){
         Curso requisitoEncontrado = null;
         for (Curso requisito : requisitos){
@@ -122,7 +112,11 @@ public class Curso {
         return requisitoEncontrado;
     }
     
-    
+    /**
+     * Método para encontrar un curso que es correquisito de un curso en particular
+     * @param codCorrequisito código del correquisito que se quiere encontrar
+     * @return el correquisito encontrado
+     */
     public Curso buscarCorrequisito(String codCorrequisito){
         Curso correquisitoEncontrado = null;
         for (Curso correquisito : correquisitos){
@@ -133,6 +127,10 @@ public class Curso {
         return correquisitoEncontrado;
     }
     
+    /**
+     * Método que permite eliminar un requisito de un curso en particular
+     * @param pCurso el requisito que se quiere eliminar
+     */
     public void eliminarRequisito(Curso pCurso){
         requisitos.remove(pCurso);
     }

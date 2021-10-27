@@ -2,16 +2,16 @@ package Modelo.logicaDeNegocio;
 
 import java.util.ArrayList;
 import java.sql.Date;
-import Excepciones.BloqueDoesNotExistException;
 
 /**
  * Abstracción de la clase PlanDeEstudio y su información referente
  * @author Valeria Fernández y Priscilla Ramírez
- * @version 1.2
+ * @version 1.4
  * @since 1.0
  */
 
 public class PlanDeEstudio {
+    //Atributos de instancia
     private int codPlanEstudio;
     private Date fechaVigencia; 
     private ArrayList<Bloque> bloques;
@@ -31,7 +31,7 @@ public class PlanDeEstudio {
     public PlanDeEstudio(int codPlanEstudio, Date fechaVigencia) {
         this.codPlanEstudio = codPlanEstudio;
         this.fechaVigencia = fechaVigencia;
-        this.bloques = new ArrayList<Bloque>();
+        this.bloques = new ArrayList<>();
     }
 
     public int getCodPlanEstudio() {
@@ -71,10 +71,7 @@ public class PlanDeEstudio {
      * @return el nuevo bloque de estudios creado
      */
     public Bloque agregarBloque(String pIdBloque){
-        //validación de si existe o no
         Bloque bloqueNuevo = new Bloque(pIdBloque);
-        //me parece que acá no hace falta declarar un nuevo arraylist de bloques pq ya está el creado en los atributos de la clase
-        //entonces más bien lo inicializas en el constructor y acá solo agregas los bloques ahí :D
         bloques.add(bloqueNuevo);
         return bloqueNuevo;
     }
@@ -83,12 +80,13 @@ public class PlanDeEstudio {
      * Método para representar en caracteres el estado de un objeto de tipo PlanDeEstudio
      * @return a representación en caracteres de los atributos del objeto de tipo PlanDeEstudio
      */
+    @Override
     public String toString() {
         String msg = "";
         msg += "Plan de Estudio{\n";
         msg += "Código del plan de estudio: " + codPlanEstudio + "\n";
         msg += "Fecha de vigencia del plan: " + fechaVigencia + "\n";
-        msg += "Bloques que conforman el plan: ";
+        msg += "Bloques que conforman el plan: \n";
         msg += bloques;
         return msg;
     }

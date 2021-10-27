@@ -1,9 +1,7 @@
 package Modelo.logicaDeNegocio;
 
-import Excepciones.CursoAlreadyExistsException;
 import java.sql.Date;
 import java.util.ArrayList;
-import Excepciones.PlanDeEstudioDoesNotExistException;
 
 /**
  * Abstracción de la clase Escuela y su información referente
@@ -33,8 +31,8 @@ public class Escuela{
     public Escuela(String nombreEscuela, String codEscuela){
         this.nombreEscuela = nombreEscuela;
         this.codEscuela = codEscuela;
-        this.planesDeEstudio = new ArrayList<PlanDeEstudio>();
-        this.misCursos = new ArrayList<Curso>();
+        this.planesDeEstudio = new ArrayList<>();
+        this.misCursos = new ArrayList<>();
     }
 
     public String getNombreEscuela(){
@@ -64,12 +62,11 @@ public class Escuela{
     /**
      * Método que permite agregar planes de estudio a una escuela
      * @param pNumPlan número del plan de estudio 
-     * @param pFechaVigencia 
+     * @param pFechaVigencia fecha de vigencia del plan de estudio
      */
     public void agregarPlanesEstudio(int pNumPlan, Date pFechaVigencia){
         PlanDeEstudio nuevoPlanDeEstudio = new PlanDeEstudio(pNumPlan, pFechaVigencia);
         planesDeEstudio.add(nuevoPlanDeEstudio);
-        //excepcion si el plan ya existe
     }
     
     /**
@@ -78,9 +75,13 @@ public class Escuela{
      */
     public void asociarCurso(Curso pCurso){
         misCursos.add(pCurso);
-        //excepcion si el curso ya estaba asociado
     }
     
+    /**
+     * Método que retonar un curso perteneciente a una escuela según su código de curso
+     * @param codCurso código del curso que se está buscando
+     * @return el objeto de tipo Curso encontrado
+     */
     public Curso buscarCursosEscuela(String codCurso){
         Curso cursoEncontrado = null;
         for (Curso curso : misCursos){
@@ -91,6 +92,11 @@ public class Escuela{
         return cursoEncontrado;
     }
     
+    /**
+     * Método que retonar un plan de estudios perteneciente a una escuela según su número de plan
+     * @param numPlan número del plan que se está buscando
+     * @return el objeto de tipo PlanDeEstudio encontrado
+     */
     public PlanDeEstudio buscarPlanEscuela(int numPlan){
         PlanDeEstudio planEncontrado = null;
         for (PlanDeEstudio plan : planesDeEstudio){
