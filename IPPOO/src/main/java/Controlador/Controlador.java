@@ -3,12 +3,12 @@ package Controlador;
 import Connect_BD.Consultas_BaseDatos;
 import API.Correo;
 import API.PDF;
+import Excepciones.CorrequisitoAlreadyExistsException;
 import Excepciones.CursoAlreadyExistsException;
 import Excepciones.CursoDoesNotExistException;
 import Excepciones.EscuelaAlreadyExistsException;
 import Excepciones.PlanDeEstudioAlreadyExistsException;
-import Excepciones.PlanDeEstudioDoesNotExistException;
-import Excepciones.RequisitoDoesNotExistException;
+import Excepciones.RequisitoAlreadyExistsException;
 import Modelo.logicaDeNegocio.Bloque;
 import Modelo.logicaDeNegocio.Escuela;
 import Modelo.logicaDeNegocio.Curso;
@@ -20,7 +20,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -30,7 +29,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -68,7 +66,7 @@ public class Controlador {
     
     /**
      * Método que retorna el objeto de tipo Curso encontrado en el registro de cursos del programa a partir de su código
-     * @param codCurso el código del curso que se quiere encontrar
+     * @param pCodCurso el código del curso que se quiere encontrar
      * @return objeto de tipo Escuela
      */
     public Curso buscarCurso(String pCodCurso){
@@ -83,11 +81,12 @@ public class Controlador {
     
     
     /**
-     * 
-     * @param pNombreEscuela
-     * @param pCodEscuela
-     * @return
-     * @throws SQLException 
+     * Método que permite crear un objeto de tipo Escuela
+     * @param pNombreEscuela el nombre de la escuela que se quiere crear
+     * @param pCodEscuela el código de la escuela que se quiere crear
+     * @return verdadero si la escuela se creó exitosamente, falso en caso contrario
+     * @throws SQLException si la inserción de la escuela en la base de datos falla
+     * @throws Excepciones.EscuelaAlreadyExistsException  si la escuela ya existe 
      */
     public boolean crearEscuela(String pNombreEscuela, String pCodEscuela) throws SQLException, EscuelaAlreadyExistsException{
         try{
@@ -106,29 +105,23 @@ public class Controlador {
     }
     
 
-    
-    
     /**
-     * 
-     * @param cbox_escuelas 
+     * Método para poblar un JComboBox en la interfaz gráfica con las escuelas registradas en el sistema
+     * @param cbox_escuelas el JComboBox que se poblará a partir de los nombres de las escuelas registradas
      */
     public void poblarCboxEscuelas(JComboBox cbox_escuelas){
-        //ArrayList<String> listaEscuelas = salidaControlador.seleccionarEscuelas();
-        
         int contador = 0;
         while (escuelas.size() > contador){
             cbox_escuelas.addItem(escuelas.get(contador).getNombreEscuela());
             System.out.println("sirve cbox");
             contador++;
-        }
-        
-        //excepcion si lista vacia 
+        } 
     }
     
   /**
-     * 
-     * @param nombreEscuela
-     * @return 
+     * Método para obtener el código de una escuela a partir de su nombre
+     * @param nombreEscuela el nombre de la escuela de la cual se desea obtener su código
+     * @return el código de la escuela 
      */
     public String obtenerCodEscuela(String nombreEscuela){
         String codEscuela = salidaControlador.seleccionarCodEscuela(nombreEscuela);
@@ -136,12 +129,13 @@ public class Controlador {
     }
    
     /**
-     * 
-     * @param pCodEscuela
-     * @param pNombreCurso
-     * @param pCodCurso
-     * @param pCantCreditos
-     * @param pCantHorasLectivas 
+     * Método para crear un objeto de tipo Curso
+     * @param pCodEscuela el código de la escuela a la que pertenecerá el curso por crear
+     * @param pNombreCurso el nombre del curso por crear
+     * @param pCodCurso el código del curso por crear
+     * @param pCantCreditos la cantidad de créditos del curso por crear
+     * @param pCantHorasLectivas la cantidad de horas lectivas del curso por crear
+     * @throws Excepciones.CursoAlreadyExistsException si el curso ya se encuentra registrado en el sistema 
      */
     public void crearCurso(String pCodEscuela, String pNombreCurso, String pCodCurso, int pCantCreditos, int pCantHorasLectivas) throws CursoAlreadyExistsException{        
         for (Escuela escuelaEncontrada : escuelas){ 
@@ -163,12 +157,15 @@ public class Controlador {
     }
     
     /**
-     * 
-     * @param pNombreEscuela
-     * @param pCodigoPlan
-     * @param pVigenciaPlan
-     * @param pCodigoCurso
-     * @param pBloqueActivo 
+     * Método para crear un objeto de tipo PlanDeEstudio
+     * @param pNombreEscuela el nombre de la escuela a la que pertenecerá el plan de estudios por crear
+     * @param pCodigoPlan el número de 4 dígitos del plan por crear
+     * @param pVigenciaPlan la fecha de vigencia del plan por crear
+     * @param pCodigoCurso el código del curso que se le agregará al plan de estudio 
+     * @param pBloqueActivo el número de semestre activo al que se le asignará el curso del plan de estudios
+     * @throws Excepciones.CursoAlreadyExistsException si el curso por registrar ya pertenece al plan
+     * @throws Excepciones.CursoDoesNotExistException si el curso por registrar no existe en el sistema
+     * @throws Excepciones.PlanDeEstudioAlreadyExistsException  si el plan de estudio con ese número de plan ya existe en esa escuela u otra
      */
     public void crearPlanEstudios(String pNombreEscuela,int pCodigoPlan,Date pVigenciaPlan,String pCodigoCurso,String pBloqueActivo) 
             throws CursoAlreadyExistsException, CursoDoesNotExistException, PlanDeEstudioAlreadyExistsException{
@@ -178,11 +175,15 @@ public class Controlador {
         
         PlanDeEstudio planExistente = escuelaEncontrada.buscarPlanEscuela(pCodigoPlan);
         boolean planYaExiste = false;
-        //buscar que el plan no exista ya en esa escuela u otras
+        //buscar que el plan no exista ya en otras escuelas
         for (Escuela escuela : escuelas){
             for (PlanDeEstudio planExiste : escuela.getPlanesDeEstudio()){
                 if (pCodigoPlan == planExiste.getCodPlanEstudio()){
-                    planYaExiste = true;
+                    if (escuela.getCodEscuela().equals(codEscuela) == false){
+                        planYaExiste = true;
+                    }else{
+                        planYaExiste = false;
+                    }   
                 }
             }
         }
@@ -200,7 +201,7 @@ public class Controlador {
             ArrayList<PlanDeEstudio> planesEscuela = escuelaEncontrada.getPlanesDeEstudio();
 
             boolean cursoExisteEnPlan = false; 
-            //buscar que el curso no exista en ese plan de estudios
+            //buscar que el curso no exista en ese plan de estudios:
             for (PlanDeEstudio plan : planesEscuela){
                 for (Bloque bloqueEncontrado : plan.getBloques()){
                     if (bloqueEncontrado.buscarCursoBloque(pCodigoCurso) != null){
@@ -228,14 +229,12 @@ public class Controlador {
     }
     
     /**
-     * 
-     * @param cbox_cursos
-     * @param codEscuela 
+     * Método para poblar un JComboBox con los códigos de los cursos pertenecientes a una escuela en particular
+     * @param cbox_cursos el JComboBox por poblar
+     * @param codEscuela el código de la escuela a la que pertenecen los cursos 
      */
     public void poblarCboxCursosDeEscuela(JComboBox cbox_cursos, String codEscuela){
-        //ArrayList<String> listaCursosDeEscuela = salidaControlador.seleccionarCursosDeEscuela(codEscuela);
         ArrayList<Curso> cursosEscuela = new ArrayList<>();
-        
         int contador = 0;
         
         for (Escuela escuelaEncontrada : escuelas){
@@ -250,31 +249,25 @@ public class Controlador {
                     System.out.println("Contador " + contador);
                 }
             }
-        }
-       
-    //excepcion si lista vacia 
+        } 
     }
     
     /**
-     * 
-     * @param cbox_cursos 
+     * Método para poblar un JComboBox con los códigos de todos registrados en el sistema
+     * @param cbox_cursos el JComboBox por poblar
      */
     public void poblarCboxCursos(JComboBox cbox_cursos){
-        //ArrayList<String> listaCursos = salidaControlador.seleccionarCursos();
-
         int contador = 0;
         while (cursos.size() > contador){
             cbox_cursos.addItem(cursos.get(contador).getCodCurso());
             contador++;
         }
-
-    //excepcion si lista vacia 
     }
     
     /**
-     * 
-     * @param cbox_codigosPlan
-     * @param codEscuela 
+     * Método para poblar un JComboBox con los números de plan de estudio de una escuela en particular
+     * @param cbox_codigosPlan el JComboBox por poblar
+     * @param codEscuela el código de la escuela a la que pertenecen los planes de estudio
      */
     public void poblarCboxCodigosPlan(JComboBox cbox_codigosPlan,String codEscuela){
         ArrayList<String> listaCodPlanes = salidaControlador.seleccionarCodPlanes(codEscuela);
@@ -283,23 +276,25 @@ public class Controlador {
             cbox_codigosPlan.addItem(listaCodPlanes.get(contador));
             contador++;
         }
-        
     }
     
     /**
-     * 
-     * @param codCurso
-     * @param codReq 
+     * Método para agregar un requisito a un curso en particular
+     * @param codCurso el código del curso al que se le agregará el requisito
+     * @param codReq el código del curso que se agregará como requisito de un curso
+     * @throws Excepciones.RequisitoAlreadyExistsException si el requisito ya esté relacionado con el curso
      */
-    public void agregarRequisitoACurso(String codCurso, String codReq){      
+    public void agregarRequisitoACurso(String codCurso, String codReq) throws RequisitoAlreadyExistsException{      
         for (Curso curso: cursos){
-            System.out.println("Codigo del curso: " + curso.getCodCurso());
             if(codCurso.equals(curso.getCodCurso()) == true){
                 for (Curso cursoRequisito : cursos){
-                    System.out.println("Codigo del requisito: " + cursoRequisito.getCodCurso());
                     if(codReq.equals(cursoRequisito.getCodCurso()) == true){
-                        curso.registrarRequisito(cursoRequisito);
-                        salidaControlador.insertarRequisitoXCurso(codCurso, codReq); //Persistencia almacenado
+                        if (curso.buscarRequisito(codReq) == null){
+                            curso.registrarRequisito(cursoRequisito);
+                            salidaControlador.insertarRequisitoXCurso(codCurso, codReq); //Persistencia almacenado
+                        }else{
+                            throw new RequisitoAlreadyExistsException(codCurso, codReq);
+                        }
                     }
                 }    
             }
@@ -307,17 +302,22 @@ public class Controlador {
     }
     
     /**
-     * 
-     * @param codCurso
-     * @param codCorreq 
+     * Método para agregar un correquisito a un curso en particular
+     * @param codCurso el código del curso al que se le agregará el correquisito
+     * @param codCorreq el código del curso que se agregará como correquisito de un curso
+     * @throws Excepciones.CorrequisitoAlreadyExistsException si el correquisito ya esté relacionado con el curso
      */
-    public void agregarCorrequisitoACurso(String codCurso, String codCorreq){      
+    public void agregarCorrequisitoACurso(String codCurso, String codCorreq) throws CorrequisitoAlreadyExistsException{      
         for (Curso curso: cursos){
             if(codCurso.equals(curso.getCodCurso()) == true){
                 for (Curso cursoCorrequisito : cursos){
                     if(codCorreq.equals(cursoCorrequisito.getCodCurso()) == true){
-                        curso.registrarRequisito(cursoCorrequisito);
-                        salidaControlador.insertarCorrequisitoXCurso(codCurso, codCorreq); //Persistencia almacenado
+                        if (curso.buscarCorrequisito(codCorreq) == null){
+                            curso.registrarRequisito(cursoCorrequisito);
+                            salidaControlador.insertarCorrequisitoXCurso(codCurso, codCorreq); //Persistencia almacenado
+                        }else{
+                            throw new CorrequisitoAlreadyExistsException(codCurso, codCorreq);
+                        }
                     }
                 }    
             }
@@ -325,16 +325,15 @@ public class Controlador {
     }
     
     /**
-     * 
-     * @param codCurso
-     * @return 
+     * Método para obtener el nombre de un curso a partir de su código de curso
+     * @param codCurso el código del curso del que se quiere obtener el nombre
+     * @return el nombre del curso obtenido a partir de su código 
      */
     public String obtenerNombreCurso(String codCurso){
         ArrayList<String> listaNombreCurso = salidaControlador.seleccionarNombreCurso(codCurso);
         int contador = 0;
         String nombreCurso = null;
         while (listaNombreCurso.size() > contador){
-            System.out.println("\n Curso obtenido:" + nombreCurso);
             nombreCurso = listaNombreCurso.get(contador);
             contador++;
         }
@@ -342,9 +341,9 @@ public class Controlador {
     }
     
     /**
-     * 
-     * @param codCurso
-     * @return 
+     * Método que permite consultar los requisitos de un curso en particular
+     * @param codCurso código del curso del que se quieren consultar los requisitos
+     * @return los requisitos del curso
      */
     private ArrayList<Curso> consultarRequisitos(String codCurso){
         ArrayList<Curso> requisitos = new ArrayList<>();
@@ -357,12 +356,15 @@ public class Controlador {
         return requisitos;
     }
     
+    /**
+     * Método para poblar una JTable con los requisitos consultados de un curso en particular
+     * @param codCursoReqs curso del cual se van a consultar los requisitos
+     * @param tablaRequisitos JTable que se va a poblar con los requisitos del curso consultado
+     */
     public void poblarTablaRequisitos(String codCursoReqs, JTable tablaRequisitos){
         DefaultTableModel modelo = new DefaultTableModel();
-        
         ArrayList<Curso> requisitos = consultarRequisitos(codCursoReqs);
-        
-        ArrayList<Object> columna = new ArrayList<Object>();
+        ArrayList<Object> columna = new ArrayList<>();
         
         columna.add("Codigo Curso");
         columna.add("Nombre Curso");
@@ -372,8 +374,6 @@ public class Controlador {
         for(Object col: columna){
             modelo.addColumn(col);
         }
-        //tablaRequisitos.setModel(modelo);
-        
         
         Object datosFila[] = new Object[4];
         
@@ -388,22 +388,24 @@ public class Controlador {
         tablaRequisitos.setModel(modelo);
     }
     
+    /**
+     * Método para poblar un JComboBox con los requisitos de un curso en particular
+     * @param jCBRequisitosEliminar JComboBox que se poblará con los códigos de los requisitos del curso consultado
+     * @param codCursoReqs código del curso del que se quieren consultar los requisitos
+     */
     public void poblarCBoxRequisitos(JComboBox jCBRequisitosEliminar, String codCursoReqs){
         ArrayList<Curso> requisitos = consultarRequisitos(codCursoReqs);
-        
-        
         int contador = 0;
         while (requisitos.size() > contador){
             jCBRequisitosEliminar.addItem(requisitos.get(contador).getCodCurso());
             contador++;
-        }
-        
+        }   
     }
     
     /**
-     * 
-     * @param codCurso
-     * @return 
+     * Método que permite consultar los correquisitos de un curso en particular
+     * @param codCurso el código del curso del que se quieren consultar los correquisitos
+     * @return los correquisitos del curso
      */
     private ArrayList<Curso> consultarCorrequisitos(String codCurso){
         ArrayList<Curso> correquisitos = new ArrayList<>();
@@ -416,6 +418,11 @@ public class Controlador {
         return correquisitos;
     }
     
+    /**
+     * Método para poblar una JTable con los correquisitos consultados de un curso en particular
+     * @param codCursoCorreqs curso del cual se van a consultar los correquisitos
+     * @param tablaCorrequisitos JTable que se va a poblar con los correquisitos del curso consultado
+     */
     public void poblarTablaCorrequisitos(String codCursoCorreqs, JTable tablaCorrequisitos){
         ArrayList<Curso> correquisitos = consultarCorrequisitos(codCursoCorreqs);
         
@@ -433,7 +440,13 @@ public class Controlador {
         }   
     }
     
-    public ArrayList <PlanDeEstudio> consultarPlanesConCiertoCurso(String codCurso){
+    //REVISAR
+    /**
+     * Método que permite consultar los planes de estudio que contienen un curso en particular en sus bloques de estudio
+     * @param codCurso código del curso que se va a consultar
+     * @return la lista de planes de estudio que contienen el curso consultado
+     */
+    private ArrayList <PlanDeEstudio> consultarPlanesConCiertoCurso(String codCurso){
         ArrayList <PlanDeEstudio> planesEscuela;
         ArrayList <Bloque> bloquesPlan;
         ArrayList <Curso> cursosBloque;
@@ -456,13 +469,16 @@ public class Controlador {
         return planesConCurso;
     }
     
-    
+    /**
+     * Método para poblar una JTable con la información de los planes que contienen un curso en particular
+     * @param codCurso código del curso que se desea consultar
+     * @param tablaPlanes JTabla que se poblará con la información obtenida de los planes de estudio
+     */
     public void poblarTablaPlanesCiertoCurso(String codCurso, JTable tablaPlanes){
-        //Cambiar los otros table
         DefaultTableModel modelo = new DefaultTableModel();
         
         ArrayList<PlanDeEstudio> planesConCurso = consultarPlanesConCiertoCurso(codCurso);
-        ArrayList<Object> columna = new ArrayList<Object>();
+        ArrayList<Object> columna = new ArrayList<>();
         
         columna.add("Codigo Plan Estudios");
         columna.add("Fecha de Vigencia");
@@ -470,9 +486,7 @@ public class Controlador {
         for(Object col: columna){
             modelo.addColumn(col);
         }
-        //tablaPlanes.setModel(modelo);
-        
-        
+
         Object datos[] = new Object[2]; 
         for (int i = 0; i < planesConCurso.size(); i++){
                 datos[0] = planesConCurso.get(i).getCodPlanEstudio();
@@ -480,11 +494,10 @@ public class Controlador {
 
                 modelo.addRow(datos);
         } 
-        tablaPlanes.setModel(modelo);
-                
+        tablaPlanes.setModel(modelo);           
     }
     
-    
+    //FALTA JAVADOC
     /**
      * 
      * @param table
@@ -492,11 +505,8 @@ public class Controlador {
      * @throws SQLException 
      */
     public void poblarCursoEnPlan(JTable table, String escuelaBuscar) throws SQLException{
-        //envio la escuela
-        
         System.out.println(escuelaBuscar);
         
-        //recibe datos y construye la tabla 
         ResultSet rst = salidaControlador.verPlanDeEstudio(escuelaBuscar);
         ResultSetMetaData rsMd= rst.getMetaData();
         
@@ -521,7 +531,7 @@ public class Controlador {
         }
     }
     
-    
+    //FALTA JAVADOC
     /**
      * 
      * @param documento
@@ -533,6 +543,7 @@ public class Controlador {
         this.salidaPDF.generarPDF(documento,rst);
     }
     
+    //FALTA JAVADOC
     /**
      * 
      * @param propiedades
@@ -546,8 +557,15 @@ public class Controlador {
         }
     }
     
+    //FALTA JAVADOC
+    /**
+     * 
+     * @param jCBCursosAsEliminar
+     * @param escuelaBuscar
+     * @param planBuscar
+     * @throws SQLException si la consulta a la base de datos no se realiza con éxito 
+     */
     public void poblarCBCursosXPlan(JComboBox jCBCursosAsEliminar, String escuelaBuscar, int planBuscar) throws SQLException {
-        //primero debo de  buscar en la escuela 
         try{
            for (Escuela escuelaEncontrada : escuelas) {
             if (escuelaBuscar.equals(escuelaEncontrada.getCodEscuela()) == true) {
@@ -567,8 +585,6 @@ public class Controlador {
                     }
 
                 }
-                //segundo debo de buscar el plan en la escuela 
-                //debo buscar los cursos asociados
             }
         }
         }catch(Exception e){
@@ -583,10 +599,8 @@ public class Controlador {
     private void crearObjetosEscuela() throws SQLException{
         ResultSet escuelasObtenidas; 
         escuelasObtenidas = salidaControlador.CargarDatosEscuelas();
-        
         String nombreEscuela;
-        String codEscuela;
-  
+        String codEscuela; 
         Escuela nuevaEscuela;
         
         while (escuelasObtenidas.next()){
@@ -606,13 +620,10 @@ public class Controlador {
     private void crearObjetosCurso() throws SQLException{
         ResultSet cursosObtenidos; 
         cursosObtenidos = salidaControlador.CargarDatosCursos();
-        
-        
         String nombreCurso;
         String codCurso;
         int cantCreditos;
-        int cantHorasLectivas;
-        
+        int cantHorasLectivas;      
         Curso nuevoCurso;
         
         while (cursosObtenidos.next()){
@@ -621,13 +632,16 @@ public class Controlador {
             cantCreditos = cursosObtenidos.getInt(3);
             cantHorasLectivas = cursosObtenidos.getInt(4);
             System.out.println("Cursos creados a partir de la info desde la base: \n");
-            System.out.println("codCurso: " + codCurso + " nombreCurso: " + nombreCurso + " cantCreditos: " + cantCreditos + " cantHorasLectivas: " + cantHorasLectivas +"\n");
-            
+            System.out.println("codCurso: " + codCurso + " nombreCurso: " + nombreCurso + " cantCreditos: " + cantCreditos + " cantHorasLectivas: " + cantHorasLectivas +"\n"); 
             nuevoCurso = new Curso(nombreCurso, codCurso, cantCreditos, cantHorasLectivas);
             cursos.add(nuevoCurso);
         }
     }
     
+    /**
+     * Método que relaciona los objetos de tipo Curso con la escuela a la que pertenecen
+     * @throws SQLException si la consulta a la base de datos no se realiza con éxito 
+     */
     private void crearRelacionCursosEscuela() throws SQLException{
         ResultSet cursosObtenidosEscuela; 
         cursosObtenidosEscuela = salidaControlador.CargarDatosCursosDeEscuela();
@@ -652,13 +666,12 @@ public class Controlador {
         }catch(SQLException e){
             e.getErrorCode();
         }
-
     }
     
     
      /**
      * Método que relaciona los objetos de tipo Curso que son correquisitos de un curso con su curso respectivo
-     * @throws SQLException 
+     * @throws SQLException si la consulta a la base de datos no se realiza con éxito 
      */
     private void crearRelacionRequisitosCursos() throws SQLException{
         ResultSet requisitosObtenidos; 
@@ -685,7 +698,7 @@ public class Controlador {
     
     /**
      * Método que relaciona los objetos de tipo Curso que son requisitos de un curso con su curso respectivo
-     * @throws SQLException 
+     * @throws SQLException si la consulta a la base de datos no se realiza con éxito 
      */
     private void crearRelacionCorrequisitosCursos() throws SQLException{
         ResultSet correquisitosObtenidos; 
@@ -712,7 +725,7 @@ public class Controlador {
     
     /**
      * Método que toma los datos en la base y crea los objetos de tipo PlanDeEstudio y su relación con los objetos de tipo Escuela
-     * @throws SQLException 
+     * @throws SQLException si la consulta a la base de datos no se realiza con éxito 
      */
     private void crearObjetosPlanDeEstudio() throws SQLException{
         ResultSet planesObtenidos;
@@ -736,8 +749,8 @@ public class Controlador {
     }
     
     /**
-     * 
-     * @throws SQLException 
+     * Método que relaciona los objetos de tipo Curso registrados, cargados desde la base de datos, a sus planes de estudio respectivos
+     * @throws SQLException si la consulta a la base de datos no se realiza con éxito 
      */
     private void relacionarCursoPlan() throws SQLException{
         ResultSet cursosObtenidosPlan;
@@ -746,7 +759,6 @@ public class Controlador {
         String codCurso;
         int numPlan; 
         String semestreActivo;
-        
         ArrayList<PlanDeEstudio> planes;
         ArrayList<Bloque> bloques;
         
@@ -775,8 +787,10 @@ public class Controlador {
         }
     }
     
-    public String generarObjetos(){
-        String msg = "";
+    /**
+     * Método para generar los objetos del programa a partir de la persistencia de datos almacenados en la base de datos relacional
+     */
+    public void generarObjetos(){
         try{
             crearObjetosEscuela(); 
             crearObjetosCurso(); 
@@ -789,14 +803,15 @@ public class Controlador {
             System.out.println(cursos.toString());
         }
         catch(SQLException e){
-            msg += "¡Excepción! ";
-            msg += e.getMessage();
-            return msg;
+            e.getMessage();
         }
-        return msg;
     }
     
-    
+    /**
+     * Método que permite eliminar un requisito de un curso 
+     * @param cursoEliminar el código del curso del que se desea eliminar el requisito 
+     * @param requisitoEliminar el código del requisito que se quiere eliminar del curso
+     */
     public void eliminarRequisitoCurso(String cursoEliminar,String requisitoEliminar){
         for (Curso curso: cursos){
             //System.out.println("Codigo del curso: " + curso.getCodCurso());
@@ -812,8 +827,13 @@ public class Controlador {
         }    
     }
     
-    public void eliminarCursoPlanEstudio(String codEscuela, int numPlan, String cursoEliminar) throws CursoDoesNotExistException,
-        PlanDeEstudioDoesNotExistException {
+    /**
+     * Método para eliminar un curso perteneciente a un plan de estudios
+     * @param codEscuela el código de la escuela a la que pertenece el plan de estudios
+     * @param numPlan el número del plan de estudios del que ser quiere eliminar el curso
+     * @param cursoEliminar el código del curso que se quiere eliminar del plan de estudios
+     */
+    public void eliminarCursoPlanEstudio(String codEscuela, int numPlan, String cursoEliminar) {
         for (Escuela escuelaSeleccionada : escuelas) {
             if (codEscuela.equals(escuelaSeleccionada.getCodEscuela()) == true) {
                 //declarar el objeto de tipo plan que vamos a buscar:
@@ -835,6 +855,11 @@ public class Controlador {
         }
     }
     
+    /**
+     * Método que permite eliminar un curso de una escuela, mientras que no exista en ningún plan de estudios
+     * @param codEscuela el código de la escuela a la que pertenece el curso
+     * @param cursoEliminar el código del curso que se desea eliminar
+     */
     public void eliminarCurso(String codEscuela, String cursoEliminar) {
         //cualquier cosa que necesites con este me avisas
         ArrayList<PlanDeEstudio> planEscuela;

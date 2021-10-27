@@ -1,11 +1,13 @@
 package Vista;
 
 import Controlador.Controlador;
+import Excepciones.CorrequisitoAlreadyExistsException;
 import Excepciones.CursoAlreadyExistsException;
 import Excepciones.CursoDoesNotExistException;
 import Excepciones.EscuelaAlreadyExistsException;
 import Excepciones.PlanDeEstudioAlreadyExistsException;
 import Excepciones.PlanDeEstudioDoesNotExistException;
+import Excepciones.RequisitoAlreadyExistsException;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
@@ -1374,35 +1376,34 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(bVentanaConsultarCorrequisitos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bVentanaEliminarReqCurso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(54, 54, 54))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(233, 233, 233))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(214, 214, 214)
-                        .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(150, 150, 150)
                         .addComponent(jLabel16))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(239, 239, 239)
-                        .addComponent(bVentanaVisualizarPlanes, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(bVentanaVisualizarPlanes, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(244, 244, 244)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(197, 197, 197)
+                        .addComponent(jLabel1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel16)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(19, 19, 19)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(bVentanaRegistrarEscuela)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bVentanaRegistrarCursos)
@@ -1410,8 +1411,7 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(bVentanaRegistrarReqCorreq)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jBInterfRegPlanesEstudio))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(bVentanaConsultarPlanesConCiertoCurso)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bVentanaConsultarRequisitos)
@@ -1647,6 +1647,8 @@ public class Principal extends javax.swing.JFrame {
             String codCursoRequisito = cbCodigoCursoReq.getSelectedItem().toString();
             System.out.println(codCursoRequisito);
             contrl.agregarRequisitoACurso(codCurso, codCursoRequisito); 
+        }catch(RequisitoAlreadyExistsException eReqExistente){
+            JOptionPane.showMessageDialog(null, eReqExistente.mensajeError());
         }
         catch(NullPointerException e){
             JOptionPane.showMessageDialog(null, "Requisito no seleccionado");
@@ -1683,6 +1685,8 @@ public class Principal extends javax.swing.JFrame {
             System.out.println(codCursoCorrequisito);
         
             contrl.agregarCorrequisitoACurso(codCurso, codCursoCorrequisito);
+        }catch(CorrequisitoAlreadyExistsException eCorreqExiste){
+            JOptionPane.showMessageDialog(null, eCorreqExiste.mensajeError());
         }
         catch(NullPointerException e){
             JOptionPane.showMessageDialog(null, "Correquisito no seleccionado");
@@ -1826,20 +1830,11 @@ public class Principal extends javax.swing.JFrame {
     String cursoEliminar= jCBCursosAsEliminar.getSelectedItem().toString();
     String preCode= jComboBoxEscuelasElim.getSelectedItem().toString();
     String codeSchool= this.contrl.obtenerCodEscuela(preCode);
-        
-        
+         
     String planEstudiosElim = jComboBoxPlanesElim.getSelectedItem().toString();
     int codePlanconvert = Integer.parseInt(planEstudiosElim);    
-    
-            
-            
-        try {
-            contrl.eliminarCursoPlanEstudio(codeSchool, codePlanconvert, cursoEliminar);
-        } catch (CursoDoesNotExistException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (PlanDeEstudioDoesNotExistException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+     
+    contrl.eliminarCursoPlanEstudio(codeSchool, codePlanconvert, cursoEliminar);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jbBuscarRECDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarRECDeleteActionPerformed

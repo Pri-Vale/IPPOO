@@ -30,5 +30,4 @@ public class CursoDoesNotExistException extends Exception{
         
         return msg;
     }
-    
 }
