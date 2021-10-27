@@ -1452,18 +1452,25 @@ public class Principal extends javax.swing.JFrame {
         if(this.tNombreEA.getText().equals("")){
             JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de escuela válido");
         }    
-        if(this.tCodigoEscuela.getText().equals("")){
+        else if(this.tCodigoEscuela.getText().equals("")){
             JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un código de escuela válido");
         }else{
-            try {
-                contrl.crearEscuela(tNombreEA.getText(), tCodigoEscuela.getText());
-                JOptionPane.showMessageDialog(null,"¡Escuela registrada con éxito!");
-                rQRegistrarEsqArea.dispose();
-            }catch(EscuelaAlreadyExistsException eCodEscuela){ 
-                JOptionPane.showMessageDialog(null,eCodEscuela.mensajeError());   
-            }catch (SQLException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            if(this.tCodigoEscuela.getText().length()>=2){
+                try {
+                    contrl.crearEscuela(tNombreEA.getText(), tCodigoEscuela.getText());
+                    JOptionPane.showMessageDialog(null,"¡Escuela registrada con éxito!");
+                    rQRegistrarEsqArea.dispose();
+                }catch(EscuelaAlreadyExistsException eCodEscuela){ 
+                    JOptionPane.showMessageDialog(null,eCodEscuela.mensajeError());   
+                }catch (SQLException ex) {
+                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+            else{
+                JOptionPane.showMessageDialog(null,"Por favor, ingrese un código de escuela válido de dos caracteres");
+        
+            }
+                
         }    
     }//GEN-LAST:event_bRegEsqAreaActionPerformed
 
