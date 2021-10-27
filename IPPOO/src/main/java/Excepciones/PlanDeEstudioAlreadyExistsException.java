@@ -18,7 +18,10 @@ public class PlanDeEstudioAlreadyExistsException extends Exception{
     public int getNumPlan(){
         return numPlan;
     }
-    
+    /**
+     * Método para obtener el mensaje de error correspondiente a la excepción atrapada
+     * @return el mensaje de error sobre un plan de estudio que ya existe
+     */
     public String mensajeError(){
         String msg = "";
         

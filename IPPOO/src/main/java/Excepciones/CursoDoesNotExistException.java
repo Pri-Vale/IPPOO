@@ -22,7 +22,10 @@ public class CursoDoesNotExistException extends Exception{
     public String getCodigoCurso(){
         return codCurso;
     }
-    
+    /**
+     * Método para obtener el mensaje de error correspondiente a la excepción atrapada
+     * @return el mensaje de error sobre que un curso que no existe
+     */
     public String mensajeError(){
         String msg = "";
         

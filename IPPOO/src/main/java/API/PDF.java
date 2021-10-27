@@ -22,7 +22,12 @@ public class PDF {
     public PDF() {
     }
     
-    
+    /**
+     * Metodo que permite generar el reporte en PDF
+     * @param documento Documento que contendra el reporte de PDF
+     * @param rst Resulset que contiene la información extraida sobre el plan
+     * @throws SQLException 
+     */
     
    public void generarPDF(Document documento,ResultSet rst) throws SQLException{
     try{

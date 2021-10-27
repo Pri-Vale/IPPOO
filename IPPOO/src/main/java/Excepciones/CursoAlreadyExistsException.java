@@ -18,7 +18,10 @@ public class CursoAlreadyExistsException extends Exception{
     public String getCodigoDeCurso(){
         return codCurso;
     }
-    
+    /**
+     * Método para obtener el mensaje de error correspondiente a la excepción atrapada
+     * @return el mensaje de error sobre que un curso que no existe
+     */
     public String mensajeError(){
         String msg = "";
         

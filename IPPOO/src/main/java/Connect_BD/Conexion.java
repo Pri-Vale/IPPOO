@@ -27,11 +27,11 @@ public class Conexion {
     public static Connection getConect() {
         return conect;
     }
-   /*String IP, String Puerto, String BDname, String USER, String password*/
+   
     
     /**
-     * Método para conectarse con la base de datos
-     * @return 
+     * Metodo que permite realizar la conexión a la base
+     * @return Connection, objeto que contiene la conexión activa
      */
     public Connection Conectar_a_base(){
         try{
@@ -48,6 +48,7 @@ public class Conexion {
 
     /**
      * Método para cerrar la conexión con la base de datos
+     * 
      */
     public void Cerrar_la_conexion(){
         try{

@@ -24,6 +24,13 @@ import javax.mail.internet.MimeMultipart;
  */
 public class Correo {
     
+    /**
+     * Metodo que permite generar un correo 
+     * @param propiedades Propiedades que se le pueden asiganar a un correo
+     * @param correoDestinatario Correo destinatario del reporte
+     * @throws AddressException
+     * @throws MessagingException 
+     */
     public void generarCorreo(Properties propiedades, String correoDestinatario) throws AddressException, MessagingException{
         propiedades.setProperty("mail.smtp.host", "smtp.googlemail.com");
         propiedades.setProperty("mail.smtp.starttls.enable", "true");

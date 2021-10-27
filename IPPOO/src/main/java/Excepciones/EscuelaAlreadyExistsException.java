@@ -18,7 +18,10 @@ public class EscuelaAlreadyExistsException extends Exception{
     public String getSemestreBloque(){
         return codEscuela;
     }
-    
+    /**
+     * Método para obtener el mensaje de error correspondiente a la excepción atrapada
+     * @return el mensaje de error sobre una escuela que no existe
+     */
     public String mensajeError(){
         String msg = "";
         
