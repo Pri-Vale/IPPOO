@@ -314,7 +314,7 @@ public class Controlador {
                 for (Curso cursoCorrequisito : cursos){
                     if(codCorreq.equals(cursoCorrequisito.getCodCurso()) == true){
                         if (curso.buscarCorrequisito(codCorreq) == null){
-                            curso.registrarRequisito(cursoCorrequisito);
+                            curso.registrarCorrequisito(cursoCorrequisito);
                             salidaControlador.insertarCorrequisitoXCurso(codCurso, codCorreq); //Persistencia almacenado
                         }else{
                             throw new CorrequisitoAlreadyExistsException(codCurso, codCorreq);
