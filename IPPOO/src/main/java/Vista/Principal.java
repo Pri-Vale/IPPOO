@@ -1616,22 +1616,24 @@ public class Principal extends javax.swing.JFrame {
             cboxPlanesEst.getSelectedItem().toString();
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(null,"Por favor, seleccione un espacio valido");
+            JOptionPane.showMessageDialog(null,"Por favor, seleccione un espacio válido");
         }
         
         if(this.txtCodigoPlan.getText().equals("")){
             JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de curso válido");
+        }else{
+            if(this.txtCodigoCurso.getText().equals("")){
+                JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de curso válido");
+            }else{
+                try{
+                    this.cboxBloqueActivo.getSelectedItem().toString();
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null,"Por favor, seleccione un espacio valido");
+                }
+            }
         }
-        if(this.txtCodigoCurso.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un nombre de curso válido");
-        }
-        
-        try{
-            this.cboxBloqueActivo.getSelectedItem().toString();
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null,"Por favor, seleccione un espacio valido");
-        }
+
         
         
         // variable 
@@ -1642,32 +1644,24 @@ public class Principal extends javax.swing.JFrame {
             int codigoPlan = Integer.parseInt(txtCodigoPlan.getText());
              String bloqueActivo =this.cboxBloqueActivo.getSelectedItem().toString();
         
-        //Conversion jCalendar
-        Date vigenciaPlan  = CalendVigencia.getDate();
-        long fechaconv= vigenciaPlan.getTime();
-        java.sql.Date fechaSql= new java.sql.Date(fechaconv);
-        
-        //Llamada al controlador
-        try{
-            contrl.crearPlanEstudios(nombreEscuela, codigoPlan, fechaSql, codigoCurso, bloqueActivo);
-        }catch(CursoDoesNotExistException eCursoNoExiste){
-            JOptionPane.showMessageDialog(null,eCursoNoExiste.mensajeError() + ". Ingrese un curso existente.");
-        }catch(CursoAlreadyExistsException eCursoExiste){
-            JOptionPane.showMessageDialog(null,eCursoExiste.mensajeError() + " en este plan de estudios.");
-        }catch(PlanDeEstudioAlreadyExistsException ePlanExiste){
-            JOptionPane.showMessageDialog(null,ePlanExiste.mensajeError());
-        }
-            
-        }
-        else{
+            //Conversion jCalendar
+            Date vigenciaPlan  = CalendVigencia.getDate();
+            long fechaconv= vigenciaPlan.getTime();
+            java.sql.Date fechaSql= new java.sql.Date(fechaconv);
+
+            //Llamada al controlador
+            try{
+                contrl.crearPlanEstudios(nombreEscuela, codigoPlan, fechaSql, codigoCurso, bloqueActivo);
+            }catch(CursoDoesNotExistException eCursoNoExiste){
+                JOptionPane.showMessageDialog(null,eCursoNoExiste.mensajeError() + ". Ingrese un curso existente.");
+            }catch(CursoAlreadyExistsException eCursoExiste){
+                JOptionPane.showMessageDialog(null,eCursoExiste.mensajeError() + " en este plan de estudios.");
+            }catch(PlanDeEstudioAlreadyExistsException ePlanExiste){
+                JOptionPane.showMessageDialog(null,ePlanExiste.mensajeError());
+            }   
+        }else{
             JOptionPane.showMessageDialog(null,"Por favor, ingrese un codigo valido de 4 digitos ");
-        
-            
-        }
-        
-        
-       
-                
+        }              
     }//GEN-LAST:event_bPropioRegistroVentanaActionPerformed
 
     private void bVentanaVisualizarPlanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVentanaVisualizarPlanesActionPerformed
