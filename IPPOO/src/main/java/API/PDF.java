@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package API;
 
 import com.itextpdf.text.Document;
@@ -14,8 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- *
- * @author pri23
+ * Clase PDF
+ * @author Valeria Fernández y Priscilla Ramírez
+ * @version 1.2
+ * @since 1.0
  */
 public class PDF {
 
@@ -26,15 +24,13 @@ public class PDF {
      * Metodo que permite generar el reporte en PDF
      * @param documento Documento que contendra el reporte de PDF
      * @param rst Resulset que contiene la información extraida sobre el plan
-     * @throws SQLException 
+     * @throws SQLException si no se recupera correctamente la información desde la base de datos
      */
-    
-   public void generarPDF(Document documento,ResultSet rst) throws SQLException{
+    public void generarPDF(Document documento,ResultSet rst) throws SQLException{
     try{
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta+"\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf"));
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta+"\\OneDrive\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf"));
             System.out.println(ruta+"\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf");
-            //PdfWriter.getInstance(documento, new FileOutputStream(ruta+"\\OneDrive\\Documents\\GitHub\\IPPOO\\Reportes\\ReportesBD.pdf"));
             documento.open();
 
             PdfPTable tabla = new PdfPTable(7);

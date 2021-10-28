@@ -115,7 +115,7 @@ public class Principal extends javax.swing.JFrame {
         bPDFCorreo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabPlanEstudio = new javax.swing.JTable();
-        jButton5 = new javax.swing.JButton();
+        bRegresarDeConsultarPlan = new javax.swing.JButton();
         cbox_codigosPlan2 = new javax.swing.JComboBox<>();
         label1 = new java.awt.Label();
         label2 = new java.awt.Label();
@@ -686,7 +686,12 @@ public class Principal extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabPlanEstudio);
 
-        jButton5.setText("Regresar");
+        bRegresarDeConsultarPlan.setText("Regresar");
+        bRegresarDeConsultarPlan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bRegresarDeConsultarPlanActionPerformed(evt);
+            }
+        });
 
         cbox_codigosPlan2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -707,7 +712,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
                         .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton5)
+                            .addComponent(bRegresarDeConsultarPlan)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(43, Short.MAX_VALUE))
                     .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
@@ -725,24 +730,23 @@ public class Principal extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
-                                .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(40, 40, 40))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rqConsultaPlanEstudioLayout.createSequentialGroup()
-                                        .addComponent(cbox_codigosPlan2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(174, 174, 174)))
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
                                 .addGroup(rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(combEscuelaMP, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
+                                        .addComponent(cbox_codigosPlan2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
                                         .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(71, 71, 71)
-                                        .addComponent(txtCantCreditos, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(bPDFCorreo)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addComponent(txtCantCreditos, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(bPDFCorreo)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(rqConsultaPlanEstudioLayout.createSequentialGroup()
+                                .addComponent(combEscuelaMP, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         rqConsultaPlanEstudioLayout.setVerticalGroup(
             rqConsultaPlanEstudioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -771,7 +775,7 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(80, 80, 80)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addComponent(bRegresarDeConsultarPlan)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1475,7 +1479,7 @@ public class Principal extends javax.swing.JFrame {
         else if(this.tCodigoEscuela.getText().equals("")){
             JOptionPane.showMessageDialog(null,"¡Espacio en blanco! Por favor, ingrese un código de escuela válido");
         }else{
-            if(this.tCodigoEscuela.getText().length()<=2){
+            if(this.tCodigoEscuela.getText().length() == 2){
                 try {
                     contrl.crearEscuela(tNombreEA.getText(), tCodigoEscuela.getText());
                     JOptionPane.showMessageDialog(null,"¡Escuela registrada con éxito!");
@@ -1948,6 +1952,10 @@ public class Principal extends javax.swing.JFrame {
     this.contrl.poblarCBoxRequisitos(jCBRequisitosEliminar,CursoEliminar);
     }//GEN-LAST:event_jCBcursosTotalesActionPerformed
 
+    private void bRegresarDeConsultarPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegresarDeConsultarPlanActionPerformed
+        this.rqConsultaPlanEstudio.dispose();
+    }//GEN-LAST:event_bRegresarDeConsultarPlanActionPerformed
+
     private String seleccionarCodigoEscuela(JComboBox cbox_escuela){
         String nombreEscuela = cbox_escuela.getSelectedItem().toString();
         String codEscuela = contrl.obtenerCodEscuela(nombreEscuela); 
@@ -1972,13 +1980,13 @@ public class Principal extends javax.swing.JFrame {
     
     private void poblarCboxBloqueActivo(JComboBox cboxBloqueActivo){
         int contador = 0;
-        String[] listaBloques = {"1","2","3","4","5","6","7","8","9","10"};
+        String[] listaBloques = {"Semestre 0","Semestre 1","Semestre 2","Semestre 3",
+            "Semestre 4","Semestre 5","Semestre 6","Semestre 7","Semestre 8","Semestre 9","Semestre 10"};
         for(int i=0; i<listaBloques.length ;++i){
             cboxBloqueActivo.addItem(listaBloques[i]);
             contador++;
         }  
     }
-    
     
     
     /**
@@ -2027,6 +2035,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton bRegistrarCorrequisito;
     private javax.swing.JButton bRegistrarCurso;
     private javax.swing.JButton bRegistrarRequisito;
+    private javax.swing.JButton bRegresarDeConsultarPlan;
     private javax.swing.JButton bVentanaConsultarCorrequisitos;
     private javax.swing.JButton bVentanaConsultarPlanesConCiertoCurso;
     private javax.swing.JButton bVentanaConsultarRequisitos;
@@ -2055,7 +2064,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jCBCursosAsEliminar;
     private javax.swing.JComboBox<String> jCBDeletSXC;

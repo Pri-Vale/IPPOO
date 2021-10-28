@@ -7,7 +7,6 @@ package Excepciones;
  * @version 1.1
  * @since 1.0
  */
-
 public class CursoAlreadyExistsException extends Exception{
     private String codCurso;
     
