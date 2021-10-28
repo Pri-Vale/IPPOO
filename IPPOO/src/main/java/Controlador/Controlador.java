@@ -413,6 +413,7 @@ public class Controlador {
         for (Curso curso : cursos){
             if(codCurso.equals(curso.getCodCurso()) == true){
                 correquisitos = curso.getCorrequisitos();
+                System.out.println("correqs" + correquisitos);
                 break;
             }
         }
@@ -425,23 +426,32 @@ public class Controlador {
      * @param tablaCorrequisitos JTable que se va a poblar con los correquisitos del curso consultado
      */
     public void poblarTablaCorrequisitos(String codCursoCorreqs, JTable tablaCorrequisitos){
+        DefaultTableModel modelo = new DefaultTableModel();
         ArrayList<Curso> correquisitos = consultarCorrequisitos(codCursoCorreqs);
+        ArrayList<Object> columna = new ArrayList<>();
         
-        DefaultTableModel modeloCorreq = (DefaultTableModel)tablaCorrequisitos.getModel();
+        columna.add("Código Curso");
+        columna.add("Nombre Curso");
+        columna.add("Cantidad de créditos");
+        columna.add("Cantidad de horas lectivas");
         
-        Object datos[] = new Object[4];
+        for(Object col: columna){
+            modelo.addColumn(col);
+        }
+        
+        Object datosFila[] = new Object[4];
         
         for (int i = 0; i < correquisitos.size(); i++){
-            datos[0] = correquisitos.get(i).getCodCurso();
-            datos[1] = correquisitos.get(i).getNombreCurso();
-            datos[2] = correquisitos.get(i).getCantCreditos();
-            datos[3] = correquisitos.get(i).getCantHorasLectivas();
+            datosFila[0] = correquisitos.get(i).getCodCurso();
+            datosFila[1] = correquisitos.get(i).getNombreCurso();
+            datosFila[2] = correquisitos.get(i).getCantCreditos();
+            datosFila[3] = correquisitos.get(i).getCantHorasLectivas();
              
-             modeloCorreq.addRow(datos);
-        }   
+             modelo.addRow(datosFila);
+        }  
+        tablaCorrequisitos.setModel(modelo);
     }
     
-    //REVISAR
     /**
      * Método que permite consultar los planes de estudio que contienen un curso en particular en sus bloques de estudio
      * @param codCurso código del curso que se va a consultar
@@ -450,7 +460,6 @@ public class Controlador {
     private ArrayList <PlanDeEstudio> consultarPlanesConCiertoCurso(String codCurso){
         ArrayList <PlanDeEstudio> planesEscuela;
         ArrayList <Bloque> bloquesPlan;
-        ArrayList <Curso> cursosBloque;
         ArrayList <PlanDeEstudio> planesConCurso = new ArrayList<>();
         
         for (Escuela escuelaEncontrada : escuelas){
@@ -458,11 +467,8 @@ public class Controlador {
             for (PlanDeEstudio planEncontrado : planesEscuela){
                 bloquesPlan = planEncontrado.getBloques();
                 for (Bloque bloqueEncontrado : bloquesPlan){
-                    bloqueEncontrado.buscarCursoBloque(codCurso);
-                    planesConCurso.add(planEncontrado);
-                    cursosBloque = bloqueEncontrado.getCursos();
-                    for (Curso cursoEncontrado : cursosBloque){
-                        cursoEncontrado.buscarRequisito(codCurso);
+                    if (bloqueEncontrado.buscarCursoBloque(codCurso) != null){
+                        planesConCurso.add(planEncontrado);
                     }
                 }    
             }
