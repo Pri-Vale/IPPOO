@@ -290,7 +290,7 @@ public class Controlador {
             if(codCurso.equals(curso.getCodCurso()) == true){
                 for (Curso cursoRequisito : cursos){
                     if(codReq.equals(cursoRequisito.getCodCurso()) == true){
-                        if (curso.buscarRequisito(codReq) == null){
+                        if (curso.buscarRequisito(codReq) == null && codCurso.equals(codReq) == false){
                             curso.registrarRequisito(cursoRequisito);
                             salidaControlador.insertarRequisitoXCurso(codCurso, codReq); //Persistencia almacenado
                         }else{
@@ -313,7 +313,7 @@ public class Controlador {
             if(codCurso.equals(curso.getCodCurso()) == true){
                 for (Curso cursoCorrequisito : cursos){
                     if(codCorreq.equals(cursoCorrequisito.getCodCurso()) == true){
-                        if (curso.buscarCorrequisito(codCorreq) == null){
+                        if (curso.buscarCorrequisito(codCorreq) == null && codCurso.equals(codCorreq) == false){
                             curso.registrarCorrequisito(cursoCorrequisito);
                             salidaControlador.insertarCorrequisitoXCurso(codCurso, codCorreq); //Persistencia almacenado
                         }else{
